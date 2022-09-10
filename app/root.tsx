@@ -4,7 +4,6 @@ import {
   LiveReload,
   Meta,
   Outlet,
-  useMatches,
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
@@ -21,13 +20,6 @@ export function links() {
 }
 
 export default function App() {
-  const matches = useMatches();
-
-  // If at least one route wants to hydrate, this will return true
-  const includeScripts = matches.some(
-    (match) => match.handle?.hydrate
-  );
-
   return (
     <html lang="en">
       <head>
@@ -36,9 +28,9 @@ export default function App() {
       </head>
       <body>
         <Outlet />
-        {includeScripts ? <Scripts /> : null}
         <ScrollRestoration />
         <LiveReload />
+        <Scripts />
       </body>
     </html>
   );
