@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import styles from "./tailwind.css"
+import appStyle from "./styles/app.css"
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -16,7 +17,7 @@ export const meta: MetaFunction = () => ({
 });
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }]
+  return [{ rel: "stylesheet", href: styles }, { rel: "stylesheet", href: appStyle }];
 }
 
 export default function App() {
