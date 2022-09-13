@@ -1,14 +1,15 @@
 import { RiMoonFoggyFill } from 'react-icons/ri'
 import { BsFillSunFill } from 'react-icons/bs'
 import { animated } from 'react-spring'
-import { transition, useFadeIn } from '~/theme/animate'
+import { transition, useFadeIn, useExpand } from '~/theme/animate'
 
 type Props = {
   toggleTheme: () => void,
   colorMode: 'dark' | 'light',
+  children: React.ReactNode,
 }
 
-const Navbar = ({ toggleTheme, colorMode }: Props) => {
+const Navbar = ({ toggleTheme, colorMode, children }: Props) => {
 
   return (
     <>
@@ -38,6 +39,17 @@ const Navbar = ({ toggleTheme, colorMode }: Props) => {
           </button>
         </animated.div>
       </nav>
+      <div className=''>
+        {children}
+      </div>
+
+      <animated.div
+        style={useExpand()}
+        className={`text-center font-display py-5 mt-5 text-gray-700 dark:text-gray-400 drop-shadow-2xl
+         backdrop-blur-md ${transition}`}
+      >
+        Created by, Richie Varghese © 2022
+      </animated.div>
     </>
   )
 }
