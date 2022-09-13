@@ -1,14 +1,13 @@
 import { useSpring } from "react-spring";
 
-export const transition = ` transition-all ease-in-out duration-1000 `;
+export const transition = ` transition-all ease-in-out duration-2000 `;
 
 // useFadeIn hook for fade in animation
 export const useFadeIn = () => {
   return useSpring({
     to: { opacity: 1 },
     from: { opacity: 0 },
-    config: { duration: 1000 },
-    delay: 500,
+    immediate: true,
   })
 };
 
@@ -54,6 +53,26 @@ export const useTraverseStartToEnd = () => {
     to: { x: '720px', opacity: 1 },
     config: { duration: 10000 },
     delay: 200,
-    loop: { reverse: false },
+    loop: { reverse: true },
+  });
+}
+
+// useZoomIn hook for zoom in animation without scroll
+export const useZoomIn = () => {
+  return useSpring({
+    to: { transform: "scale(1)" },
+    from: { transform: "scale(0)" },
+    config: { duration: 1000 },
+    delay: 200,
+  })
+}
+
+export const useBreathing = () => {
+  return useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 1000 },
+    delay: 200,
+    loop: { reverse: true },
   });
 }
