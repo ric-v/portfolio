@@ -1,15 +1,13 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
+import AppLayout from '~/components/layouts/AppLayout'
 
 type Props = {}
 
 const About = (props: Props) => {
   return (
-    <div>
-      <h1>About</h1>
+    <AppLayout>
       <Link to='/'>Home</Link>
-
-    </div>
+    </AppLayout>
   )
 }
 
