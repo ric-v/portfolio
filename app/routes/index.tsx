@@ -22,7 +22,7 @@ export default function Index() {
     <ThemeContext.Provider value={{ theme: colorMode, toggleTheme: toggleTheme }}>
       <main className={`${colorMode} `} >
         <animated.div
-          className={`${transition} bg-gradient-to-bl from-indigo-50 to-indigo-300 dark:from-slate-700 dark:to-slate-900 star-field`}
+          className={`${transition} bg-gradient-to-bl from-indigo-50 to-indigo-300 dark:bg-gradient-to-bl dark:from-slate-700 dark:bg-slate-900`}
           style={{
             ...useFadeIn(),
             // background: `url(${bgStars})`,
@@ -32,9 +32,9 @@ export default function Index() {
             // backgroundSize: 'cover',
           }}
         >
+          {/* <div className='layer'></div>
           <div className='layer'></div>
-          <div className='layer'></div>
-          <div className='layer'></div>
+          <div className='layer'></div> */}
           {/* <div className='layer'></div> */}
           <App toggleTheme={toggleTheme} colorMode={colorMode} />
         </animated.div>
