@@ -44,4 +44,4 @@ const Navbar = (props: Props) => {
   )
 }
 
-export default Navbar
+export default Navbar;
