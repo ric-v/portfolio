@@ -45,7 +45,7 @@ export default function Index() {
         </ParallaxLayer>
 
         <ParallaxLayer
-          offset={2.5}
+          offset={3.5}
           speed={-0.4}
           style={{
             display: 'flex',
@@ -53,7 +53,7 @@ export default function Index() {
             justifyContent: 'center',
             pointerEvents: 'none',
           }}>
-          <img src={url('earth')} style={{ width: '60%' }} />
+          <img src={url('earth')} style={{ width: '30%' }} />
         </ParallaxLayer>
 
         <ParallaxLayer
@@ -87,7 +87,7 @@ export default function Index() {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <img src={url('bash')} style={{ width: '40%' }} />
+          <img src={url('bash')} style={{ width: '20%' }} />
         </ParallaxLayer>
 
         <ParallaxLayer
@@ -99,7 +99,7 @@ export default function Index() {
             justifyContent: 'center',
           }}
           onClick={() => parallax.current.scrollTo(0)}>
-          <img src={url('clients-main')} style={{ width: '40%' }} />
+          <img src={url('clients-main')} style={{ width: '20%' }} />
         </ParallaxLayer>
       </Parallax>
     </AppLayout>

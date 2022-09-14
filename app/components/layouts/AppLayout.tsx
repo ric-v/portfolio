@@ -11,9 +11,10 @@ const AppLayout = ({ children }: Props) => {
   return (
     <div
       className={`min-h-screen min-w-screen flex flex-col justify-between
-        ${transition} bg-gradient-to-bl from-indigo-50 to-indigo-300 
-        dark:bg-gradient-to-bl dark:from-slate-700 dark:bg-slate-900 star-field`
+        ${transition}  bg-sky-200 dark:bg-slate-900 star-field`
       }
+    // bg-gradient-to-bl from-indigo-50 to-indigo-300 
+    // dark:bg-gradient-to-bl dark:from-slate-700 dark:to-slate-900
     >
       <div className='layer' /><div className='layer' /><div className='layer' />
       <Navbar />
