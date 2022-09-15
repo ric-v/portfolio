@@ -6,7 +6,7 @@ module.exports = {
       'sans': ['Montserrat', 'sans-serif'],
       'display': ['Pacifico', 'cursive'],
       'rounded': ['Comfortaa', 'Montserrat', 'sans-serif'],
-      'body': ['Ralway', 'sans-serif'],
+      'body': ['Raleway', 'sans-serif'],
       'mono': ['Fira Code', 'monospace'],
     },
     extend: {
