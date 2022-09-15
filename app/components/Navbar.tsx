@@ -4,6 +4,7 @@ import { animated } from 'react-spring'
 import { transition, useFadeIn } from '~/theme/animate'
 import { useContext } from 'react'
 import { ThemeContext } from '~/theme/context'
+import { Link } from '@remix-run/react'
 
 type Props = {
   // children: React.ReactNode,
@@ -20,9 +21,11 @@ const Navbar = (props: Props) => {
           style={useFadeIn()}
           className="flex flex-row justify-between p-5"
         >
-          <h1 className="text-4xl md:text-5xl col-span-2 dark:text-gray-200 font-sans">
-            asterix.dev
-          </h1>
+          <Link to='/'>
+            <h1 className="text-4xl md:text-5xl col-span-2 dark:text-gray-200 font-sans">
+              asterix.dev
+            </h1>
+          </Link>
           <button
             className={`p-2 mr-8 col-span-2 rounded-full shadow-xl mx-5 bg-amber-50 dark:bg-slate-800
               border border-amber-200 dark:border-slate-800 ${colorMode.theme === 'light' ? 'light-mode-shadow' : 'dark-mode-shadow'}
