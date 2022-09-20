@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import AppLayout from '~/components/layouts/AppLayout'
 import type { IParallax } from '@react-spring/parallax';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
