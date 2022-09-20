@@ -28,8 +28,8 @@ export default function Index() {
           </div>
         </ParallaxLayer>
         <ParallaxLayer offset={3} speed={0} onClick={() => parallax.current.scrollTo(0)} >
-          <div className="flex flex-col justify-center items-center h-screen text-2xl font-mono bg-orange-900 bg-opacity-50 dark:bg-slate-800 dark:bg-opacity-50">
-            <p>Meanwhile, useful links:</p>
+          <div className="flex flex-col justify-center items-center h-screen text-2xl font-mono bg-orange-900 bg-opacity-30 dark:bg-slate-800 dark:bg-opacity-30">
+            <p>Meanwhile, Checkme out at useful links:</p>
             <div className="flex flex-col text-center text-sky-900 dark:text-amber-200 font-sans">
               <a href="https://github.com/ric-v/" rel="noreferrer" target={"_blank"} className='hover:text-sky-700 dark:hover:text-amber-400'>Github</a>
               <a href="https://www.linkedin.com/in/ric-v/" rel="noreferrer" target={"_blank"} className='hover:text-sky-700 dark:hover:text-amber-400'>Linkedin</a>
