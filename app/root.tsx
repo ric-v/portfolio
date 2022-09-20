@@ -23,7 +23,7 @@ export function links() {
 }
 
 export default function App() {
-  const [colorMode, setColorMode] = useState<'dark' | 'light'>('light');
+  const [colorMode, setColorMode] = useState<'dark' | 'light'>('dark');
   const toggleTheme = () => {
     setColorMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
     localStorage.setItem("theme", colorMode === "light" ? "dark" : "light");

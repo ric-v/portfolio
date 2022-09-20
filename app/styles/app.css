@@ -12,6 +12,12 @@
   box-shadow: 20px 20px 60px #c1b66a, -20px -20px 60px #fff690;
 }
 
+.neumorphic-shadow {
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow: 20px 20px 43px rgb(137, 162, 171, 0.6), -20px -20px 43px #ffffff;
+}
+
 .bg {
   /* background: url(https://i.ibb.co/87GbbFP/2799006.jpg) no-repeat; */
   background-size: cover;
@@ -134,7 +140,6 @@
     -199px -832px #c2c2c2, 1322px 1390px #d9d9d9, 1750px -1885px #c2c2c2,
     -1293px 381px #fcfcfc, -811px 309px #c2c2c2, 1814px 1855px #d9d9d9,
     1402px -948px #c9c9c9, -1759px 307px #d1d1d1, 951px -1330px #ededed,
-    -644px 1970px #f7f7f7, -657px -1184px #fcfcfc, 765px 1374px #d4d4d4,
     1003px 709px #f0f0f0, 1458px -1175px #c7c7c7, -297px -1421px #c7c7c7,
     -1085px -1416px #c9c9c9, 204px -274px #e8e8e8, 89px 1203px #e8e8e8,
     1832px 1318px #d9d9d9, -66px -1308px #f7f7f7, 1372px 1278px #fcfcfc,
@@ -146,7 +151,6 @@
     1345px -1841px #ededed, 642px -608px #e0e0e0, 1884px -1459px #ededed,
     -1913px -1395px #fcfcfc, -590px 451px #e8e8e8, 663px -376px #d9d9d9,
     2010px 553px #c9c9c9, 1218px -1534px #f7f7f7, 777px -1319px #c2c2c2,
-    1335px -1797px #f7f7f7, -712px 5px #c2c2c2, 774px 957px #c2c2c2,
     450px -1238px #e0e0e0, -1189px 1699px #e0e0e0, 868px 1949px #ededed,
     -565px 249px #d4d4d4, 757px -227px #c9c9c9, 891px 1161px #fcfcfc,
     1753px 1690px #ededed, -1840px 1251px #d9d9d9, 1385px -1549px #c2c2c2,
@@ -175,13 +179,13 @@
     584px -1433px #f7f7f7, -64px 382px #c9c9c9, -11px -462px #c9c9c9,
     722px 37px #fcfcfc, 229px 1175px #ededed, 1919px -1420px #c7c7c7,
     1311px 532px #c2c2c2, 430px -26px #c7c7c7, -928px -1227px #cccccc,
-    1502px 1655px #c7c7c7, 1px 1px sandybrown;
+    1502px 1655px #c7c7c7, 1px 0px sandybrown;
   transform-style: preserve-3d;
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 4px;
-  width: 4px;
+  height: 8px;
+  width: 8px;
   border-radius: 20px;
 }
 
