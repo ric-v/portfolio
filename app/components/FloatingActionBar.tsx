@@ -2,7 +2,6 @@ import { Link } from '@remix-run/react'
 import { useState } from 'react'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { IoCloseSharp } from 'react-icons/io5'
-import { animated, useSpring } from 'react-spring'
 import { transition } from '~/theme/animate'
 
 type Props = {
@@ -12,13 +11,7 @@ type Props = {
 
 const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [style, animate] = useSpring(() => ({
-    to: { opacity: 1 },
-    from: { opacity: 0 },
-    config: {
-      duration: 500,
-    }
-  }))
+
 
   return (
     <>
@@ -28,7 +21,6 @@ const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
         bg-slate-100 hover:bg-slate-300 dark:bg-slate-700 hover:dark:bg-slate-800 cursor-pointer drop-shadow-2xl ${transition}`}
         onClick={() => {
           setIsOpen(!isOpen);
-          animate({ opacity: isOpen ? 0 : 1, delay: 100 });
         }}
       >
         {
@@ -41,12 +33,15 @@ const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
 
         {
           isOpen && (
-            <animated.div style={style} className={`absolute bottom-16 right-10 w-56 text-xl bg-slate-100 dark:bg-slate-700 rounded-lg shadow-lg p-5`}>
+            <div className={`absolute bottom-16 right-10 w-56 text-xl bg-slate-100 dark:bg-slate-700 rounded-lg shadow-lg p-5`}>
               <div className='flex flex-col justify-between'>
                 <Link to='/' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Home</Link>
                 <Link to='/me' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>About</Link>
                 <Link to='/contact' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Contact</Link>
-                <p className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1' onClick={() => setEnableStarLight(!enableStarLight)}>
+                <p className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1' onClick={() => {
+                  setEnableStarLight(!enableStarLight);
+                  localStorage.setItem('enableStarLight', (!enableStarLight).toString());
+                }}>
                   {
                     enableStarLight ? (
                       'Disable Starlight'
@@ -56,7 +51,7 @@ const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
                   }
                 </p>
               </div>
-            </animated.div>
+            </div>
           )
         }
       </div>

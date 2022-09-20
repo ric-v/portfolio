@@ -3,7 +3,7 @@ import Navbar from "../Navbar"
 import { transition, useFadeIn } from "~/theme/animate"
 import Footer from "../Footer"
 import FloatingActionBar from "../FloatingActionBar"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type Props = {
   children: React.ReactNode
@@ -11,6 +11,12 @@ type Props = {
 
 const AppLayout = ({ children }: Props) => {
   const [enableStarLight, setEnableStarLight] = useState(false);
+
+  useEffect(() => {
+    localStorage.getItem('enableStarLight') === 'true' ?
+      (window.innerWidth > 720 && window.innerHeight > 480) ? setEnableStarLight(true) : setEnableStarLight(false) :
+      setEnableStarLight(false)
+  }, []);
 
   return (
     <>
