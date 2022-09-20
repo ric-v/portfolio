@@ -12,27 +12,6 @@
   box-shadow: 20px 20px 60px #c1b66a, -20px -20px 60px #fff690;
 }
 
-.bg {
-  /* background: url(https://i.ibb.co/87GbbFP/2799006.jpg) no-repeat; */
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -3;
-}
-.bg:before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  background: #000;
-  position: fixed;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
-}
 @keyframes sf-fly-by-1 {
   from {
     transform: translateZ(-2500px);
@@ -114,21 +93,13 @@
     722px 37px #fcfcfc, 229px 1175px #ededed, 1919px -1420px #c7c7c7,
     1311px 532px #c2c2c2, 430px -26px #c7c7c7, -928px -1227px #cccccc,
     1502px 1655px #c7c7c7;
-  transform-style: preserve-3d;
+  /* transform-style: preserve-3d; */
   position: absolute;
   top: 50%;
   left: 50%;
   height: 8px;
   width: 8px;
   border-radius: 20px;
-  /* fix choppy animation on mobile */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translate3d(-50%, -50%, 0);
-  transform: translate3d(-50%, -50%, 0);
-  -webkit-animation: animate 30s linear infinite;
-  animation: animate 30s linear infinite;
-  
 }
 
 .star-field .layer:nth-child(1) {

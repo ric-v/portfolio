@@ -5,9 +5,12 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { animated, useSpring } from 'react-spring'
 import { transition } from '~/theme/animate'
 
-type Props = {}
+type Props = {
+  enableStarLight: boolean
+  setEnableStarLight: (enable: boolean) => void
+}
 
-const FloatingActionBar = (props: Props) => {
+const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const [style, animate] = useSpring(() => ({
     to: { opacity: 1 },
@@ -38,11 +41,20 @@ const FloatingActionBar = (props: Props) => {
 
         {
           isOpen && (
-            <animated.div style={style} className={`absolute bottom-16 right-10 text-xl bg-slate-100 dark:bg-slate-700 rounded-lg shadow-lg p-5`}>
+            <animated.div style={style} className={`absolute bottom-16 right-10 w-56 text-xl bg-slate-100 dark:bg-slate-700 rounded-lg shadow-lg p-5`}>
               <div className='flex flex-col justify-between'>
                 <Link to='/' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Home</Link>
                 <Link to='/me' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>About</Link>
                 <Link to='/contact' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Contact</Link>
+                <p className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1' onClick={() => setEnableStarLight(!enableStarLight)}>
+                  {
+                    enableStarLight ? (
+                      'Disable Starlight'
+                    ) : (
+                      'Enable Starlight'
+                    )
+                  }
+                </p>
               </div>
             </animated.div>
           )
