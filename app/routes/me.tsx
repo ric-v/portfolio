@@ -1,11 +1,13 @@
 import AppLayout from "~/components/layouts/AppLayout";
 import type { IParallax } from "@react-spring/parallax";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VscGithubInverted } from "react-icons/vsc";
 import { GrLinkedinOption } from 'react-icons/gr';
 import { AiFillFilePdf } from 'react-icons/ai';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import { transition } from "~/theme/animate";
+import Timeline from "~/components/Timeline";
 
 type Props = {};
 
@@ -15,22 +17,14 @@ const Me = (props: Props) => {
   return (
     <AppLayout>
       <Parallax ref={parallax} pages={7} className="scrollbar-none">
-        {page_1(parallax)}
+        {/* {Intro(parallax)} */}
 
-        {page_2(parallax)}
+        {Experience(parallax)}
 
-        <ParallaxLayer
-          offset={2}
-          speed={0}
-          className="bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-30 h-screen flex flex-col justify-center px-2"
-          onClick={() => parallax.current.scrollTo(3)}
-        />
-        <ParallaxLayer
-          offset={3}
-          speed={0}
-          className="bg-sky-700 dark:bg-slate-700 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
-          onClick={() => parallax.current.scrollTo(4)}
-        />
+        {Projects(parallax)}
+
+        {Skills(parallax)}
+
         <ParallaxLayer
           offset={4}
           speed={0}
@@ -69,7 +63,7 @@ const Me = (props: Props) => {
 
 export default Me;
 
-const page_1 = (parallax: React.MutableRefObject<IParallax>) => {
+const Intro = (parallax: React.MutableRefObject<IParallax>) => {
   return (
     <>
       <ParallaxLayer
@@ -88,8 +82,8 @@ const page_1 = (parallax: React.MutableRefObject<IParallax>) => {
           <div className="col-span-3 h-20 md:col-span-2" />
           <div className="col-span-3 md:col-span-2 bg-amber-400 dark:bg-sky-500 bg-opacity-10 dark:bg-opacity-10 h-64 rounded-3xl backdrop-blur-sm shadow-2xl -rotate-6 m-5">
             <div className="h-full w-full flex flex-col justify-center items-center">
-              <div className="text-2xl font-bold text-center text-slate-700 dark:text-sky-300">
-                Hi, this is <span className="font-bold">Richie</span> 👋, a full-stack engineer from Bengaluru, India.
+              <div className="text-2xl font-medium text-center text-slate-700 dark:text-sky-300">
+                Hi, this is <span className="font-bold">Richie</span> 👋, a <span className={`font-bold`}>Full Stack Engineer</span> from Bengaluru, India.
               </div>
             </div>
           </div>
@@ -125,15 +119,69 @@ const page_1 = (parallax: React.MutableRefObject<IParallax>) => {
             <AiFillFilePdf size={32} />
           </a>
         </div>
+      </ParallaxLayer>
+    </>
+  )
+}
+
+const Experience = (parallax: React.MutableRefObject<IParallax>) => {
+  return (
+    <>
+      <ParallaxLayer
+        offset={0}
+        speed={0}
+        className="bg-sky-200 dark:bg-sky-700 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
+        onClick={() => parallax.current.scrollTo(2)}
+      />
+      <ParallaxLayer
+        offset={-0.1}
+        speed={0}
+        className="h-screen flex flex-col justify-center mt-28 px-2"
+      >
+        <div className="grid grid-cols-3 lg:grid-cols-6 gap-4">
+          <Timeline duration="Jun 2018 - May 2021" title="Software Developer L2" company="Algomox Pvt. Ltd." desc="An employee since start of the company. Worked on 2 major platform building cycle and most of the back-end server development. Associated with chief engineer to architect and design solutions based on the platforms. Had the opportunity to build servers from scratch, design them, document and debug the applications." key='1' />
+          <Timeline duration="Jun 2021 - Sept 2022" title='Engineer - Software Development' company="Schnell Digital Technologies" desc='Worked as part of the initial team for building PBM engine for processing real-time pharmacy claims request for clients at high scale and high volume. Primarily worked on the processing engine with concurrent processing and adjudication capabilities based on business rules.' key='2' />
+          <Timeline duration="Oct 2022 - Preset" title="Senior Engineer - Software Development" company="Schnell Digital Technologies" desc='Worked on the PBM claim processing engine for high scale and high volume pharmacy requests from clients. Worked on integration with external switch providers for managing the entire lifecycle of claims and their processing.' />
+        </div>
+      </ParallaxLayer>
+    </>
+  )
+}
+
+const Projects = (parallax: React.MutableRefObject<IParallax>) => {
+  return (
+    <>
+      <ParallaxLayer
+        offset={2}
+        speed={0}
+        className="bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-30 h-screen flex flex-col justify-center px-2"
+        onClick={() => parallax.current.scrollTo(3)}
+      />
+      <ParallaxLayer
+        offset={1.9}
+        speed={0}
+        className="h-screen flex flex-col justify-center px-2"
+        onClick={() => parallax.current.scrollTo(3)}
+      >
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+          <div className="col-span-3 h-20 md:col-span-2" />
+
+        </div>
+      </ParallaxLayer>
+      <ParallaxLayer
+        offset={1.9}
+        speed={0}
+        className="h-screen flex flex-col justify-end px-2"
+      >
         <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
           <div className="col-span-10 md:col-span-11" />
-          <div className="col-span-2 md:col-span-1">
-            {/* <IoIosArrowUp className="text-4xl text-slate-700 dark:text-sky-300" /> */}
+          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(1)}>
+            <IoIosArrowUp className="text-4xl text-slate-700 dark:text-sky-300 animate-bounce" />
           </div>
         </div>
         <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
           <div className="col-span-10 md:col-span-11" />
-          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(1)}>
+          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(3)}>
             <IoIosArrowDown className="text-4xl text-slate-700 dark:text-sky-300 animate-bounce" />
           </div>
         </div>
@@ -142,42 +190,40 @@ const page_1 = (parallax: React.MutableRefObject<IParallax>) => {
   )
 }
 
-const page_2 = (parallax: React.MutableRefObject<IParallax>) => {
+const Skills = (parallax: React.MutableRefObject<IParallax>) => {
   return (
     <>
       <ParallaxLayer
-        offset={1}
+        offset={3}
         speed={0}
-        className="bg-sky-200 dark:bg-sky-700 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
-        onClick={() => parallax.current.scrollTo(2)}
+        className="bg-sky-700 dark:bg-slate-700 bg-opacity-20 dark:bg-opacity-40 h-screen flex flex-col justify-center px-2"
+        onClick={() => parallax.current.scrollTo(4)}
       />
       <ParallaxLayer
-        offset={0.9}
+        offset={2.9}
         speed={0}
         className="h-screen flex flex-col justify-center px-2"
-        onClick={() => parallax.current.scrollTo(2)}
+        onClick={() => parallax.current.scrollTo(4)}
       >
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
           <div className="col-span-3 h-20 md:col-span-2" />
-          <div className="col-span-3 md:col-span-2 bg-sky-200 dark:bg-sky-800 bg-opacity-10 dark:bg-opacity-10 h-64 rounded-3xl backdrop-blur-sm shadow-2xl m-5">
 
-          </div>
         </div>
       </ParallaxLayer>
       <ParallaxLayer
-        offset={0.9}
+        offset={2.9}
         speed={0}
         className="h-screen flex flex-col justify-end px-2"
       >
         <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
           <div className="col-span-10 md:col-span-11" />
-          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(0)}>
+          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(2)}>
             <IoIosArrowUp className="text-4xl text-slate-700 dark:text-sky-300 animate-bounce" />
           </div>
         </div>
         <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
           <div className="col-span-10 md:col-span-11" />
-          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(2)}>
+          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(4)}>
             <IoIosArrowDown className="text-4xl text-slate-700 dark:text-sky-300 animate-bounce" />
           </div>
         </div>
