@@ -34,9 +34,11 @@ const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
           isOpen && (
             <div className={`absolute bottom-16 right-10 w-56 text-xl bg-slate-100 dark:bg-slate-700 rounded-lg shadow-lg p-5`}>
               <div className='flex flex-col justify-between'>
-                <Link to='/' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Home</Link>
-                <Link to='/projects' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Projects</Link>
-                <p className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1' onClick={() => {
+                <Link to='/' className='text-gray-400 dark:text-gray-400 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Home</Link>
+                <div className='border border-slate-200 dark:border-slate-600' />
+                <Link to='/projects' className='text-gray-400 dark:text-gray-400 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Projects</Link>
+                <div className='border border-slate-200 dark:border-slate-600' />
+                <p className='text-gray-400 dark:text-gray-400 hover:text-gray-800 hover:dark:text-gray-50 p-1' onClick={() => {
                   setEnableStarLight(!enableStarLight);
                   localStorage.setItem('enableStarLight', (!enableStarLight).toString());
                 }}>

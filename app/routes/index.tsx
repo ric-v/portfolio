@@ -27,25 +27,7 @@ const Index = (props: Props) => {
 
         {Skills(parallax)}
 
-        <ParallaxLayer
-          offset={4}
-          speed={0}
-          className="bg-gradient-to-bl from-transparent bg-orange-900 dark:bg-zinc-900 bg-opacity-20 dark:bg-opacity-50 h-screen flex flex-col justify-center px-2"
-          onClick={() => parallax.current.scrollTo(0)}
-        >
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-5">
-            <div className="bg-black rounded-xl p-2">01</div>
-            <div className="bg-black rounded-xl p-2">02</div>
-            <div className="bg-black rounded-xl p-2">03</div>
-            <div className="col-span-2 rounded-xl bg-black p-2">04</div>
-            <div className="bg-black rounded-xl p-2">05</div>
-            <div className="bg-black rounded-xl p-2">06</div>
-            <div className="col-span-2 rounded-xl bg-black p-2">07</div>
-            <div className="bg-black rounded-xl p-2">08</div>
-            <div className="bg-black rounded-xl p-2">09</div>
-            <div className="bg-black rounded-xl p-2">10</div>
-          </div>
-        </ParallaxLayer>
+        {Contact(parallax)}
       </Parallax>
     </AppLayout >
   );
@@ -71,8 +53,8 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
           <div className="col-span-3 md:col-span-2 bg-amber-400 dark:bg-sky-500 bg-opacity-10 dark:bg-opacity-10 h-64 rounded-3xl backdrop-blur-sm shadow-2xl -rotate-6 m-5">
             <img src="https://avatars.githubusercontent.com/u/20295778?v=4" alt="profile" className={`rounded-full w-36 h-36 absolute -top-20 -left-10 z-50 drop-shadow-xl grayscale border border-slate-400 border-spacing-16 border-8 opacity-90 `} />
             <div className="h-full w-full flex flex-col justify-center items-center">
-              <div className="text-xl md:text-3xl font-medium text-center text-slate-700 dark:text-sky-300">
-                Hi, this is <span className="font-bold">Richie</span> 👋, a <span className={`font-bold`}>Full Stack Engineer</span> from Bengaluru, India.
+              <div className="text-xl md:text-3xl font-medium text-center text-slate-700 dark:text-sky-300 drop-shadow-xl">
+                Hi, this is <span className="font-bold">Richie</span> 👋, a <span className={`font-bold drop-shadow-xl`}>Full Stack Engineer</span> from Bengaluru, India.
               </div>
             </div>
           </div>
@@ -90,22 +72,22 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
             className={`col-span-3 md:col-span-1 flex flex-row justify-center py-2 backdrop-blur-sm rounded-2xl hover:shadow-2xl text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:scale-110 transition-all duration-1000`}
             href="https://github.com/ric-v" target={'_blank'} rel={'noreferrer'}
           >
-            <span className="mr-2">Github</span>
-            <VscGithubInverted size={32} />
+            <span className="mr-2 drop-shadow-xl">Github</span>
+            <VscGithubInverted size={32} className='drop-shadow-xl' />
           </a>
           <a
             className={`col-span-3 md:col-span-1 flex flex-row justify-center py-2 backdrop-blur-sm rounded-2xl hover:shadow-2xl text-slate-600 hover:text-sky-700 dark:text-slate-400 dark:hover:text-sky-500 hover:scale-110 transition-all duration-1000`}
             href="https://www.linkedin.com/in/ric-v/" target={'_blank'} rel={'noreferrer'}
           >
-            <span className="mr-2">LinkedIn</span>
-            <GrLinkedinOption size={32} />
+            <span className="mr-2 drop-shadow-xl">LinkedIn</span>
+            <GrLinkedinOption size={32} className='drop-shadow-xl' />
           </a>
           <a
             className={`col-span-3 md:col-span-1 flex flex-row justify-center py-2 backdrop-blur-sm rounded-2xl hover:shadow-2xl text-slate-600 hover:text-red-700 dark:text-slate-400 dark:hover:text-red-400 hover:scale-110 transition-all duration-1000`}
             href="https://drive.google.com/file/d/1-34NxUJF_Fj6-s4vUZVZIjIVO0VD-WX9/view?usp=sharing" target={'_blank'} rel={'noreferrer'}
           >
-            <span className="mr-2">Resume</span>
-            <AiFillFilePdf size={32} />
+            <span className="mr-2 drop-shadow-xl">Resume</span>
+            <AiFillFilePdf size={32} className='drop-shadow-xl' />
           </a>
         </div>
       </ParallaxLayer>
@@ -127,7 +109,7 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
         speed={0}
         className="h-screen flex flex-col justify-center mt-28 px-2"
       >
-        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none ${transition}`}>
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none drop-shadow-xl ${transition}`}>
           Work Experience
         </p>
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-2">
@@ -213,11 +195,11 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
         className="bg-gradient-to-bl from-transparent bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
       />
       <ParallaxLayer
-        offset={2}
+        offset={1.9}
         speed={0}
         className="h-screen flex flex-col justify-center px-2"
       >
-        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 ${transition}`}>
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 drop-shadow-xl ${transition}`}>
           Projects
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6">
@@ -241,37 +223,64 @@ const Skills = (parallax: React.MutableRefObject<IParallax>) => {
     <>
       <ParallaxLayer
         offset={3}
-        speed={0}
+        speed={1}
         className="bg-gradient-to-bl from-transparent bg-orange-600 dark:bg-zinc-900 bg-opacity-10 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
         onClick={() => parallax.current.scrollTo(4)}
       />
       <ParallaxLayer
-        offset={3}
-        speed={0}
-        className="h-screen flex flex-col justify-center px-2"
-        onClick={() => parallax.current.scrollTo(4)}
-      >
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-          <div className="col-span-3 h-20 md:col-span-2" />
-
-        </div>
-      </ParallaxLayer>
-      <ParallaxLayer
-        offset={3}
+        offset={2.7}
         speed={0}
         className="h-screen flex flex-col justify-end px-2"
       >
-        <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
-          <div className="col-span-10 md:col-span-11" />
-          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(2)}>
-            <IoIosArrowUp className="text-4xl text-slate-700 dark:text-sky-300 animate-bounce" />
-          </div>
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 drop-shadow-xl ${transition}`}>
+          Skills
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6">
+          <div className="bg-black rounded-xl p-2">01</div>
+          <div className="bg-black rounded-xl p-2">02</div>
+          <div className="bg-black rounded-xl p-2">03</div>
+          <div className="col-span-2 rounded-xl bg-black p-2">04</div>
+          <div className="bg-black rounded-xl p-2">05</div>
+          <div className="bg-black rounded-xl p-2">06</div>
+          <div className="col-span-2 rounded-xl bg-black p-2">07</div>
+          <div className="bg-black rounded-xl p-2">08</div>
+          <div className="bg-black rounded-xl p-2">09</div>
+          <div className="bg-black rounded-xl p-2">10</div>
         </div>
-        <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
-          <div className="col-span-10 md:col-span-11" />
-          <div className="col-span-2 md:col-span-1 cursor-pointer" onClick={() => parallax.current.scrollTo(4)}>
-            <IoIosArrowDown className="text-4xl text-slate-700 dark:text-sky-300 animate-bounce" />
-          </div>
+      </ParallaxLayer>
+    </>
+  )
+}
+
+const Contact = (parallax: React.MutableRefObject<IParallax>) => {
+  return (
+    <>
+      <ParallaxLayer
+        offset={4}
+        speed={1}
+        className="bg-gradient-to-bl from-transparent bg-orange-900 dark:bg-zinc-900 bg-opacity-20 dark:bg-opacity-50 h-screen flex flex-col justify-center px-2"
+        onClick={() => parallax.current.scrollTo(0)}
+      />
+      <ParallaxLayer
+        offset={3.5}
+        speed={0}
+        className="h-screen flex flex-col justify-end px-2"
+        onClick={() => parallax.current.scrollTo(0)}
+      >
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 drop-shadow-xl ${transition}`}>
+          Contact
+        </p>
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-5">
+          <div className="bg-black rounded-xl p-2">01</div>
+          <div className="bg-black rounded-xl p-2">02</div>
+          <div className="bg-black rounded-xl p-2">03</div>
+          <div className="col-span-2 rounded-xl bg-black p-2">04</div>
+          <div className="bg-black rounded-xl p-2">05</div>
+          <div className="bg-black rounded-xl p-2">06</div>
+          <div className="col-span-2 rounded-xl bg-black p-2">07</div>
+          <div className="bg-black rounded-xl p-2">08</div>
+          <div className="bg-black rounded-xl p-2">09</div>
+          <div className="bg-black rounded-xl p-2">10</div>
         </div>
       </ParallaxLayer>
     </>

@@ -31,12 +31,12 @@ const Project = ({ owner, name }: Props) => {
           </a>}
         </div>
         <h2 className="text-xs lg:text-lg text-amber-800 dark:text-orange-300 font-medium animate-pulse">{owner}</h2>
-        <h1 className="text-md lg:text-2xl text-slate-800 dark:text-sky-300 font-bold uppercase">
+        <h1 className="text-md lg:text-xl text-slate-800 dark:text-sky-300 font-bold uppercase">
           {name.replace(/[-_.]/g, ' ')}
         </h1>
         {/* <img className="w-32 h-32 rounded-xl mx-auto mt-4" src={`${project.owner?.avatar_url}&s=64`} alt="avatar" /> */}
         <p className="text-sm lg:text-xl text-slate-700 dark:text-sky-100 mt-2">
-          {project?.description.length > 40 ? `${project?.description.slice(0, 40)}...` : project?.description}
+          {project?.description.length > 30 ? `${project?.description.slice(0, 30)}...` : project?.description}
         </p>
         <div className='flex flex-row flex-wrap justify-center text-center md:text-left mt-2 cursor-pointer'>
           <ProgrammingLang size={18} color='text-sky-500' programmingLang={['go', 'golang']} project={project} Icon={SiGo} />
