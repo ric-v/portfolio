@@ -1,48 +1,26 @@
-import { json } from "@remix-run/node"; // or cloudflare/deno
-import { Link, useLoaderData } from "@remix-run/react";
-import AppLayout from "~/components/layouts/AppLayout";
+import { useContext } from 'react'
+import AppLayout from '~/components/layouts/AppLayout';
+import Project from '~/components/Project';
+import { ghContext } from '~/github-api/auth';
 
-// Import all your posts from the app/routes/posts directory. Since these are
-// regular route modules, they will all be available for individual viewing
-// at /posts/a, for example.
-import * as postA from "./a.mdx";
-import * as postB from "./b.md";
-import * as postC from "./c.md";
+type Props = {}
 
-function postFromModule(mod: typeof postA) {
-  return {
-    slug: mod.filename.replace(/\.mdx?$/, ""),
-    ...mod.attributes.meta,
-  };
-}
-
-export async function loader() {
-  // Return metadata about each of the posts for display on the index page.
-  // Referencing the posts here instead of in the Index component down below
-  // lets us avoid bundling the actual posts themselves in the bundle for the
-  // index page.
-  return json([
-    postFromModule(postA),
-    postFromModule(postB),
-    postFromModule(postC),
-  ]);
-}
-
-export default function Index() {
-  const posts = useLoaderData();
+const Index = (props: Props) => {
+  const projects = useContext(ghContext)
 
   return (
     <AppLayout>
-      <ul>
-        {posts.map((post: any) => (
-          <li key={post.slug}>
-            <Link to={post.slug}>{post.title}</Link>
-            {post.description ? (
-              <p>{post.description}</p>
-            ) : null}
-          </li>
+      <div className="flex flex-col justify-center items-center mt-24 mb-10">
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-sky-300">Projects</h1>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-scroll scrollbar-none">
+        {projects.data.map((project: GithubRepoType, index: number) => (
+          (!project?.fork) && <Project owner={project?.owner?.login} name={project?.name} key={index} />
         ))}
-      </ul>
+      </div>
     </AppLayout>
-  );
+  )
 }
+
+export default Index;

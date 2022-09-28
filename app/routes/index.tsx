@@ -13,13 +13,13 @@ import { Link } from "react-router-dom";
 
 type Props = {};
 
-const Me = (props: Props) => {
+const Index = (props: Props) => {
   const parallax = useRef<IParallax>(null!);
 
   return (
     <AppLayout>
       <Parallax ref={parallax} pages={5} className="scrollbar-none">
-        {/* {Intro(parallax)} */}
+        {Intro(parallax)}
 
         {Experience(parallax)}
 
@@ -51,7 +51,7 @@ const Me = (props: Props) => {
   );
 };
 
-export default Me;
+export default Index;
 
 const Intro = (parallax: React.MutableRefObject<IParallax>) => {
   return (
@@ -209,13 +209,13 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
   return (
     <>
       <ParallaxLayer
-        offset={0}
+        offset={2.1}
         speed={0}
         className="bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-30 h-screen flex flex-col justify-center px-2"
       // onClick={() => parallax.current.scrollTo(3)}
       />
       <ParallaxLayer
-        offset={0}
+        offset={2}
         speed={0}
         className="h-screen flex flex-col justify-center px-2"
       // onClick={() => parallax.current.scrollTo(3)}
@@ -229,6 +229,7 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
           <Project owner='ric-v' name='divulge-keyvalue-db-ui' />
           <Project owner='ric-v' name='go-func-collections' />
         </div>
+        <a href="https://docs.github.com/en/rest" target={'_blank'} rel='noreferrer' className={`text-slate-500 hover:text-amber-100 ${transition}`}>*data is pulled with github api, click to know more</a>
         <div className='text-center mt-10 animate-bounce text-slate-700 dark:text-sky-300' >
           <Link to={"/projects"}>
             {'click to see more projects'}
