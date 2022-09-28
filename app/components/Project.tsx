@@ -34,7 +34,7 @@ const Project = ({ owner, name }: Props) => {
       {expand && (
         <>
           <div className='fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center z-50 backdrop-blur-2xl backdrop-brightness-90'>
-            <div className='rounded-2xl p-2 md:p-10 mt-20 overflow-y-scroll scrollbar-thin'>
+            <div className='rounded-2xl w-full md:w-1/2 p-2 md:p-10 mt-20 overflow-y-scroll scrollbar-thin'>
               <div className='text-center'>
                 <div className='text-md md:text-xl text-amber-800 dark:text-orange-300 animate-pulse'>
                   {owner}
@@ -70,27 +70,27 @@ const Project = ({ owner, name }: Props) => {
                 ))}
               </div>
               <div className='flex flex-row flex-wrap justify-center text-center md:text-left mt-2'>
-                {(findLang('go') || findLang('golang')) && (<SiGo size={32} className='mx-2' />)}
-                {(findLang('node')) && (<SiNodedotjs size={32} className='mx-2' />)}
-                {(findLang('php')) && (<SiPhp size={32} className='mx-2' />)}
-                {(findLang('ts') || findLang('typescript')) && (<SiTypescript size={32} className='mx-2' />)}
-                {(findLang('js') || findLang('javascript')) && (<SiJavascript size={32} className='mx-2' />)}
-                {(findLang('react')) && (<SiReact size={32} className='mx-2' />)}
-                {(findLang('nextjs')) && (<SiNextdotjs size={32} className='mx-2' />)}
-                {(findLang('redux')) && (<SiRedux size={32} className='mx-2' />)}
-                {(findLang('mui') || findLang('material')) && (<SiMaterialui size={32} className='mx-2' />)}
-                {(findLang('tailwind')) && (<SiTailwindcss size={32} className='mx-2' />)}
-                {(findLang('html')) && (<SiHtml5 size={32} className='mx-2' />)}
-                {(findLang('css')) && (<SiCsswizardry size={32} className='mx-2' />)}
-                {(findLang('graphql') || findLang('gql')) && (<SiGraphql size={32} className='mx-2' />)}
-                {(findLang('rest') || findLang('http')) && (<MdHttp size={32} className='mx-2' />)}
-                {(findLang('python')) && (<SiPython size={32} className='mx-2' />)}
-                {(findLang('dart')) && (<SiDart size={32} className='mx-2' />)}
-                {(findLang('flutter')) && (<SiFlutter size={32} className='mx-2' />)}
-                {(findLang('postgres') || findLang('pgsql') || (findLang('pl/pgsql'))) && (<SiPostgresql size={32} className='mx-2' />)}
-                {(findLang('mysql')) && (<SiMysql size={32} className='mx-2' />)}
-                {(findLang('mongo')) && (<SiMongodb size={32} className='mx-2' />)}
-                {(findLang('linux') || findLang('terminal') || findLang('shell') || findLang('bash')) && (<HiTerminal size={32} className='mx-2' />)}
+                {(findLang('go') || findLang('golang')) && (<SiGo size={32} className={`mx-2 hover:scale-125 hover:text-sky-500 ${transition}`} />)}
+                {(findLang('node')) && (<SiNodedotjs size={32} className={`mx-2 hover:scale-125 hover:text-green-600 ${transition}`} />)}
+                {(findLang('php')) && (<SiPhp size={32} className={`mx-2 hover:scale-125 hover:text-indigo-500 ${transition}`} />)}
+                {(findLang('ts') || findLang('typescript')) && (<SiTypescript size={32} className={`mx-2 hover:scale-125 hover:text-blue-700 ${transition}`} />)}
+                {(findLang('js') || findLang('javascript')) && (<SiJavascript size={32} className={`mx-2 hover:scale-125 hover:text-yellow-500 ${transition}`} />)}
+                {(findLang('react')) && (<SiReact size={32} className={`mx-2 hover:scale-125 hover:text-cyan-700 ${transition}`} />)}
+                {(findLang('nextjs')) && (<SiNextdotjs size={32} className={`mx-2 hover:scale-125 hover:text-black ${transition}`} />)}
+                {(findLang('redux')) && (<SiRedux size={32} className={`mx-2 hover:scale-125 hover:text-purple-700 ${transition}`} />)}
+                {(findLang('mui') || findLang('material')) && (<SiMaterialui size={32} className={`mx-2 hover:scale-125 hover:text-sky-500 ${transition}`} />)}
+                {(findLang('tailwind')) && (<SiTailwindcss size={32} className={`mx-2 hover:scale-125 hover:text-sky-600 ${transition}`} />)}
+                {(findLang('html')) && (<SiHtml5 size={32} className={`mx-2 hover:scale-125 hover:text-orange-600 ${transition}`} />)}
+                {(findLang('css')) && (<SiCsswizardry size={32} className={`mx-2 hover:scale-125 hover:text-yellow-400 ${transition}`} />)}
+                {(findLang('graphql') || findLang('gql')) && (<SiGraphql size={32} className={`mx-2 hover:scale-125 hover:text-rose-500 ${transition}`} />)}
+                {(findLang('rest') || findLang('http')) && (<MdHttp size={32} className={`mx-2 hover:scale-125 hover:text-black ${transition}`} />)}
+                {(findLang('python')) && (<SiPython size={32} className={`mx-2 hover:scale-125 hover:text-emerald-600 ${transition}`} />)}
+                {(findLang('dart')) && (<SiDart size={32} className={`mx-2 hover:scale-125 hover:text-cyan-700 ${transition}`} />)}
+                {(findLang('flutter')) && (<SiFlutter size={32} className={`mx-2 hover:scale-125 hover:text-blue-600 ${transition}`} />)}
+                {(findLang('postgres') || findLang('pgsql') || (findLang('pl/pgsql'))) && (<SiPostgresql size={32} className={`mx-2 hover:scale-125 hover:text-blue-700 ${transition}`} />)}
+                {(findLang('mysql')) && (<SiMysql size={32} className={`mx-2 hover:scale-125 hover:text-blue-800 ${transition}`} />)}
+                {(findLang('mongo')) && (<SiMongodb size={32} className={`mx-2 hover:scale-125 hover:text-emerald-700 ${transition}`} />)}
+                {(findLang('linux') || findLang('terminal') || findLang('shell') || findLang('bash')) && (<HiTerminal size={32} className={`mx-2 hover:scale-125 hover:text-black ${transition}`} />)}
               </div>
             </div>
             <button className={`px-3 py-3 rounded-full hover:backdrop-brightness-50 hover:scale-110 hover:bg-black hover:bg-opacity-40 animate-pulse hover:animate-none ${transition}`} onClick={() => setExpand(false)}>
