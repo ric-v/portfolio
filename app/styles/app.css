@@ -2,20 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-.dark-mode-shadow {
-  border-radius: 50px;
-  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-}
+@layer components {
+  .dark-mode-shadow {
+    border-radius: 50px;
+    box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  }
 
-.light-mode-shadow {
-  border-radius: 50px;
-  box-shadow: 20px 20px 60px #c1b66a, -20px -20px 60px #fff690;
-}
+  .light-mode-shadow {
+    border-radius: 50px;
+    box-shadow: 20px 20px 60px #c1b66a, -20px -20px 60px #fff690;
+  }
 
-.neumorphic-shadow {
-  border-radius: 50px;
-  background: #e0e0e0;
-  box-shadow: 20px 20px 43px rgb(137, 162, 171, 0.6), -20px -20px 43px #ffffff;
+  .neumorphic-shadow {
+    border-radius: 50px;
+    box-shadow: 20px 20px 60px #172f46, -20px -20px 60px #1f3f5e;
+  }
 }
 
 .bg {
