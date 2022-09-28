@@ -31,11 +31,11 @@ const Timeline = ({ duration, title, company, companyLink, domain, desc, childre
           <div className='text-sm sm:text-md md:text-lg text-slate-800 dark:text-sky-300'>
             Domain: {domain}
           </div>
-          <div className='text-sm sm:text-md md:text-lg text-slate-600 dark:text-slate-300'>
+          {/* <div className='text-sm sm:text-md md:text-lg text-slate-600 dark:text-slate-300'>
             {desc.length > 30 ? `${desc.slice(0, 30)}...` : desc}
             <br />
-            <span className={`text-xs cursor-pointer hover:text-sky-500 ${transition}`}>{'click to expand'}</span>
-          </div>
+          </div> */}
+          <span className={`text-xs cursor-pointer hover:text-sky-500 animate-bounce ${transition}`}>{'click to expand'}</span>
         </div>
       </div>
 

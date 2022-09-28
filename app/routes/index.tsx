@@ -30,7 +30,7 @@ const Index = (props: Props) => {
         <ParallaxLayer
           offset={4}
           speed={0}
-          className="bg-orange-900 dark:bg-zinc-900 bg-opacity-50 dark:bg-opacity-50 h-screen flex flex-col justify-center px-2"
+          className="bg-gradient-to-bl from-transparent bg-orange-900 dark:bg-zinc-900 bg-opacity-20 dark:bg-opacity-50 h-screen flex flex-col justify-center px-2"
           onClick={() => parallax.current.scrollTo(0)}
         >
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-5">
@@ -59,7 +59,7 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
       <ParallaxLayer
         offset={0}
         speed={1}
-        className="bg-amber-400 dark:bg-sky-500 bg-opacity-10 dark:bg-opacity-10 h-screen flex flex-col justify-center px-2"
+        className="bg-gradient-to-bl from-transparent bg-amber-400 dark:bg-sky-500 bg-opacity-10 dark:bg-opacity-10 h-screen flex flex-col justify-center px-2"
       />
       <ParallaxLayer
         offset={-0.1}
@@ -118,8 +118,8 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
     <>
       <ParallaxLayer
         offset={1}
-        speed={0}
-        className="bg-sky-200 dark:bg-sky-700 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
+        speed={1}
+        className="bg-gradient-to-bl from-transparent bg-sky-200 dark:bg-sky-700 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
         onClick={() => parallax.current.scrollTo(2)}
       />
       <ParallaxLayer
@@ -209,8 +209,8 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
     <>
       <ParallaxLayer
         offset={2}
-        speed={0}
-        className="bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-30 h-screen flex flex-col justify-center px-2"
+        speed={1}
+        className="bg-gradient-to-bl from-transparent bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
       />
       <ParallaxLayer
         offset={2}
@@ -220,7 +220,7 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
         <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 ${transition}`}>
           Projects
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6">
           <Project owner="dev-asterix" name='and-the-time-is' />
           <Project owner='ric-v' name='glog' />
           <Project owner='ric-v' name='divulge-keyvalue-db-ui' />
@@ -242,7 +242,7 @@ const Skills = (parallax: React.MutableRefObject<IParallax>) => {
       <ParallaxLayer
         offset={3}
         speed={0}
-        className="bg-sky-700 dark:bg-slate-700 bg-opacity-20 dark:bg-opacity-40 h-screen flex flex-col justify-center px-2"
+        className="bg-gradient-to-bl from-transparent bg-orange-600 dark:bg-zinc-900 bg-opacity-10 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
         onClick={() => parallax.current.scrollTo(4)}
       />
       <ParallaxLayer

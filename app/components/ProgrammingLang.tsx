@@ -20,7 +20,7 @@ const ProgrammingLang = ({ size, color, programmingLang, project, Icon }: Props)
   }
 
   return (
-    <>{findLang(programmingLang) && <Icon size={size} className={`mx-2 hover:scale-125 hover:${color} transition-all duration-500`} />}</>
+    <>{findLang(programmingLang) && <Icon size={size} className={`mx-2 drop-shadow-xl text-slate-500 hover:scale-125 hover:${color} transition-all duration-500`} />}</>
   )
 }
 
