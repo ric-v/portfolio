@@ -60,17 +60,16 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
         offset={0}
         speed={1}
         className="bg-amber-400 dark:bg-sky-500 bg-opacity-10 dark:bg-opacity-10 h-screen flex flex-col justify-center px-2"
-      // onClick={() => parallax.current.scrollTo(1)}
       />
       <ParallaxLayer
         offset={-0.1}
         speed={0}
         className="h-screen flex flex-col justify-center px-2"
-      // onClick={() => parallax.current.scrollTo(1)}
       >
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
           <div className="col-span-3 h-20 md:col-span-2" />
           <div className="col-span-3 md:col-span-2 bg-amber-400 dark:bg-sky-500 bg-opacity-10 dark:bg-opacity-10 h-64 rounded-3xl backdrop-blur-sm shadow-2xl -rotate-6 m-5">
+            <img src="https://avatars.githubusercontent.com/u/20295778?v=4" alt="profile" className={`rounded-full w-36 h-36 absolute -top-20 -left-10 z-50 drop-shadow-xl grayscale border border-slate-400 border-spacing-16 border-8 opacity-90 `} />
             <div className="h-full w-full flex flex-col justify-center items-center">
               <div className="text-xl md:text-3xl font-medium text-center text-slate-700 dark:text-sky-300">
                 Hi, this is <span className="font-bold">Richie</span> 👋, a <span className={`font-bold`}>Full Stack Engineer</span> from Bengaluru, India.
@@ -209,27 +208,24 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
   return (
     <>
       <ParallaxLayer
-        offset={2.1}
+        offset={2}
         speed={0}
         className="bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-30 h-screen flex flex-col justify-center px-2"
-      // onClick={() => parallax.current.scrollTo(3)}
       />
       <ParallaxLayer
         offset={2}
         speed={0}
         className="h-screen flex flex-col justify-center px-2"
-      // onClick={() => parallax.current.scrollTo(3)}
       >
         <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 ${transition}`}>
           Projects
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <Project owner="dev-asterix" name='and-the-time-is.web' />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Project owner="dev-asterix" name='and-the-time-is' />
           <Project owner='ric-v' name='glog' />
           <Project owner='ric-v' name='divulge-keyvalue-db-ui' />
-          <Project owner='ric-v' name='go-func-collections' />
         </div>
-        <a href="https://docs.github.com/en/rest" target={'_blank'} rel='noreferrer' className={`text-slate-500 hover:text-amber-100 ${transition}`}>*data is pulled with github api, click to know more</a>
+        <a href="https://docs.github.com/en/rest" target={'_blank'} rel='noreferrer' className={`text-xs text-slate-500 hover:text-amber-100 ${transition}`}>*Projects data are pulled live from github api, click to know more</a>
         <div className='text-center mt-10 animate-bounce text-slate-700 dark:text-sky-300' >
           <Link to={"/projects"}>
             {'click to see more projects'}
@@ -250,7 +246,7 @@ const Skills = (parallax: React.MutableRefObject<IParallax>) => {
         onClick={() => parallax.current.scrollTo(4)}
       />
       <ParallaxLayer
-        offset={2.9}
+        offset={3}
         speed={0}
         className="h-screen flex flex-col justify-center px-2"
         onClick={() => parallax.current.scrollTo(4)}
@@ -261,7 +257,7 @@ const Skills = (parallax: React.MutableRefObject<IParallax>) => {
         </div>
       </ParallaxLayer>
       <ParallaxLayer
-        offset={2.9}
+        offset={3}
         speed={0}
         className="h-screen flex flex-col justify-end px-2"
       >

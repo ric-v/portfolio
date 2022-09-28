@@ -12,7 +12,6 @@ type Props = {
 const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
-
   return (
     <>
       {/* <animated.div className={`${!isOpen && 'hidden'} h-screen w-screen backdrop-brightness-90 backdrop-blur-md ${transition}`}></animated.div> */}
@@ -36,8 +35,7 @@ const FloatingActionBar = ({ enableStarLight, setEnableStarLight }: Props) => {
             <div className={`absolute bottom-16 right-10 w-56 text-xl bg-slate-100 dark:bg-slate-700 rounded-lg shadow-lg p-5`}>
               <div className='flex flex-col justify-between'>
                 <Link to='/' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Home</Link>
-                <Link to='/me' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>About</Link>
-                <Link to='/contact' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Contact</Link>
+                <Link to='/projects' className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1'>Projects</Link>
                 <p className='text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:dark:text-gray-50 p-1' onClick={() => {
                   setEnableStarLight(!enableStarLight);
                   localStorage.setItem('enableStarLight', (!enableStarLight).toString());
