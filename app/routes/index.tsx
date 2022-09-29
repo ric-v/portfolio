@@ -1,15 +1,16 @@
 import AppLayout from "~/components/layouts/AppLayout";
 import type { IParallax } from "@react-spring/parallax";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { VscGithubInverted } from "react-icons/vsc";
 import { GrLinkedinOption } from 'react-icons/gr';
 import { AiFillFilePdf } from 'react-icons/ai';
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import { transition } from "~/theme/animate";
 import Timeline from "~/components/Timeline";
 import Project from "~/components/Project";
 import { Link } from "react-router-dom";
+import Contributions from "~/components/Contributions";
+import { HiChevronDoubleDown } from 'react-icons/hi';
 
 type Props = {};
 
@@ -44,7 +45,7 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
         className="bg-gradient-to-bl from-transparent bg-amber-400 dark:bg-sky-500 bg-opacity-10 dark:bg-opacity-10 h-screen flex flex-col justify-center px-2"
       />
       <ParallaxLayer
-        offset={-0.1}
+        offset={-0.05}
         speed={0}
         className="h-screen flex flex-col justify-center px-2"
       >
@@ -62,9 +63,8 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
       </ParallaxLayer>
       <ParallaxLayer
         offset={0.3}
-        speed={2}
+        speed={1.4}
         className="flex flex-col justify-center px-2"
-      // onClick={() => parallax.current.scrollTo(1)}
       >
         <div className="grid grid-cols-3 md:grid-cols-5 gap-4 text-lg font-bold">
           <div className="col-span-3 md:col-span-1" />
@@ -90,6 +90,9 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
             <AiFillFilePdf size={32} className='drop-shadow-xl' />
           </a>
         </div>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(3)}>
+          <HiChevronDoubleDown size={32} />
+        </div>
       </ParallaxLayer>
     </>
   )
@@ -100,14 +103,14 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
     <>
       <ParallaxLayer
         offset={1}
-        speed={1}
+        speed={0.3}
         className="bg-gradient-to-bl from-transparent bg-sky-200 dark:bg-sky-700 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
         onClick={() => parallax.current.scrollTo(2)}
       />
       <ParallaxLayer
-        offset={0.9}
-        speed={0}
-        className="h-screen flex flex-col justify-center mt-28 px-2"
+        offset={1}
+        speed={1}
+        className="h-screen flex flex-col justify-center mt-22 px-2"
       >
         <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none drop-shadow-xl ${transition}`}>
           Work Experience
@@ -125,8 +128,7 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
             key='1'
           >
             <>
-              <p className="text-xl md:text-3xl mt-2 text-slate-800 dark:text-sky-300">Major roles played and contributions</p>
-              <ul className="text-sm md:text-lg list-disc text-slate-700 dark:text-slate-300 mt-2">
+              <Contributions>
                 <li>Senior back-end developer, system administrator and SCM</li>
                 <li>Assisted in solution design and architecture</li>
                 <li>Microservice based server development in GO and Python</li>
@@ -135,7 +137,7 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
                 <li>Byte-code engineering experience in Java (ASM) for high volume and dynamic data manipulation</li>
                 <li>Technical designing and functional documentation of developed products</li>
                 <li>Technical demo with customers and experience in deploying products at customer’s end</li>
-              </ul>
+              </Contributions>
             </>
           </Timeline>
 
@@ -149,12 +151,11 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
             key='2'
           >
             <>
-              <p className="text-xl md:text-3xl mt-2 text-slate-800 dark:text-sky-300">Major roles played and contributions</p>
-              <ul className="list-disc text-sm md:text-lg text-slate-700 dark:text-slate-300 mt-2">
+              <Contributions>
                 <li>Golang developer working on socket connection based micro-services for claim processing</li>
                 <li>Worked with the team to integrate SQL functions and logic with processing engine</li>
                 <li>Did POC with team to add server logging and tracing with Prometheus</li>
-              </ul>
+              </Contributions>
             </>
           </Timeline>
 
@@ -168,8 +169,7 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
             key='3'
           >
             <>
-              <p className="text-xl md:text-3xl mt-2 text-slate-800 dark:text-sky-300">Major roles played and contributions</p>
-              <ul className="list-disc text-sm md:text-lg text-slate-700 dark:text-slate-300 mt-2">
+              <Contributions>
                 <li>Senior Golang developer working on multiple REST API based services for product/external switch integration and on concurrent processing engine in micro-service architecture based on socket programming</li>
                 <li>Built unit test for each functionalities in all services for better code coverage and initial testing for devs</li>
                 <li>Built internal Golang modules/packages on azure git to be shared between multiple services</li>
@@ -177,9 +177,12 @@ const Experience = (parallax: React.MutableRefObject<IParallax>) => {
                 <li>Product dockerization and its deployment implemented with team members</li>
                 <li>Postgres PL/pgSQL based stored procedures built for efficient and modularized queries for processing claims / statistics</li>
                 <li>Microsoft Azure cloud skills developed with the help of team members for managing cloud infra</li>
-              </ul>
+              </Contributions>
             </>
           </Timeline>
+        </div>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(2)}>
+          <HiChevronDoubleDown size={32} />
         </div>
       </ParallaxLayer>
     </>
@@ -191,12 +194,12 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
     <>
       <ParallaxLayer
         offset={2}
-        speed={1}
+        speed={0.3}
         className="bg-gradient-to-bl from-transparent bg-sky-500 dark:bg-sky-900 bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
       />
       <ParallaxLayer
-        offset={1.9}
-        speed={0}
+        offset={2}
+        speed={1}
         className="h-screen flex flex-col justify-center px-2"
       >
         <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 drop-shadow-xl ${transition}`}>
@@ -213,6 +216,9 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
             {'click to see more projects'}
           </Link>
         </div>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(3)}>
+          <HiChevronDoubleDown size={32} />
+        </div>
       </ParallaxLayer>
     </>
   )
@@ -223,16 +229,16 @@ const Skills = (parallax: React.MutableRefObject<IParallax>) => {
     <>
       <ParallaxLayer
         offset={3}
-        speed={1}
+        speed={0.3}
         className="bg-gradient-to-bl from-transparent bg-orange-600 dark:bg-zinc-900 bg-opacity-10 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
         onClick={() => parallax.current.scrollTo(4)}
       />
       <ParallaxLayer
-        offset={2.7}
-        speed={0}
+        offset={3}
+        speed={1}
         className="h-screen flex flex-col justify-end px-2"
       >
-        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 drop-shadow-xl ${transition}`}>
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none drop-shadow-xl ${transition}`}>
           Skills
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6">
@@ -247,6 +253,9 @@ const Skills = (parallax: React.MutableRefObject<IParallax>) => {
           <div className="bg-black rounded-xl p-2">09</div>
           <div className="bg-black rounded-xl p-2">10</div>
         </div>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(4)}>
+          <HiChevronDoubleDown size={32} />
+        </div>
       </ParallaxLayer>
     </>
   )
@@ -257,17 +266,17 @@ const Contact = (parallax: React.MutableRefObject<IParallax>) => {
     <>
       <ParallaxLayer
         offset={4}
-        speed={1}
+        speed={0.3}
         className="bg-gradient-to-bl from-transparent bg-orange-900 dark:bg-zinc-900 bg-opacity-20 dark:bg-opacity-50 h-screen flex flex-col justify-center px-2"
         onClick={() => parallax.current.scrollTo(0)}
       />
       <ParallaxLayer
-        offset={3.5}
-        speed={0}
+        offset={4}
+        speed={0.5}
         className="h-screen flex flex-col justify-end px-2"
         onClick={() => parallax.current.scrollTo(0)}
       >
-        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none mt-24 drop-shadow-xl ${transition}`}>
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none drop-shadow-xl ${transition}`}>
           Contact
         </p>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-5">
@@ -281,6 +290,9 @@ const Contact = (parallax: React.MutableRefObject<IParallax>) => {
           <div className="bg-black rounded-xl p-2">08</div>
           <div className="bg-black rounded-xl p-2">09</div>
           <div className="bg-black rounded-xl p-2">10</div>
+        </div>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(0)}>
+          <HiChevronDoubleDown size={32} />
         </div>
       </ParallaxLayer>
     </>

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { transition } from '~/theme/animate'
-import { IoCloseSharp } from 'react-icons/io5'
 import { ghContext } from '~/github-api/auth'
 import { VscGlobe } from 'react-icons/vsc'
 import { FaGithub } from 'react-icons/fa'
@@ -23,10 +22,10 @@ const Project = ({ owner, name }: Props) => {
     <>
       <div className={`rounded-2xl text-center p-2 md:p-5 backdrop-blur-sm backdrop-brightness-95 hover:backdrop-brightness-75 cursor-pointer ${transition}`} onClick={() => setExpand(true)}>
         <div className={`flex flex-row justify-center my-5 absolute top-0 right-0 opacity-30 hover:opacity-100`}>
-          <a href={project?.html_url} target='_blank' rel='noreferrer' className={` text-slate-700 drop-shadow-xl hover:text-slate-900 dark:text-sky-200 hover:dark:text-sky-400 hover:scale-110 mt-2 mx-2 ${transition}`} onClick={() => setExpand(false)}>
+          <a href={project?.html_url} target='_blank' rel='noreferrer' className={` text-slate-700 drop-shadow-xl hover:text-slate-900 dark:text-sky-200 hover:dark:text-sky-400 hover:scale-110 mt-2 mx-2 ${transition}`}>
             <FaGithub size={28} />
           </a>
-          {project?.homepage && <a href={project?.homepage} target='_blank' rel='noreferrer' className={` text-slate-700 drop-shadow-xl hover:text-slate-900 dark:text-sky-200 hover:dark:text-sky-400 hover:scale-110 mt-2 mx-2 ${transition}`} onClick={() => setExpand(false)}>
+          {project?.homepage && <a href={project?.homepage} target='_blank' rel='noreferrer' className={` text-slate-700 drop-shadow-xl hover:text-slate-900 dark:text-sky-200 hover:dark:text-sky-400 hover:scale-110 mt-2 mx-2 ${transition}`}>
             <VscGlobe size={28} />
           </a>}
         </div>
@@ -66,7 +65,7 @@ const Project = ({ owner, name }: Props) => {
 
       {expand && (
         <>
-          <div className='fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center z-50 backdrop-blur-2xl backdrop-brightness-90'>
+          <div className='fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center z-50 backdrop-blur-2xl backdrop-brightness-90' onClick={() => setExpand(false)}>
             <div className='rounded-2xl w-full md:w-1/2 p-2 md:p-10 mt-20 overflow-y-scroll scrollbar-thin'>
               <div className='text-center'>
                 <div className='text-md md:text-xl text-amber-800 dark:text-orange-300 animate-pulse'>
@@ -120,9 +119,6 @@ const Project = ({ owner, name }: Props) => {
                 <ProgrammingLang size={32} color={'text-black'} programmingLang={['linux', 'terminal', 'shell', 'bash']} project={project} Icon={HiTerminal} />
               </div>
             </div>
-            <button className={`px-3 py-3 rounded-full hover:backdrop-brightness-50 hover:scale-110 hover:bg-black hover:bg-opacity-40 animate-pulse hover:animate-none ${transition}`} onClick={() => setExpand(false)}>
-              <IoCloseSharp size={32} />
-            </button>
           </div>
         </>
       )}
