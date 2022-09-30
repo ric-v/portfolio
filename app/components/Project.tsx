@@ -3,10 +3,7 @@ import { transition } from '~/theme/animate'
 import { ghContext } from '~/github-api/auth'
 import { VscGlobe } from 'react-icons/vsc'
 import { FaGithub } from 'react-icons/fa'
-import { MdHttp } from 'react-icons/md'
-import { HiTerminal } from 'react-icons/hi'
-import { SiGo, SiTypescript, SiNextdotjs, SiMaterialui, SiJavascript, SiTailwindcss, SiCsswizardry, SiReact, SiRedux, SiDart, SiFlutter, SiPostgresql, SiMysql, SiGraphql, SiNodedotjs, SiHtml5, SiPhp, SiPython, SiMongodb, SiRust } from 'react-icons/si'
-import ProgrammingLang from './ProgrammingLang'
+import ProgrammingLanguages from './ProgrammingLanguages'
 
 type Props = {
   owner: string
@@ -38,28 +35,9 @@ const Project = ({ owner, name }: Props) => {
           {project?.description.length > 30 ? `${project?.description.slice(0, 30)}...` : project?.description}
         </p>
         <div className='flex flex-row flex-wrap justify-center text-center md:text-left mt-2 cursor-pointer'>
-          <ProgrammingLang size={18} color='text-sky-500' programmingLang={['go', 'golang']} project={project} Icon={SiGo} />
-          <ProgrammingLang size={18} color='text-indigo-500' programmingLang={['php']} project={project} Icon={SiPhp} />
-          <ProgrammingLang size={18} color='text-green-600' programmingLang={['node']} project={project} Icon={SiNodedotjs} />
-          <ProgrammingLang size={18} color='text-blue-700' programmingLang={['typescript', 'ts']} project={project} Icon={SiTypescript} />
-          <ProgrammingLang size={18} color='text-yellow-500' programmingLang={['javascript', 'js']} project={project} Icon={SiJavascript} />
-          <ProgrammingLang size={18} color='text-cyan-700' programmingLang={['react']} project={project} Icon={SiReact} />
-          <ProgrammingLang size={18} color='text-black' programmingLang={['nextjs']} project={project} Icon={SiNextdotjs} />
-          <ProgrammingLang size={18} color='text-purple-700' programmingLang={['redux']} project={project} Icon={SiRedux} />
-          <ProgrammingLang size={18} color='text-sky-500' programmingLang={['mui', 'material']} project={project} Icon={SiMaterialui} />
-          <ProgrammingLang size={18} color='text-sky-600' programmingLang={['tailwind']} project={project} Icon={SiTailwindcss} />
-          <ProgrammingLang size={18} color='text-orange-600' programmingLang={['html']} project={project} Icon={SiHtml5} />
-          <ProgrammingLang size={18} color='text-yellow-400' programmingLang={['css']} project={project} Icon={SiCsswizardry} />
-          <ProgrammingLang size={18} color='text-rose-500' programmingLang={['graphql']} project={project} Icon={SiGraphql} />
-          <ProgrammingLang size={18} color='text-black' programmingLang={['rest', 'http']} project={project} Icon={MdHttp} />
-          <ProgrammingLang size={18} color='text-emerald-600' programmingLang={['python']} project={project} Icon={SiPython} />
-          <ProgrammingLang size={18} color='text-stone-600' programmingLang={['rust']} project={project} Icon={SiRust} />
-          <ProgrammingLang size={18} color='text-cyan-500' programmingLang={['dart']} project={project} Icon={SiDart} />
-          <ProgrammingLang size={18} color='text-cyan-600' programmingLang={['flutter']} project={project} Icon={SiFlutter} />
-          <ProgrammingLang size={18} color='text-blue-500' programmingLang={['postgres', 'pgsql', 'pl/pgsql']} project={project} Icon={SiPostgresql} />
-          <ProgrammingLang size={18} color='text-orange-500' programmingLang={['mysql']} project={project} Icon={SiMysql} />
-          <ProgrammingLang size={18} color='text-emerald-700' programmingLang={['mongo']} project={project} Icon={SiMongodb} />
-          <ProgrammingLang size={18} color='text-black' programmingLang={['linux', 'terminal', 'shell', 'bash']} project={project} Icon={HiTerminal} />
+          {project?.topics.map((topic: string) => (
+            <ProgrammingLanguages key={topic} size={22} topic={topic} />
+          ))}
         </div>
       </div>
 
@@ -95,28 +73,9 @@ const Project = ({ owner, name }: Props) => {
                 ))}
               </div>
               <div className='flex flex-row flex-wrap justify-center text-center md:text-left mt-2 cursor-pointer'>
-                <ProgrammingLang size={32} color={'text-sky-500'} programmingLang={['go', 'golang']} project={project} Icon={SiGo} />
-                <ProgrammingLang size={32} color={'text-indigo-500'} programmingLang={['php']} project={project} Icon={SiPhp} />
-                <ProgrammingLang size={32} color={'text-green-600'} programmingLang={['node']} project={project} Icon={SiNodedotjs} />
-                <ProgrammingLang size={32} color={'text-blue-700'} programmingLang={['typescript', 'ts']} project={project} Icon={SiTypescript} />
-                <ProgrammingLang size={32} color={'text-yellow-500'} programmingLang={['javascript', 'js']} project={project} Icon={SiJavascript} />
-                <ProgrammingLang size={32} color={'text-cyan-700'} programmingLang={['react']} project={project} Icon={SiReact} />
-                <ProgrammingLang size={32} color={'text-black'} programmingLang={['nextjs']} project={project} Icon={SiNextdotjs} />
-                <ProgrammingLang size={32} color={'text-purple-700'} programmingLang={['redux']} project={project} Icon={SiRedux} />
-                <ProgrammingLang size={32} color={'text-sky-500'} programmingLang={['mui', 'material']} project={project} Icon={SiMaterialui} />
-                <ProgrammingLang size={32} color={'text-sky-600'} programmingLang={['tailwind']} project={project} Icon={SiTailwindcss} />
-                <ProgrammingLang size={32} color={'text-orange-600'} programmingLang={['html']} project={project} Icon={SiHtml5} />
-                <ProgrammingLang size={32} color={'text-yellow-400'} programmingLang={['css']} project={project} Icon={SiCsswizardry} />
-                <ProgrammingLang size={32} color={'text-rose-500'} programmingLang={['graphql']} project={project} Icon={SiGraphql} />
-                <ProgrammingLang size={32} color={'text-black'} programmingLang={['rest', 'http']} project={project} Icon={MdHttp} />
-                <ProgrammingLang size={32} color={'text-emerald-600'} programmingLang={['python']} project={project} Icon={SiPython} />
-                <ProgrammingLang size={32} color={'text-stone-600'} programmingLang={['rust']} project={project} Icon={SiRust} />
-                <ProgrammingLang size={32} color={'text-cyan-500'} programmingLang={['dart']} project={project} Icon={SiDart} />
-                <ProgrammingLang size={32} color={'text-cyan-600'} programmingLang={['flutter']} project={project} Icon={SiFlutter} />
-                <ProgrammingLang size={32} color={'text-blue-500'} programmingLang={['postgres', 'pgsql', 'pl/pgsql']} project={project} Icon={SiPostgresql} />
-                <ProgrammingLang size={32} color={'text-orange-500'} programmingLang={['mysql']} project={project} Icon={SiMysql} />
-                <ProgrammingLang size={32} color={'text-emerald-700'} programmingLang={['mongo']} project={project} Icon={SiMongodb} />
-                <ProgrammingLang size={32} color={'text-black'} programmingLang={['linux', 'terminal', 'shell', 'bash']} project={project} Icon={HiTerminal} />
+                {project?.topics.map((topic: string) => (
+                  <ProgrammingLanguages key={topic} size={32} topic={topic} />
+                ))}
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import AppLayout from "~/components/layouts/AppLayout";
 import type { IParallax } from "@react-spring/parallax";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { VscGithubInverted } from "react-icons/vsc";
 import { GrLinkedinOption } from 'react-icons/gr';
 import { AiFillFilePdf } from 'react-icons/ai';
@@ -11,6 +11,9 @@ import Project from "~/components/Project";
 import { Link } from "react-router-dom";
 import Contributions from "~/components/Contributions";
 import { HiChevronDoubleDown } from 'react-icons/hi';
+import { ghContext } from "~/github-api/auth";
+import Skill from "~/components/Skill";
+import ProgrammingLanguages from "~/components/ProgrammingLanguages";
 
 type Props = {};
 
@@ -90,7 +93,7 @@ const Intro = (parallax: React.MutableRefObject<IParallax>) => {
             <AiFillFilePdf size={32} className='drop-shadow-xl' />
           </a>
         </div>
-        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(3)}>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(1)}>
           <HiChevronDoubleDown size={32} />
         </div>
       </ParallaxLayer>
@@ -216,7 +219,7 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
             {'click to see more projects'}
           </Link>
         </div>
-        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(3)}>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(3.15)}>
           <HiChevronDoubleDown size={32} />
         </div>
       </ParallaxLayer>
@@ -225,35 +228,33 @@ const Projects = (parallax: React.MutableRefObject<IParallax>) => {
 }
 
 const Skills = (parallax: React.MutableRefObject<IParallax>) => {
+  const projects = useContext(ghContext);
+  let skills = projects.data.reduce((acc: string[], curr: GithubRepoType) => {
+    acc.push(...curr.topics);
+    return acc;
+  }, []);
+  skills = [...new Set(skills)];
+
+  console.log(skills)
   return (
     <>
       <ParallaxLayer
-        offset={3}
+        offset={3.2}
         speed={0.3}
         className="bg-gradient-to-bl from-transparent bg-orange-600 dark:bg-zinc-900 bg-opacity-10 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2"
-        onClick={() => parallax.current.scrollTo(4)}
       />
       <ParallaxLayer
         offset={3}
         speed={1}
         className="h-screen flex flex-col justify-end px-2"
       >
-        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none drop-shadow-xl ${transition}`}>
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 mt-24 cursor-none drop-shadow-xl ${transition}`}>
           Skills
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6">
-          <div className="bg-black rounded-xl p-2">01</div>
-          <div className="bg-black rounded-xl p-2">02</div>
-          <div className="bg-black rounded-xl p-2">03</div>
-          <div className="col-span-2 rounded-xl bg-black p-2">04</div>
-          <div className="bg-black rounded-xl p-2">05</div>
-          <div className="bg-black rounded-xl p-2">06</div>
-          <div className="col-span-2 rounded-xl bg-black p-2">07</div>
-          <div className="bg-black rounded-xl p-2">08</div>
-          <div className="bg-black rounded-xl p-2">09</div>
-          <div className="bg-black rounded-xl p-2">10</div>
+        <div className="grid grid-cols-3 md:grid-cols-9 gap-1 gap-y-4 md:gap-6">
+          {skills.map((skill, i) => <ProgrammingLanguages key={i} size={24} topic={skill} showLabel={true} />)}
         </div>
-        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(4)}>
+        <div className="flex flex-row justify-center mt-5 animate-bounce cursor-pointer" onClick={() => parallax.current.scrollTo(4.2)}>
           <HiChevronDoubleDown size={32} />
         </div>
       </ParallaxLayer>
@@ -271,12 +272,12 @@ const Contact = (parallax: React.MutableRefObject<IParallax>) => {
         onClick={() => parallax.current.scrollTo(0)}
       />
       <ParallaxLayer
-        offset={4}
+        offset={4.05}
         speed={0.5}
         className="h-screen flex flex-col justify-end px-2"
         onClick={() => parallax.current.scrollTo(0)}
       >
-        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 cursor-none drop-shadow-xl ${transition}`}>
+        <p className={`text-2xl md:text-4xl font-bold text-center text-slate-700 dark:text-sky-300 mb-5 hover:scale-125 mt-24 cursor-none drop-shadow-xl ${transition}`}>
           Contact
         </p>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-5">

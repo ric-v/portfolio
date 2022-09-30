@@ -22,8 +22,8 @@ const Navbar = (props: Props) => {
           className="flex flex-row justify-between p-5"
         >
           <Link to='/'>
-            <h1 className="text-4xl md:text-5xl col-span-2 dark:text-gray-200 font-sans">
-              asterix.dev
+            <h1 className="text-2xl md:text-3xl col-span-2 dark:text-gray-200 font-sans">
+              Portfolio - Richie
             </h1>
           </Link>
           <button
