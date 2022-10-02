@@ -1,7 +1,7 @@
-import { animated } from "react-spring"
-import { useExpand, transition } from "~/theme/animate"
+import { animated } from "react-spring";
+import { useExpand, transition } from "~/theme/animate";
 
-type Props = {}
+type Props = {};
 
 const Footer = (props: Props) => {
   return (
@@ -11,7 +11,7 @@ const Footer = (props: Props) => {
     >
       Created by, Richie Varghese © 2022
     </animated.div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -8,9 +8,8 @@ export const useFadeIn = () => {
     to: { opacity: 1 },
     from: { opacity: 0 },
     immediate: true,
-  })
+  });
 };
-
 
 export const useFadeOut = () => {
   return useSpring({
@@ -18,8 +17,8 @@ export const useFadeOut = () => {
     from: { opacity: 1 },
     config: { duration: 1000 },
     delay: 200,
-  })
-}
+  });
+};
 
 // useSlideIn hook for slide in animation
 export const useSlideIn = () => {
@@ -28,8 +27,8 @@ export const useSlideIn = () => {
     from: { transform: "translateX(-100%)" },
     config: { duration: 1000 },
     delay: 200,
-  })
-}
+  });
+};
 
 export const useSlideOut = () => {
   return useSpring({
@@ -37,25 +36,25 @@ export const useSlideOut = () => {
     from: { transform: "translateX(0)" },
     config: { duration: 1000 },
     delay: 200,
-  })
-}
+  });
+};
 
 export const useExpand = () => {
   return useSpring({
-    from: { x: '50%', width: '20%', opacity: 0 },
-    to: { x: '0%', width: '100%', opacity: 1 },
+    from: { x: "50%", width: "20%", opacity: 0 },
+    to: { x: "0%", width: "100%", opacity: 1 },
   });
-}
+};
 
 export const useTraverseStartToEnd = () => {
   return useSpring({
-    from: { x: '-1000px', opacity: 1 },
-    to: { x: '720px', opacity: 1 },
+    from: { x: "-1000px", opacity: 1 },
+    to: { x: "720px", opacity: 1 },
     config: { duration: 10000 },
     delay: 200,
     loop: { reverse: true },
   });
-}
+};
 
 // useZoomIn hook for zoom in animation without scroll
 export const useZoomIn = () => {
@@ -64,8 +63,8 @@ export const useZoomIn = () => {
     from: { transform: "scale(0)" },
     config: { duration: 1000 },
     delay: 200,
-  })
-}
+  });
+};
 
 export const useBreathing = () => {
   return useSpring({
@@ -75,4 +74,4 @@ export const useBreathing = () => {
     delay: 200,
     loop: { reverse: true },
   });
-}
+};

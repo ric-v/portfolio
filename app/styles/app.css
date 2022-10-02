@@ -27,6 +27,7 @@
   left: 0;
   z-index: -3;
 }
+
 .bg:before {
   content: "";
   width: 100%;
@@ -38,31 +39,37 @@
   left: 0;
   opacity: 0.3;
 }
+
 @keyframes sf-fly-by-1 {
   from {
     transform: translateZ(-2500px);
     opacity: 0.5;
   }
+
   to {
     transform: translateZ(-1500px);
     opacity: 0.5;
   }
 }
+
 @keyframes sf-fly-by-2 {
   from {
     transform: translateZ(-1500px);
     opacity: 0.5;
   }
+
   to {
     transform: translateZ(-1000px);
     opacity: 0.5;
   }
 }
+
 @keyframes sf-fly-by-3 {
   from {
     transform: translateZ(-1000px);
     opacity: 0.5;
   }
+
   to {
     transform: translateZ(0px);
     opacity: 0.5;
@@ -79,6 +86,7 @@
   -webkit-perspective: 600px;
   z-index: -1;
 }
+
 .star-field .layer {
   box-shadow: -360px -421px #ededed, -1636px 1898px #c7c7c7,
     -21px -1446px #ededed, -970px 654px #c9c9c9, -137px 736px #d4d4d4,
