@@ -4,6 +4,8 @@
 ![license](https://badgen.net/github/license/dev-asterix/and-the-time-is)
 [![website](https://img.shields.io/website?down_color=red&down_message=offline&up_color=31c553&up_message=online&url=https%3A%2F%2Fwww.astrx.dev%2F)](https://me.astrx.dev)
 
+portfolio - <https://me.astrx.dev/>
+
 - [Remix Docs](https://remix.run/docs)
 
 ## Deployment
