@@ -32,7 +32,7 @@ export default function Home() {
                 alt="profile"
                 width={200}
                 height={200}
-                className={`rounded-full w-40 h-40 absolute -top-16 right-1/4 md:right-1/3 z-60 drop-shadow-xl 
+                className={`rounded-full w-40 h-40 z-70 drop-shadow-xl absolute top-1.5 left-1/2 transform -translate-x-1/2 -translate-y-1/2
                 grayscale border-slate-400 border-spacing-16 border-8 opacity-90 `}
               />
               <div className="h-full w-full flex flex-col justify-center items-center">
