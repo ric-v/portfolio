@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dark-mode-shadow {
+  border-radius: 50px;
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+}
+
+.light-mode-shadow {
+  border-radius: 50px;
+  box-shadow: 20px 20px 60px #c1b66a, -20px -20px 60px #fff690;
+}
