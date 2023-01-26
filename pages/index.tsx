@@ -32,12 +32,12 @@ export default function Home() {
                 alt="profile"
                 width={200}
                 height={200}
-                className={`rounded-full w-40 h-40 absolute -top-10 -left-10 z-60 drop-shadow-xl 
+                className={`rounded-full w-40 h-40 absolute -top-16 right-1/4 md:right-1/3 z-60 drop-shadow-xl 
                 grayscale border-slate-400 border-spacing-16 border-8 opacity-90 `}
               />
               <div className="h-full w-full flex flex-col justify-center items-center">
 
-                <div className="mt-2 font-sans text-2xl md:text-4xl font-medium text-center text-slate-700 
+                <div className="mt-2 font-sans text-3xl md:text-4xl font-medium text-center text-slate-700 
                 dark:text-sky-300 drop-shadow-xl transition-all animate-pulse duration-1000">
                   <div className='mt-5 font-display text-sm md:text-md font-medium text-center 
                   text-slate-500 dark:text-sky-200 drop-shadow-xl'
@@ -50,7 +50,7 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <div className='mt-5 font-display text-sm md:text-lg font-medium text-center 
+                <div className='mt-5 font-display text-md md:text-lg font-medium text-center 
                   text-slate-500 dark:text-sky-200 drop-shadow-xl'
                 >
                   <Typewriter
