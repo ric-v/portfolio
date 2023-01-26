@@ -11,7 +11,7 @@ module.exports = {
     extend: {
       fontFamily: {
         pacifico: ['Pacifico'],
-        plexMono: ['IBM Plex Mono', 'monospace'],
+        mono: ['IBM Plex Mono', 'monospace'],
         sans: ['Montserrat'],
       },
     },
