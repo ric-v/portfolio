@@ -8,6 +8,47 @@ import { GrLinkedinOption } from "react-icons/gr";
 import { AiFillFilePdf, AiFillMediumSquare } from "react-icons/ai";
 import { BiCodeCurly } from "react-icons/bi";
 import { SiLeetcode } from 'react-icons/si'
+import SocialLink from './SocialLink';
+
+// Social links
+const socialLinks = [
+  {
+    title: 'Github',
+    url: 'https://github.com/ric-v/',
+    classes: 'text-slate-600 hover:text-slate-800 dark:text-slate-400',
+    icon: <VscGithubInverted />
+  },
+  {
+    title: 'LinkedIn',
+    url: 'https://www.linkedin.com/in/ric-v/',
+    classes: 'text-slate-600 hover:text-sky-700 dark:text-slate-400 dark:hover:text-sky-500',
+    icon: <GrLinkedinOption />
+  },
+  {
+    title: 'Medium',
+    url: 'https://ric-v.medium.com/',
+    classes: 'text-slate-600 hover:text-yellow-700 dark:text-slate-400 dark:hover:text-yellow-400',
+    icon: <AiFillMediumSquare />
+  },
+  {
+    title: 'Exercism',
+    url: 'https://exercism.org/profiles/ric-v',
+    classes: 'text-slate-600 hover:text-purple-500 dark:text-slate-400 dark:hover:text-purple-400',
+    icon: <BiCodeCurly />
+  },
+  {
+    title: 'LeetCode',
+    url: 'https://leetcode.com/ric_v/',
+    classes: 'text-slate-600 hover:text-orange-400 dark:text-slate-400 dark:hover:text-orange-400',
+    icon: <SiLeetcode />
+  },
+  {
+    title: 'Resume',
+    url: 'https://drive.google.com/file/d/1-34NxUJF_Fj6-s4vUZVZIjIVO0VD-WX9/view?usp=sharing',
+    classes: 'text-slate-600 hover:text-red-700 dark:text-slate-400 dark:hover:text-red-400',
+    icon: <AiFillFilePdf />
+  }
+]
 
 type Props = {
   user: GithubUserType;
@@ -29,8 +70,8 @@ const IntroCard = ({ user }: Props) => {
             height={200}
             className={
               `rounded-full w-40 h-40 z-70 drop-shadow-xl absolute top-1.5 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-                  grayscale border-slate-400 border-spacing-16 border-8 opacity-90 contrast-125 brightness-100
-                  hover:scale-150 transition-all duration-1000`
+                  saturate-50 border-slate-400 border-spacing-16 border-8 opacity-90 contrast-125 brightness-100
+                  hover:scale-200 transition-all duration-2000`
             }
           />
           <div className="h-full w-full mt-5 flex flex-col justify-center items-center">
@@ -85,72 +126,9 @@ const IntroCard = ({ user }: Props) => {
 
       {/* social links */}
       <div className="mt-14 md:px-10 grid grid-cols-3 md:grid-cols-6 gap-4 text-sm md:text-xl font-bold">
-        <a
-          className={`col-span-1 flex flex-row justify-center py-2 
-              rounded-2xl text-slate-600 hover:text-slate-800
-              dark:text-slate-400 dark:hover:text-slate-200 hover:scale-125 transition-all duration-1000`}
-          href="https://github.com/ric-v"
-          target={"_blank"}
-          rel={"noreferrer"}
-        >
-          <VscGithubInverted className="text-2xl drop-shadow-xl hover:scale-125 transition-transform duration-1000" />
-          <span className="ml-4 md:inline text-md">Github</span>
-        </a>
-        <a
-          className={`col-span-1 flex flex-row justify-center py-2 
-              rounded-2xl text-slate-600 hover:text-sky-700 dark:text-slate-400
-              dark:hover:text-sky-500 hover:scale-125 transition-all duration-1000`}
-          href="https://www.linkedin.com/in/ric-v/"
-          target={"_blank"}
-          rel={"noreferrer"}
-        >
-          <GrLinkedinOption className="text-2xl drop-shadow-xl hover:scale-125 transition-transform duration-1000" />
-          <span className="ml-4 md:inline text-md">LinkedIn</span>
-        </a>
-        <a
-          className={`col-span-1 flex flex-row justify-center py-2 
-              rounded-2xl text-slate-600 hover:text-yellow-700 dark:text-slate-400
-              dark:hover:text-yellow-400 hover:scale-125 transition-all duration-1000`}
-          href="https://medium.com/@astrx-dev"
-          target={"_blank"}
-          rel={"noreferrer"}
-        >
-          <AiFillMediumSquare className="text-2xl drop-shadow-xl hover:scale-125 transition-transform duration-1000" />
-          <span className="ml-4  md:inline text-md">Medium</span>
-        </a>
-        <a
-          className={`col-span-1 flex flex-row justify-center py-2 
-              rounded-2xl text-slate-600 hover:text-purple-500 dark:text-slate-400
-              dark:hover:text-purple-400 hover:scale-125 transition-all duration-1000`}
-          href="https://exercism.org/profiles/ric-v"
-          target={"_blank"}
-          rel={"noreferrer"}
-        >
-          <BiCodeCurly className="text-2xl drop-shadow-xl hover:scale-125 transition-transform duration-1000" />
-          <span className="ml-4  md:inline text-md">Exercism</span>
-        </a>
-        <a
-          className={`col-span-1 flex flex-row justify-center py-2 
-              rounded-2xl text-slate-600 hover:text-orange-400 dark:text-slate-400
-              dark:hover:text-orange-400 hover:scale-125 transition-all duration-1000`}
-          href="https://leetcode.com/ric-v/"
-          target={"_blank"}
-          rel={"noreferrer"}
-        >
-          <SiLeetcode className="text-2xl drop-shadow-xl hover:scale-125 transition-transform duration-1000" />
-          <span className="ml-4  md:inline text-md">Leetcode</span>
-        </a>
-        <a
-          className={`col-span-1 flex flex-row justify-center py-2 
-              rounded-2xl text-slate-600 hover:text-red-700 dark:text-slate-400
-              dark:hover:text-red-400 hover:scale-125 transition-all duration-1000`}
-          href="https://drive.google.com/file/d/1-34NxUJF_Fj6-s4vUZVZIjIVO0VD-WX9/view?usp=sharing"
-          target={"_blank"}
-          rel={"noreferrer"}
-        >
-          <AiFillFilePdf className="text-2xl drop-shadow-xl hover:scale-125 transition-transform duration-1000" />
-          <span className="ml-4  md:inline text-md">Résumé</span>
-        </a>
+        {socialLinks.map((link, index) => (
+          <SocialLink key={index} title={link.title} url={link.url} classes={link.classes} icon={link.icon} />
+        ))}
       </div>
     </>
   )

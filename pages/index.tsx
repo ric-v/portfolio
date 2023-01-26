@@ -16,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>
+      <Layout navbarTitle={user.user.name}>
         <div className='h-screen flex flex-col justify-center px-2'>
           <IntroCard user={user.user} />
         </div>
