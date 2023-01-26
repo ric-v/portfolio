@@ -1,4 +1,4 @@
-import { ThemeContext } from '@/store/store';
+import { ThemeCtx } from '@/store/theme';
 import React, { useContext, useEffect, useState } from 'react'
 import Navbar from './Navbar';
 
@@ -7,21 +7,7 @@ type Props = {
 }
 
 const Layout = ({ children }: Props) => {
-  const theme = useContext(ThemeContext)
-
-  const [isDark, setIsDark] = useState(true);
-
-  useEffect(() => {
-    if (theme.theme === "dark") {
-      setIsDark(true);
-    } else {
-      setIsDark(false);
-    }
-  }, [theme.theme]);
-
-  const toggleTheme = () => {
-    theme.toggleTheme();
-  };
+  const theme = useContext(ThemeCtx)
 
   return (
     <div className={`${theme.theme}`}>

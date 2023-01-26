@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 
 // Theme Context
-export const ThemeContext = createContext({
+export const ThemeCtx = createContext({
   theme: "dark" as "dark" | "light",
   toggleTheme: () => { },
 });
@@ -32,9 +32,9 @@ const ThemeProvider = ({ children }: Props) => {
 
   // return the theme and the toggle function
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeCtx.Provider value={{ theme, toggleTheme }}>
       {children}
-    </ThemeContext.Provider>
+    </ThemeCtx.Provider>
   );
 };
 
