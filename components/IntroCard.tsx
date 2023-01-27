@@ -26,7 +26,7 @@ const socialLinks = [
   },
   {
     title: 'Medium',
-    url: 'https://ric-v.medium.com/',
+    url: 'https://astrx-dev.medium.com/',
     classes: 'text-slate-600 hover:text-yellow-700 dark:text-slate-400 dark:hover:text-yellow-400',
     icon: <AiFillMediumSquare />
   },
@@ -58,7 +58,7 @@ const IntroCard = ({ user }: Props) => {
   return (
     <>
       {/* card */}
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-1 scale-90 hover:scale-100 transition-all duration-1000">
+      <div className="pt-20 sm:pt-32 md:pt-44 grid grid-cols-3 md:grid-cols-4 gap-1 scale-90 hover:scale-100 transition-all duration-1000">
         <div className="col-span-3 h-20 md:col-span-1" />
         <div className="col-span-3 md:col-span-2 bg-amber-400 dark:bg-sky-500 bg-opacity-10 '
             dark:bg-opacity-10 h-auto p-5 md:p-20 rounded-3xl backdrop-blur-sm shadow-2xl -rotate-6 m-5">
@@ -71,13 +71,13 @@ const IntroCard = ({ user }: Props) => {
             className={
               `rounded-full w-40 h-40 z-70 drop-shadow-xl absolute top-1.5 left-1/2 transform -translate-x-1/2 -translate-y-1/2
                   saturate-50 border-slate-400 border-spacing-16 border-8 opacity-90 contrast-125 brightness-100
-                  hover:scale-200 transition-all duration-2000`
+                  hover:scale-200 hover:-translate-y-5 transition-all duration-2000`
             }
           />
           <div className="h-full w-full mt-5 flex flex-col justify-center items-center">
 
             {/* user name and salutation */}
-            <div className="mt-2 font-sans text-3xl md:text-4xl font-medium text-center text-slate-700 
+            <div className="mt-2 font-sans text-3xl md:text-4xl font-medium text-center text-slate-800 
                 dark:text-sky-300 drop-shadow-xl animate-pulse hover:animate-none hover:scale-110 transition-all duration-1000">
               <div className='mt-5 font-display text-sm md:text-md font-medium text-center 
                   text-slate-500 dark:text-sky-200 drop-shadow-xl'
@@ -123,6 +123,7 @@ const IntroCard = ({ user }: Props) => {
           </div>
         </div>
       </div>
+
 
       {/* social links */}
       <div className="mt-14 md:px-10 grid grid-cols-3 md:grid-cols-6 gap-4 text-sm md:text-xl font-bold">
