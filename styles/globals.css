@@ -11,3 +11,14 @@
   border-radius: 50px;
   box-shadow: 20px 20px 60px #c1b66a, -20px -20px 60px #fff690;
 }
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

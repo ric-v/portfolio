@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
 
       <Layout navbarTitle={user.user.name}>
-        <div className='h-screen flex flex-col justify-center px-2'>
+        <div className='flex flex-col justify-center px-2'>
           <IntroCard user={user.user} />
         </div>
       </Layout>
