@@ -38,7 +38,7 @@ const socialLinks = [
   },
   {
     title: 'LeetCode',
-    url: 'https://leetcode.com/ric_v/',
+    url: 'https://leetcode.com/ric-v/',
     classes: 'text-slate-600 hover:text-orange-400 dark:text-slate-400 dark:hover:text-orange-400',
     icon: <SiLeetcode />
   },
