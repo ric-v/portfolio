@@ -82,7 +82,7 @@ const IntroCard = ({ user }: Props) => {
               <div className='mt-5 font-display text-sm md:text-md font-medium text-center 
                   text-slate-500 dark:text-sky-200 drop-shadow-xl'
               >
-                Hey, this is
+                Hey, this is {user.name}
               </div>
               <Typewriter
                 onInit={(typewriter) => {
