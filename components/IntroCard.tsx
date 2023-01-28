@@ -55,6 +55,8 @@ type Props = {
 }
 
 const IntroCard = ({ user }: Props) => {
+  const userName = user.name
+
   return (
     <>
       {/* card */}
@@ -82,11 +84,11 @@ const IntroCard = ({ user }: Props) => {
               <div className='mt-5 font-display text-sm md:text-md font-medium text-center 
                   text-slate-500 dark:text-sky-200 drop-shadow-xl'
               >
-                Hey, this is {user.name}
+                Hey, this is
               </div>
               <Typewriter
                 onInit={(typewriter) => {
-                  typewriter.pasteString(`${user.name} 🖖`, null).start();
+                  typewriter.pasteString(`${userName} 🖖`, null).start();
                 }}
               />
             </div>

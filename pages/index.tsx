@@ -7,7 +7,6 @@ import { useContext } from 'react';
 export default function Home() {
   const user = useContext(GithubCtx)
 
-  console.log(user)
   return (
     <>
       <Head>
