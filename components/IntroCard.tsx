@@ -84,11 +84,7 @@ const IntroCard = ({ user }: Props) => {
               >
                 Hey, this is
               </div>
-              <Typewriter
-                onInit={(typewriter) => {
-                  typewriter.pasteString(`${user.name} 🖖`, null).start();
-                }}
-              />
+              {user.name}
             </div>
 
             {/* user designation */}
