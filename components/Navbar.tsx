@@ -12,7 +12,7 @@ const Navbar = ({ title, theme, toggleTheme }: Props) => {
   return (
     <nav className="fixed top-0 left-0 w-full backdrop-blur-xl z-10 flex flex-row justify-between p-5">
       <Link href="/">
-        <h1 className="font-pacifico text-2xl md:text-3xl col-span-2 dark:text-gray-200">
+        <h1 className="font-pacifico text-2xl md:text-3xl col-span-2 dark:text-gray-200 transition-colors duration-2000">
           {title}
         </h1>
       </Link>
@@ -21,7 +21,7 @@ const Navbar = ({ title, theme, toggleTheme }: Props) => {
               border border-amber-200 dark:border-slate-800
               ${theme === "light" ? "light-mode-shadow" : "dark-mode-shadow"}
               hover:px-10 hover:mr-0 hover:border hover:rounded-full hover:border-amber-300
-              dark:hover:border-slate-600 transition-all ease-in-out duration-1500`}
+              dark:hover:border-slate-600 transition-all ease-in-out duration-1500 animate-pulse hover:animate-none`}
         onClick={toggleTheme}
       >
         {theme === "light" ? (

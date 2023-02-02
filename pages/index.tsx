@@ -2,10 +2,17 @@ import { GithubCtx } from '@/store/github_api';
 import IntroCard from '@/components/IntroCard';
 import Layout from '@/components/Layout';
 import Head from 'next/head'
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
+import { IParallax, Parallax, ParallaxLayer } from '@react-spring/parallax';
+import Projects from '@/components/Projects';
+import ParallaxScroll from '@/components/ParallaxScroll';
+import Contact from '@/components/Contact';
 
 export default function Home() {
-  const user = useContext(GithubCtx)
+  const github = useContext(GithubCtx);
+  const parallax = useRef<IParallax>(null!);
+  const parallaxBgLayerClass = `bg-gradient-to-bl from-transparent bg-opacity-20 dark:bg-opacity-20 h-screen flex flex-col justify-center px-2`
+  const screenCenterCols = `h-screen flex flex-col justify-center px-2`
 
   return (
     <>
@@ -16,10 +23,35 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout navbarTitle={user.user.name}>
-        <div className='flex flex-col justify-center px-2'>
-          <IntroCard user={user.user} />
-        </div>
+      {/* Main layout with navbar and contents */}
+      <Layout navbarTitle={github.user.name}>
+        <Parallax ref={parallax} pages={3} className='scrollbar-hide'>
+
+          {/* Layer 1 - Intro */}
+          <ParallaxLayer offset={0} speed={0} className={`${parallaxBgLayerClass} bg-amber-400 dark:bg-sky-700`} />
+
+          <ParallaxLayer offset={0} speed={1} className={screenCenterCols}>
+            <IntroCard user={github.user} />
+            <ParallaxScroll toPage={1} parallax={parallax} />
+          </ParallaxLayer>
+
+          {/* Layer 2 - Projects */}
+          <ParallaxLayer offset={1} speed={0} className={`${parallaxBgLayerClass} bg-sky-400 dark:bg-sky-900`} />
+
+          <ParallaxLayer offset={1} speed={1} className={screenCenterCols}>
+            <Projects repos={github.repos} />
+            <ParallaxScroll toPage={2} parallax={parallax} />
+          </ParallaxLayer>
+
+          {/* Layer 3 - Contact */}
+          <ParallaxLayer offset={2} speed={0} className={`${parallaxBgLayerClass} bg-orange-700 dark:bg-slate-900`} />
+
+          <ParallaxLayer offset={2} speed={1} className={screenCenterCols}>
+            <Contact />
+            <ParallaxScroll toPage={0} parallax={parallax} />
+          </ParallaxLayer>
+
+        </Parallax>
       </Layout>
     </>
   )

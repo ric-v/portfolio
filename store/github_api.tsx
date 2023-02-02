@@ -1,49 +1,21 @@
 import { createContext, useEffect, useState } from "react";
 
-export type GithubUserType = {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-  name: string;
-  company: string;
-  blog: string;
-  location: string;
-  email: string;
-  hireable: string;
-  bio: string;
-  twitter_username: string;
-  public_repos: number;
-  public_gists: number;
-  followers: number;
-  following: number;
-  created_at: string;
-  updated_at: string;
-};
 
 export const GithubCtx = createContext({
   user: {} as GithubUserType,
   setUser: (user: GithubUserType) => { },
+  repos: [] as GithubRepoType[],
+  setRepos: (repos: GithubRepoType[]) => { },
 });
 
 const GithubProvider = ({ children }: any) => {
   const [user, setUser] = useState({} as GithubUserType);
+  const [repos, setRepos] = useState([] as GithubRepoType[]);
 
+  // fetch user and repos from github api
   useEffect(() => {
+
+    // fetch user from local storage if available or from github api
     const localUser = localStorage.getItem("user");
     if (localUser) {
       setUser(JSON.parse(localUser));
@@ -55,10 +27,24 @@ const GithubProvider = ({ children }: any) => {
           localStorage.setItem("user", JSON.stringify(data));
         });
     }
+
+    // fetch repos from local storage if available or from github api
+    const localRepos = localStorage.getItem("repos");
+    if (localRepos) {
+      setRepos(JSON.parse(localRepos));
+    } else {
+      fetch("https://api.github.com/users/ric-v/repos")
+        .then((res) => res.json())
+        .then((data) => {
+          setRepos(data);
+          localStorage.setItem("repos", JSON.stringify(data));
+        }
+        );
+    }
   }, []);
 
   return (
-    <GithubCtx.Provider value={{ user, setUser }}>
+    <GithubCtx.Provider value={{ user, setUser, repos, setRepos }}>
       {children}
     </GithubCtx.Provider>
   );

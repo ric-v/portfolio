@@ -26,6 +26,11 @@ module.exports = {
         2000: '2000ms',
         2500: '2500ms',
         3000: '3000ms',
+      },
+      boxShadow: {
+        '3xl': '10px 35px 60px -15px rgba(0, 0, 0, 0.3)',
+        '4xl': '30px 45px 80px -20px rgba(0, 0, 0, 0.4)',
+        '5xl': '50px 55px 100px -25px rgba(0, 0, 0, 0.5)',
       }
     },
   },

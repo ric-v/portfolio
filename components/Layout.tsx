@@ -1,5 +1,5 @@
 import { ThemeCtx } from '@/store/theme';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import Navbar from './Navbar';
 
 type Props = {
