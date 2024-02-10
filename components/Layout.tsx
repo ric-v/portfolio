@@ -1,5 +1,5 @@
 import { ThemeCtx } from '@/store/theme';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import Navbar from './Navbar';
 
 type Props = {
@@ -12,7 +12,7 @@ const Layout = ({ navbarTitle, children }: Props) => {
 
   return (
     <div className={`${theme.theme} `}>
-      <main className='h-screen bg-gradient-to-bl from-amber-50 bg-indigo-300 dark:bg-gradient-to-bl dark:from-slate-700 dark:bg-slate-900
+      <main className='h-screen bg-gradient-to-bl from-amber-100 bg-indigo-500 dark:bg-gradient-to-bl dark:from-slate-700 dark:bg-slate-900
         transition-colors ease-in duration-2000 overflow-scroll overflow-x-hidden scrollbar-hide'
       >
         <Navbar title={navbarTitle} theme={theme.theme} toggleTheme={theme.toggleTheme} />
