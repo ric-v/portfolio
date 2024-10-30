@@ -20,7 +20,7 @@ const Projects = (props: Props) => {
       <h1 className='text-2xl md:text-4xl font-bold text-slate-700 dark:text-sky-500 underline text-center mb-6 md:mb-12 mt-32'>
         Personal Projects
       </h1>
-      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 px-4 md:px-12'>
+      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 px-4 md:px-12 mt-64'>
         {repos.map((repo, i) => (
           <div
             key={i}
