@@ -28,25 +28,25 @@ export default function Home() {
         <Parallax ref={parallax} pages={3} className='scrollbar-hide'>
 
           {/* Layer 1 - Intro */}
-          <ParallaxLayer offset={0} speed={0} className={`${parallaxBgLayerClass} bg-amber-400 dark:bg-sky-700`} />
+          <ParallaxLayer offset={0} speed={0.5} className={`${parallaxBgLayerClass} bg-amber-400 dark:bg-sky-700`} />
 
-          <ParallaxLayer offset={0} speed={1} className={screenCenterCols}>
+          <ParallaxLayer offset={0} speed={0.8} className={screenCenterCols}>
             <IntroCard user={github.user} />
             <ParallaxScroll toPage={1} parallax={parallax} />
           </ParallaxLayer>
 
           {/* Layer 2 - Projects */}
-          <ParallaxLayer offset={1} speed={0} className={`${parallaxBgLayerClass} bg-sky-400 dark:bg-sky-900`} />
+          <ParallaxLayer offset={1} speed={0.5} className={`${parallaxBgLayerClass} bg-sky-400 dark:bg-sky-900`} />
 
-          <ParallaxLayer offset={1} speed={1} className={screenCenterCols}>
+          <ParallaxLayer offset={1} speed={0.8} className={screenCenterCols}>
             <Projects repos={github.repos} />
             <ParallaxScroll toPage={2} parallax={parallax} />
           </ParallaxLayer>
 
           {/* Layer 3 - Contact */}
-          <ParallaxLayer offset={2} speed={0} className={`${parallaxBgLayerClass} bg-orange-700 dark:bg-slate-900`} />
+          <ParallaxLayer offset={2} speed={0.5} className={`${parallaxBgLayerClass} bg-orange-700 dark:bg-slate-900`} />
 
-          <ParallaxLayer offset={2} speed={1} className={screenCenterCols}>
+          <ParallaxLayer offset={2} speed={0.8} className={screenCenterCols}>
             <Contact />
             <ParallaxScroll toPage={0} parallax={parallax} />
           </ParallaxLayer>
