@@ -31,7 +31,19 @@ module.exports = {
         '3xl': '10px 35px 60px -15px rgba(0, 0, 0, 0.3)',
         '4xl': '30px 45px 80px -20px rgba(0, 0, 0, 0.4)',
         '5xl': '50px 55px 100px -25px rgba(0, 0, 0, 0.5)',
-      }
+      },
+      colors: {
+        'primary': '#1a202c',
+        'secondary': '#2d3748',
+        'accent': '#4a5568',
+        'background': '#f7fafc',
+        'foreground': '#edf2f7',
+      },
+      spacing: {
+        '72': '18rem',
+        '84': '21rem',
+        '96': '24rem',
+      },
     },
   },
   plugins: [],

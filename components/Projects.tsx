@@ -16,7 +16,7 @@ const Projects = ({ repos }: Props) => {
   isMobile && repos.splice(3, repos.length - 2);
 
   return (
-    <div className='flex flex-row justify-center'>
+    <div className='flex flex-row justify-center mt-20'>
       <div className='flex flex-col justify-center'>
         <h1 className='text-2xl md:text-4xl font-bold text-slate-900 dark:text-sky-500 text-center mb-6 md:mb-12'>
           Personal Projects
