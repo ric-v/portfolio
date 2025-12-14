@@ -1,0 +1,330 @@
+@import "tailwindcss";
+
+/* =====================================================
+   LIVING CANVAS PORTFOLIO - Theme System
+   Sunrise ↔ Sunset with Fluid Animations
+   ===================================================== */
+
+:root {
+  /* Core Theme Variables - Sunrise (Light) Default */
+  --bg-primary: #f0f9fa;
+  --bg-secondary: #d4eef2;
+  --bg-tertiary: #b8e4eb;
+
+  /* Accent Colors - Warm Orange for Sunrise */
+  --accent-primary: #ff7e33;
+  --accent-secondary: #ffaa6c;
+  --accent-tertiary: #ffd4a8;
+
+  /* Glow & Highlights */
+  --glow-color: rgba(255, 126, 51, 0.5);
+  --glow-secondary: rgba(255, 170, 108, 0.3);
+  --highlight: #fff8f0;
+
+  /* Text Colors */
+  --text-primary: #0d2f2f;
+  --text-secondary: #1a4a4a;
+  --text-muted: #3d7070;
+
+  /* Glass Effects */
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: rgba(255, 126, 51, 0.15);
+
+  /* Neon Strokes */
+  --neon-stroke: rgba(255, 126, 51, 0.8);
+  --neon-glow: 0 0 20px rgba(255, 126, 51, 0.5);
+
+  /* Animation Variables */
+  --light-intensity: 1;
+  --glow-opacity: 0.6;
+  --shadow-depth: 0.1;
+  --transition-duration: 5000ms;
+
+  /* Gradient Stops for Background Shader */
+  --gradient-start-r: 0.94;
+  --gradient-start-g: 0.98;
+  --gradient-start-b: 0.98;
+  --gradient-mid-r: 0.83;
+  --gradient-mid-g: 0.93;
+  --gradient-mid-b: 0.95;
+  --gradient-end-r: 0.72;
+  --gradient-end-g: 0.89;
+  --gradient-end-b: 0.92;
+
+  /* Sunrise Animation Colors */
+  --sun-color: #ff9500;
+  --horizon-glow: rgba(255, 180, 100, 0.8);
+}
+
+[data-theme="sunset"] {
+  /* Core Theme Variables - Sunset (Dark) */
+  --bg-primary: #050f12;
+  --bg-secondary: #081a1f;
+  --bg-tertiary: #0c2329;
+
+  /* Accent Colors - Electric Purple/Cyan for Sunset */
+  --accent-primary: #8b5cf6;
+  --accent-secondary: #a78bfa;
+  --accent-tertiary: #c4b5fd;
+
+  /* Glow & Highlights - Magenta/Cyan */
+  --glow-color: rgba(139, 92, 246, 0.6);
+  --glow-secondary: rgba(236, 72, 153, 0.4);
+  --highlight: #22d3ee;
+
+  /* Text Colors */
+  --text-primary: #e8f5f5;
+  --text-secondary: #b8d8d8;
+  --text-muted: #7ab0b0;
+
+  /* Glass Effects - Darker */
+  --glass-bg: rgba(10, 30, 35, 0.6);
+  --glass-border: rgba(139, 92, 246, 0.3);
+  --glass-shadow: rgba(139, 92, 246, 0.25);
+
+  /* Neon Strokes - Purple/Cyan */
+  --neon-stroke: rgba(139, 92, 246, 0.9);
+  --neon-glow: 0 0 25px rgba(139, 92, 246, 0.6), 0 0 50px rgba(236, 72, 153, 0.3);
+
+  /* Animation Variables */
+  --light-intensity: 0.3;
+  --glow-opacity: 0.85;
+  --shadow-depth: 0.5;
+
+  /* Gradient Stops for Background Shader - Deep Teal/Emerald */
+  --gradient-start-r: 0.02;
+  --gradient-start-g: 0.06;
+  --gradient-start-b: 0.07;
+  --gradient-mid-r: 0.03;
+  --gradient-mid-g: 0.10;
+  --gradient-mid-b: 0.12;
+  --gradient-end-r: 0.05;
+  --gradient-end-g: 0.14;
+  --gradient-end-b: 0.16;
+
+  /* Sunset Animation Colors */
+  --sun-color: #8b5cf6;
+  --horizon-glow: rgba(139, 92, 246, 0.5);
+}
+
+/* =====================================================
+   Tailwind Theme Extension
+   ===================================================== */
+@theme inline {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-accent: var(--accent-primary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* =====================================================
+   Base Styles
+   ===================================================== */
+* {
+  box-sizing: border-box;
+  /* Apply transition to all color-related properties */
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* =====================================================
+   Glass Card Utilities
+   ===================================================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 48px var(--glass-shadow);
+}
+
+/* =====================================================
+   Neon Effects
+   ===================================================== */
+.neon-border {
+  position: relative;
+}
+
+.neon-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg,
+      var(--accent-primary),
+      var(--accent-secondary),
+      var(--accent-primary));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.neon-border:hover::before {
+  opacity: 1;
+}
+
+/* =====================================================
+   Glow Effects
+   ===================================================== */
+.glow {
+  box-shadow: var(--neon-glow);
+}
+
+.glow-text {
+  text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color);
+}
+
+/* =====================================================
+   Animation Utilities
+   ===================================================== */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px var(--glow-color);
+  }
+
+  50% {
+    box-shadow: 0 0 40px var(--glow-color), 0 0 60px var(--glow-secondary);
+  }
+}
+
+/* =====================================================
+   Selection Styling
+   ===================================================== */
+::selection {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* =====================================================
+   Scrollbar Styling
+   ===================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* =====================================================
+   GPU Acceleration Hints
+   ===================================================== */
+.gpu-accelerate {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* =====================================================
+   Cloud Animation for Dark Mode
+   ===================================================== */
+@keyframes cloudDrift {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(120vw);
+  }
+}
+
+/* =====================================================
+   Bird Animation for Light Mode
+   ===================================================== */
+@keyframes fly-cycle {
+  0% {
+    transform: scaleY(1) translateY(0);
+  }
+
+  50% {
+    transform: scaleY(0.7) translateY(2px);
+  }
+
+  100% {
+    transform: scaleY(1) translateY(0);
+  }
+}
+
+@keyframes fly-away {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(20vw, -8vh) scale(0.1);
+    opacity: 0;
+  }
+}
