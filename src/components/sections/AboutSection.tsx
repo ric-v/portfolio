@@ -1,18 +1,52 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { GlassCard } from "../ui/GlassCard";
+import Image from "next/image";
 import { useTheme } from "../providers/ThemeContext";
 import { GradientText } from "../ui/GradientText";
+import Link from "next/link";
 
-const skills = [
-  { name: "React & Next.js", level: 95 },
-  { name: "TypeScript", level: 90 },
-  { name: "Three.js & WebGL", level: 80 },
-  { name: "Node.js", level: 85 },
-  { name: "UI/UX Design", level: 75 },
-];
+// Helper component for smooth theme transitions
+function ThemeImage({ lightSrc, darkSrc, alt, className, style = {} }: {
+  lightSrc: string;
+  darkSrc: string;
+  alt: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const { visualProgress } = useTheme();
+
+  return (
+    <div className={`relative w-full h-full ${className}`} style={style}>
+      {/* Light Mode Image */}
+      <div
+        className="absolute inset-0"
+        style={{ opacity: visualProgress }}
+      >
+        <Image
+          src={lightSrc}
+          alt={alt}
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      {/* Dark Mode Image */}
+      <div
+        className="absolute inset-0"
+        style={{ opacity: 1 - visualProgress }}
+      >
+        <Image
+          src={darkSrc}
+          alt={alt}
+          fill
+          className="object-cover"
+        />
+      </div>
+    </div >
+  );
+}
 
 export function AboutSection() {
   const { theme } = useTheme();
@@ -27,6 +61,15 @@ export function AboutSection() {
     }
   };
 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
+
   const itemVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
@@ -37,10 +80,11 @@ export function AboutSection() {
   };
 
   return (
-    <section
+    <motion.section
       ref={containerRef}
-      className="relative min-h-screen py-24 px-6"
+      className="relative min-h-screen py-24 px-6 flex flex-col justify-center"
       id="about"
+      style={{ y, opacity, scale }}
     >
       <div className="max-w-6xl mx-auto">
         <motion.div
@@ -51,89 +95,90 @@ export function AboutSection() {
         >
           {/* Text Content */}
           <motion.div variants={itemVariants}>
-            <h2
-              className="text-4xl md:text-5xl font-bold mb-6"
-              style={{ color: "var(--text-primary)" }}
-            >
-              About{" "}
-              <GradientText colors={{
-                sunrise: "linear-gradient(135deg, #ff7e33, #ff9500)",
-                sunset: "linear-gradient(135deg, #8b5cf6, #22d3ee)"
-              }}>
-                Me
-              </GradientText>
-            </h2>
+            <div className="flex items-center justify-between lg:block mb-6">
+              <h2
+                className="text-4xl md:text-5xl font-bold"
+                style={{ color: "var(--text-primary)" }}
+              >
+                About{" "}
+                <GradientText colors={{
+                  sunrise: "linear-gradient(135deg, #ff7e33, #ff9500)",
+                  sunset: "linear-gradient(135deg, #8b5cf6, #22d3ee)"
+                }}>
+                  Me
+                </GradientText>
+              </h2>
+
+              {/* Mobile Image */}
+              <div className="relative w-28 h-28 rounded-2xl overflow-hidden lg:hidden flex-shrink-0 border-2 border-[var(--text-primary)]">
+                <ThemeImage
+                  lightSrc="/dp-light.png"
+                  darkSrc="/dp-dark.png"
+                  alt="Profile"
+                />
+              </div>
+            </div>
 
             <div className="space-y-4" style={{ color: "var(--text-secondary)" }}>
               <p className="text-lg">
-                I&apos;m a Tech Lead and Principal Engineer focused on building scalable, high-performance systems.
-                My work spans distributed backends, data-intensive platforms, and cloud-native architectures, with a strong emphasis on performance, reliability, and observability.
+                I&apos;m a Tech Lead and Principal Engineer focused on building scalable, high-performance systems that operate reliably under real-world load.
               </p>
               <p className="text-lg">
-                With a focus on performance and aesthetics, I craft interfaces that
-                don&apos;t just work—they <em>feel</em> right. From fluid animations to
-                thoughtful micro-interactions, every detail matters.
+                My work spans distributed backends, data-intensive platforms, and cloud-native architectures, with a strong emphasis on latency, reliability, and observability. I design systems that remain predictable as traffic grows—and debuggable when things go wrong.
               </p>
               <p className="text-lg">
-                I enjoy working close to system fundamentals—designing software that stays predictable under load and remains easy to reason about as it grows.
+                I work close to the fundamentals: system design, concurrency, data flow, and performance tuning. Whether it’s optimizing critical paths, simplifying complex architectures, or mentoring engineers, I care about building software that earns trust over time.
+              </p>
+              <p>
+                Outside core product work, I build developer tooling and internal utilities to improve visibility, productivity, and operational clarity.
               </p>
             </div>
-          </motion.div>
 
-          {/* Skills */}
-          <motion.div variants={itemVariants}>
-            <GlassCard className="p-8">
-              <h3
-                className="text-2xl font-semibold mb-6"
+            <motion.blockquote
+              className="mt-8 p-6 rounded-lg relative overflow-hidden"
+              style={{
+                backgroundColor: "rgba(var(--primary-rgb), 0.05)",
+                borderLeft: "4px solid var(--text-primary)",
+              }}
+              variants={itemVariants}
+            >
+              <div
+                className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
+                style={{
+                  background: "linear-gradient(45deg, transparent, var(--text-primary), transparent)",
+                }}
+              />
+              <p
+                className="text-lg md:text-xl italic font-medium relative z-10"
                 style={{ color: "var(--text-primary)" }}
               >
-                Core Skills
-              </h3>
+                &quot;If it aint broke, break it, make it better.&quot;
+              </p>
+            </motion.blockquote>
+          </motion.div>
 
-              <div className="space-y-5">
-                {skills.map((skill, index) => (
-                  <motion.div
-                    key={skill.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.4 + index * 0.1 }}
-                  >
-                    <div className="flex justify-between mb-2">
-                      <span style={{ color: "var(--text-primary)" }}>
-                        {skill.name}
-                      </span>
-                      <span style={{ color: "var(--text-muted)" }}>
-                        {skill.level}%
-                      </span>
-                    </div>
-                    <div
-                      className="h-2 rounded-full overflow-hidden"
-                      style={{ backgroundColor: "var(--glass-bg)" }}
-                    >
-                      <motion.div
-                        className="h-full rounded-full"
-                        style={{
-                          background: theme === "sunrise"
-                            ? "linear-gradient(90deg, #ff7e33, #ff9500)"
-                            : "linear-gradient(90deg, #8b5cf6, #ec4899)",
-                        }}
-                        initial={{ width: 0 }}
-                        animate={isInView ? { width: `${skill.level}%` } : {}}
-                        transition={{
-                          duration: 1,
-                          delay: 0.5 + index * 0.1,
-                          ease: [0.4, 0, 0.2, 1]
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </GlassCard>
+          {/* Image (Desktop Only) */}
+          <motion.div
+            variants={itemVariants}
+            className="relative h-full w-full rounded-2xl overflow-hidden hidden lg:block"
+          >
+            <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(to bottom, transparent 0%, var(--background) 100%)" }} />
+            <div className="absolute inset-0 z-10" style={{ background: "radial-gradient(circle at center, transparent 30%, var(--background) 100%)" }} />
+
+            <ThemeImage
+              lightSrc="/dp-light.png"
+              darkSrc="/dp-dark.png"
+              alt="Profile Background"
+              className="opacity-80"
+              style={{
+                maskImage: "radial-gradient(circle at center, black 45%, transparent 100%)",
+                WebkitMaskImage: "radial-gradient(circle at center, black 45%, transparent 100%)"
+              }}
+            />
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

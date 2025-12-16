@@ -6,6 +6,40 @@ import { useRef } from "react";
 import { Button } from "../ui/Button";
 import { useTheme } from "../providers/ThemeContext";
 import { GradientText } from "../ui/GradientText";
+import { TypewriterText } from "../ui/TypewriterText";
+
+import { HeroCarousel, CarouselItem } from "../ui/HeroCarousel";
+
+const carouselItems: CarouselItem[] = [
+  {
+    headline: "Distributed systems at production scale",
+    subtext: "Designing microservices that handle high-frequency traffic with predictable latency."
+  },
+  {
+    headline: "Performance is a feature",
+    subtext: "Optimized low level systems to achieve sub 100ms response times under real-world load which is used by millions of users."
+  },
+  {
+    headline: "Data-intensive by design",
+    subtext: "Database query optimization, planning, and schema decisions that reduce latency. When scaling, every microsecond counts."
+  },
+  {
+    headline: "Built to fail gracefully",
+    subtext: "Systems designed with observability, timeouts, circuit breakers, and degradation in mind. Looking pretty under pressure."
+  },
+  {
+    headline: "Hands-on technical leadership",
+    subtext: "Leading small teams, reviewing critical code, and owning architectural decisions end-to-end."
+  },
+  {
+    headline: "Builder beyond the day job",
+    subtext: "Creating developer tools, internal utilities, and experiments to improve self, team, and product."
+  },
+  {
+    headline: "Break. Build. Repeat.",
+    subtext: "Nothing is permanent. Iterate and improve. If it's not broken, break it, and make it better."
+  }
+];
 
 export function HeroSection() {
   const { theme, visualProgress } = useTheme();
@@ -20,26 +54,14 @@ export function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+  const buttonVariants = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring" as const,
-        damping: 20,
-        stiffness: 100,
+        delay: 4.0, // Wait for most typing to finish
+        duration: 0.8,
       }
     }
   };
@@ -50,63 +72,53 @@ export function HeroSection() {
       className="relative min-h-screen flex items-center justify-center px-6 py-24"
       style={{ y, opacity, scale }}
     >
-      <motion.div
-        className="max-w-4xl mx-auto text-center"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div className="max-w-4xl mx-auto text-center">
         {/* Greeting */}
-        <motion.p
-          className="text-lg md:text-xl mb-4"
+        <div
+          className="text-lg md:text-xl mb-4 h-8"
           style={{ color: "var(--text-muted)" }}
-          variants={itemVariants}
         >
-          Hello, I&apos;m Richie Varghese
-        </motion.p>
+          <TypewriterText
+            text="Hello, I'm Richie Varghese"
+            delay={0.5}
+          />
+        </div>
 
-        <motion.h1
+        <h1
           className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
           style={{ color: "var(--text-primary)" }}
-          variants={itemVariants}
         >
-          <span>
-            I Engineer {" "}
-            <GradientText>Scalable Systems</GradientText>
+          <span className="block md:inline">
+            <TypewriterText
+              text="I Engineer "
+              delay={2.0}
+            />
           </span>
-        </motion.h1>
+          <GradientText>
+            <TypewriterText
+              text="Scalable Systems"
+              delay={2.6}
+            />
+          </GradientText>
+        </h1>
 
-        {/* Tagline */}
-        <motion.p
-          className="text-xl md:text-2xl max-w-2xl mx-auto mb-10"
-          style={{ color: "var(--text-secondary)" }}
-          variants={itemVariants}
-        >
-          Tech Lead and Principal Engineer specializing in distributed systems, and data-intensive platforms.
-          <br />I architect, design, and deliver software that stays fast, reliable, and observable under real-world load.
-        </motion.p>
+        {/* Carousel Tagline */}
+        <div className="mb-10">
+          <HeroCarousel items={carouselItems} />
+        </div>
 
         {/* CTA Buttons */}
         <motion.div
           className="flex flex-wrap gap-4 justify-center"
-          variants={itemVariants}
+          variants={buttonVariants}
+          initial="hidden"
+          animate="visible"
         >
           <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-            <Button
-              variant="solid"
-              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              View Projects
-            </Button>
-            <Button
-              variant="hollow"
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              Contact Me
-            </Button>
+
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </motion.section>
   );
 }
