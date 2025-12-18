@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useTheme } from "../providers/ThemeContext";
 import { GradientText } from "../ui/GradientText";
 import Link from "next/link";
+import { portfolioConfig } from "@/config/portfolio";
 
 // Helper component for smooth theme transitions
 function ThemeImage({ lightSrc, darkSrc, alt, className, style = {} }: {
@@ -112,26 +113,19 @@ export function AboutSection() {
               {/* Mobile Image */}
               <div className="relative w-28 h-28 rounded-2xl overflow-hidden lg:hidden flex-shrink-0 border-2 border-[var(--text-primary)]">
                 <ThemeImage
-                  lightSrc="/dp-light.png"
-                  darkSrc="/dp-dark.png"
+                  lightSrc={portfolioConfig.personalInfo.profileImage.light}
+                  darkSrc={portfolioConfig.personalInfo.profileImage.dark}
                   alt="Profile"
                 />
               </div>
             </div>
 
             <div className="space-y-4" style={{ color: "var(--text-secondary)" }}>
-              <p className="text-lg">
-                I&apos;m a Tech Lead and Principal Engineer focused on building scalable, high-performance systems that operate reliably under real-world load.
-              </p>
-              <p className="text-lg">
-                My work spans distributed backends, data-intensive platforms, and cloud-native architectures, with a strong emphasis on latency, reliability, and observability. I design systems that remain predictable as traffic grows—and debuggable when things go wrong.
-              </p>
-              <p className="text-lg">
-                I work close to the fundamentals: system design, concurrency, data flow, and performance tuning. Whether it’s optimizing critical paths, simplifying complex architectures, or mentoring engineers, I care about building software that earns trust over time.
-              </p>
-              <p>
-                Outside core product work, I build developer tooling and internal utilities to improve visibility, productivity, and operational clarity.
-              </p>
+              {portfolioConfig.personalInfo.bio.map((paragraph, index) => (
+                <p key={index} className="text-lg">
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             <motion.blockquote
@@ -152,7 +146,7 @@ export function AboutSection() {
                 className="text-lg md:text-xl italic font-medium relative z-10"
                 style={{ color: "var(--text-primary)" }}
               >
-                &quot;If it aint broke, break it, make it better.&quot;
+                &quot;{portfolioConfig.personalInfo.quote}&quot;
               </p>
             </motion.blockquote>
           </motion.div>
@@ -166,8 +160,8 @@ export function AboutSection() {
             <div className="absolute inset-0 z-10" style={{ background: "radial-gradient(circle at center, transparent 30%, var(--background) 100%)" }} />
 
             <ThemeImage
-              lightSrc="/dp-light.png"
-              darkSrc="/dp-dark.png"
+              lightSrc={portfolioConfig.personalInfo.profileImage.light}
+              darkSrc={portfolioConfig.personalInfo.profileImage.dark}
               alt="Profile Background"
               className="opacity-80"
               style={{

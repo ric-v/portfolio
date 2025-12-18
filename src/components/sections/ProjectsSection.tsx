@@ -7,34 +7,7 @@ import { Button } from "../ui/Button";
 import { useTheme } from "../providers/ThemeContext";
 import { GradientText } from "../ui/GradientText";
 import { Badge } from "../ui/Badge";
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  tags: string[];
-  image: string;
-  link: string;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Nebula Dashboard",
-    description: "A real-time analytics dashboard with stunning data visualizations and fluid animations.",
-    tags: ["React", "D3.js", "WebSocket"],
-    image: "/projects/nebula.jpg",
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "Aurora Commerce",
-    description: "Next-generation e-commerce platform with immersive 3D product previews.",
-    tags: ["Next.js", "Three.js", "Stripe"],
-    image: "/projects/aurora.jpg",
-    link: "#",
-  }
-];
+import { portfolioConfig, type Project } from "@/config/portfolio";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { theme } = useTheme();
@@ -176,7 +149,7 @@ export function ProjectsSection() {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {portfolioConfig.projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>

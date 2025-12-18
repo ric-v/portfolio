@@ -8,6 +8,7 @@ import { CinematicIntro } from "@/components/ui/CinematicIntro";
 
 import { BackgroundMusic } from "@/components/ui/BackgroundMusic";
 import { PageNavigator } from "@/components/ui/PageNavigator";
+import { portfolioConfig } from "@/config/portfolio";
 
 const gantari = Gantari({
   variable: "--font-geist-sans", // Reuse existing variable to propagate change globally
@@ -20,13 +21,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Richie Varghese | Portfolio",
-  description: "Building digital experiences that feel alive. Crafting interfaces where every pixel has purpose and every interaction tells a story.",
+  title: `${portfolioConfig.personalInfo.name} | Portfolio`,
+  description: portfolioConfig.personalInfo.description,
   keywords: ["developer", "portfolio", "creative", "web development", "React", "Next.js", "Three.js"],
-  authors: [{ name: "Creative Developer" }],
+  authors: [{ name: portfolioConfig.personalInfo.name }],
   openGraph: {
-    title: "Richie Varghese | Portfolio",
-    description: "Building digital experiences that feel alive.",
+    title: `${portfolioConfig.personalInfo.name} | Portfolio`,
+    description: portfolioConfig.personalInfo.description,
     type: "website",
   },
 };

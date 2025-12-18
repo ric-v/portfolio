@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useTheme } from "../providers/ThemeContext";
+import { portfolioConfig } from "@/config/portfolio";
 
 export function Footer() {
   const { theme } = useTheme();
@@ -65,13 +66,13 @@ export function Footer() {
               className="text-xl font-bold mb-1"
               style={{ color: "var(--text-primary)" }}
             >
-              Creative Developer
+              {portfolioConfig.footer.tagline}
             </h3>
             <p
               className="text-sm"
               style={{ color: "var(--text-muted)" }}
             >
-              Crafting digital experiences
+              {portfolioConfig.footer.subTagline}
             </p>
           </motion.div>
 

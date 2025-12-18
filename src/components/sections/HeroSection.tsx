@@ -9,37 +9,7 @@ import { GradientText } from "../ui/GradientText";
 import { TypewriterText } from "../ui/TypewriterText";
 
 import { HeroCarousel, CarouselItem } from "../ui/HeroCarousel";
-
-const carouselItems: CarouselItem[] = [
-  {
-    headline: "Distributed systems at production scale",
-    subtext: "Designing microservices that handle high-frequency traffic with predictable latency."
-  },
-  {
-    headline: "Performance is a feature",
-    subtext: "Optimized low level systems to achieve sub 100ms response times under real-world load which is used by millions of users."
-  },
-  {
-    headline: "Data-intensive by design",
-    subtext: "Database query optimization, planning, and schema decisions that reduce latency. When scaling, every microsecond counts."
-  },
-  {
-    headline: "Built to fail gracefully",
-    subtext: "Systems designed with observability, timeouts, circuit breakers, and degradation in mind. Looking pretty under pressure."
-  },
-  {
-    headline: "Hands-on technical leadership",
-    subtext: "Leading small teams, reviewing critical code, and owning architectural decisions end-to-end."
-  },
-  {
-    headline: "Builder beyond the day job",
-    subtext: "Creating developer tools, internal utilities, and experiments to improve self, team, and product."
-  },
-  {
-    headline: "Break. Build. Repeat.",
-    subtext: "Nothing is permanent. Iterate and improve. If it's not broken, break it, and make it better."
-  }
-];
+import { portfolioConfig } from "@/config/portfolio";
 
 export function HeroSection() {
   const { theme, visualProgress } = useTheme();
@@ -79,7 +49,7 @@ export function HeroSection() {
           style={{ color: "var(--text-muted)" }}
         >
           <TypewriterText
-            text="Hello, I'm Richie Varghese"
+            text={`Hello, I'm ${portfolioConfig.personalInfo.name}`}
             delay={0.5}
           />
         </div>
@@ -90,13 +60,13 @@ export function HeroSection() {
         >
           <span className="block md:inline">
             <TypewriterText
-              text="I Engineer "
+              text={portfolioConfig.personalInfo.role.split(" ").slice(0, 2).join(" ") + " "}
               delay={2.0}
             />
           </span>
           <GradientText>
             <TypewriterText
-              text="Scalable Systems"
+              text={portfolioConfig.personalInfo.role.split(" ").slice(2).join(" ")}
               delay={2.6}
             />
           </GradientText>
@@ -104,7 +74,7 @@ export function HeroSection() {
 
         {/* Carousel Tagline */}
         <div className="mb-10">
-          <HeroCarousel items={carouselItems} />
+          <HeroCarousel items={portfolioConfig.hero.carouselItems} />
         </div>
 
         {/* CTA Buttons */}

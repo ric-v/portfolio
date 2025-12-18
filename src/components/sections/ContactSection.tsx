@@ -6,6 +6,7 @@ import { GlassCard } from "../ui/GlassCard";
 import { Button } from "../ui/Button";
 import { useTheme } from "../providers/ThemeContext";
 import { GradientText } from "../ui/GradientText";
+import { portfolioConfig } from "@/config/portfolio";
 
 export function ContactSection() {
   const { theme } = useTheme();
@@ -21,7 +22,7 @@ export function ContactSection() {
     e.preventDefault();
     const subject = encodeURIComponent(`Contact from Portfolio: ${formState.name}`);
     const body = encodeURIComponent(`Name: ${formState.name}\nEmail: ${formState.email}\n\nMessage:\n${formState.message}`);
-    window.location.href = `mailto:support@astrx.dev?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${portfolioConfig.contact.email}?subject=${subject}&body=${body}`;
 
     // Clear form
     setFormState({
@@ -183,15 +184,11 @@ export function ContactSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.7 }}
         >
-          <a href="https://github.com/ric-v" target="_blank" rel="noopener noreferrer">
-            <Button variant="hollow" magneticStrength={0.3}>GitHub</Button>
-          </a>
-          <a href="https://linkedin.com/in/ric-v" target="_blank" rel="noopener noreferrer">
-            <Button variant="hollow" magneticStrength={0.3}>LinkedIn</Button>
-          </a>
-          <a href="https://drive.google.com/file/d/1-34NxUJF_Fj6-s4vUZVZIjIVO0VD-WX9/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-            <Button variant="hollow" magneticStrength={0.3}>Resume</Button>
-          </a>
+          {portfolioConfig.personalInfo.socials.map((social, index) => (
+            <a key={index} href={social.url} target="_blank" rel="noopener noreferrer">
+              <Button variant="hollow" magneticStrength={0.3}>{social.platform}</Button>
+            </a>
+          ))}
         </motion.div>
       </div>
     </section>
