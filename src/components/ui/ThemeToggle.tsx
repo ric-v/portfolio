@@ -3,10 +3,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../ui/Button";
 import { useTheme } from "../providers/ThemeContext";
+import { usePlanetNavigation } from "@/hooks/usePlanetNavigation";
 
 export function ThemeToggle() {
   const { theme, toggleTheme, isTransitioning } = useTheme();
+  const { currentPlanet } = usePlanetNavigation();
   const isSunrise = theme === "sunrise";
+
+  // Use planet's atmosphere accent for glow color
+  const glowColor = currentPlanet.atmosphere.accent;
 
   return (
     <div className="relative w-32 h-32 overflow-visible pointer-events-auto z-50 flex items-center justify-center">
@@ -19,9 +24,7 @@ export function ThemeToggle() {
       <motion.div
         className="absolute inset-0 -m-20 rounded-full blur-[60px] pointer-events-none"
         style={{
-          background: isSunrise
-            ? "radial-gradient(circle, rgba(255, 183, 77, 0.5) 0%, rgba(255, 183, 77, 0.1) 50%, transparent 80%)"
-            : "radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(139, 92, 246, 0.1) 50%, transparent 80%)",
+          background: `radial-gradient(circle, ${glowColor}80 0%, ${glowColor}1A 50%, transparent 80%)`,
         }}
         animate={{
           scale: [1, 1.2, 1],
@@ -38,9 +41,7 @@ export function ThemeToggle() {
       <motion.div
         className="absolute inset-0 -m-4 rounded-full blur-[20px] pointer-events-none"
         style={{
-          background: isSunrise
-            ? "rgba(255, 183, 77, 0.6)"
-            : "rgba(139, 92, 246, 0.5)",
+          background: `${glowColor}99`,
         }}
         animate={{
           opacity: [0.5, 0.8, 0.5],
@@ -78,7 +79,7 @@ export function ThemeToggle() {
                   className="w-16 h-16 rounded-full"
                   style={{
                     background: "radial-gradient(circle at 30% 30%, #fff7ed, #ffb74d)",
-                    boxShadow: "0 0 10px rgba(255, 183, 77, 0.8)" /* Reduced internal shadow, relying on outer glow */
+                    boxShadow: `0 0 10px ${glowColor}CC`
                   }}
                 />
 
@@ -120,7 +121,7 @@ export function ThemeToggle() {
                 {/* Moon Aura (Attached to object) */}
                 <motion.div
                   className="absolute inset-0 -m-2 rounded-full blur-md opacity-40"
-                  style={{ background: "#a78bfa" }}
+                  style={{ background: glowColor }}
                   animate={{ opacity: [0.3, 0.6, 0.3] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 />

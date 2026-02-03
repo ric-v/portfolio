@@ -2,35 +2,42 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useTheme } from "../providers/ThemeContext";
+import { usePlanetNavigation } from "@/hooks/usePlanetNavigation";
 import { portfolioConfig } from "@/config/portfolio";
 
 export function Footer() {
-  const { theme } = useTheme();
+  const { currentPlanet } = usePlanetNavigation();
   const currentYear = new Date().getFullYear();
 
+  const links = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Skills", path: "/skills" },
+    { name: "Experience", path: "/experience" },
+    { name: "Projects", path: "/projects" },
+    { name: "Contact", path: "/contact" },
+  ];
+
   return (
-    <footer className="relative py-16 px-6">
-      {/* Ambient gradient overlay - very subtle, near-still */}
+    <footer className="relative py-20 px-6">
+      {/* Ambient gradient overlay */}
       <motion.div
         className="absolute inset-0 pointer-events-none overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1.5 }}
       >
         <motion.div
           className="absolute bottom-0 left-1/2 w-[600px] h-[300px] -translate-x-1/2"
           style={{
-            background: theme === "sunrise"
-              ? "radial-gradient(ellipse at center bottom, rgba(255, 149, 0, 0.1) 0%, transparent 70%)"
-              : "radial-gradient(ellipse at center bottom, rgba(139, 92, 246, 0.08) 0%, transparent 70%)",
+            background: `radial-gradient(ellipse at center bottom, ${currentPlanet.surface.glow}15 0%, transparent 70%)`,
           }}
           animate={{
             opacity: [0.5, 0.7, 0.5],
             scale: [1, 1.02, 1],
           }}
           transition={{
-            duration: 8,
+            duration: 10,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -40,57 +47,60 @@ export function Footer() {
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Separator line with glow */}
         <motion.div
-          className="h-px mb-12 rounded-full"
+          className="h-px mb-16 rounded-full"
           style={{
-            background: theme === "sunrise"
-              ? "linear-gradient(90deg, transparent, var(--accent-primary), transparent)"
-              : "linear-gradient(90deg, transparent, var(--accent-primary), transparent)",
-            boxShadow: `0 0 20px ${theme === "sunrise" ? "rgba(255, 149, 0, 0.5)" : "rgba(139, 92, 246, 0.5)"}`,
+            background: `linear-gradient(90deg, transparent, ${currentPlanet.text.accent}, transparent)`,
+            boxShadow: `0 0 20px ${currentPlanet.surface.glow}50`,
           }}
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
         />
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           {/* Logo/Name */}
           <motion.div
             className="text-center md:text-left"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8 }}
           >
             <h3
-              className="text-xl font-bold mb-1"
-              style={{ color: "var(--text-primary)" }}
+              className="text-xl font-bold mb-2"
+              style={{ color: currentPlanet.text.primary }}
             >
               {portfolioConfig.footer.tagline}
             </h3>
             <p
               className="text-sm"
-              style={{ color: "var(--text-muted)" }}
+              style={{ color: currentPlanet.text.muted }}
             >
               {portfolioConfig.footer.subTagline}
             </p>
           </motion.div>
 
           {/* Navigation Links */}
-          <nav className="flex flex-wrap justify-center gap-6">
-            {["Home", "About", "Projects", "Contact"].map((link) => (
+          <nav className="flex flex-wrap justify-center gap-4 md:gap-6">
+            {links.map((link) => (
               <Link
-                key={link}
-                href={link === "Home" ? "/" : `/pages/${link.toLowerCase()}`}
+                key={link.name}
+                href={link.path}
                 className="text-sm transition-colors relative group"
-                style={{ color: "var(--text-secondary)" }}
+                style={{ color: currentPlanet.text.secondary }}
               >
-                <span className="group-hover:text-[var(--accent-primary)] transition-colors duration-300">
-                  {link}
+                <span
+                  className="transition-colors duration-500"
+                  style={{
+                    color: currentPlanet.text.secondary,
+                  }}
+                >
+                  {link.name}
                 </span>
                 <span
-                  className="absolute -bottom-1 left-0 w-full h-px origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
-                  style={{ backgroundColor: "var(--accent-primary)" }}
+                  className="absolute -bottom-1 left-0 w-full h-px origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
+                  style={{ backgroundColor: currentPlanet.text.accent }}
                 />
               </Link>
             ))}
@@ -99,35 +109,33 @@ export function Footer() {
           {/* Copyright */}
           <motion.p
             className="text-sm text-center md:text-right"
-            style={{ color: "var(--text-muted)" }}
+            style={{ color: currentPlanet.text.muted }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             © {currentYear} All rights reserved
           </motion.p>
         </div>
 
-        {/* Ambient floating particles - very slow, subtle */}
+        {/* Ambient floating particles */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 rounded-full"
               style={{
-                backgroundColor: theme === "sunrise"
-                  ? "rgba(255, 149, 0, 0.4)"
-                  : "rgba(139, 92, 246, 0.4)",
+                backgroundColor: `${currentPlanet.text.accent}60`,
                 left: `${20 + i * 30}%`,
                 bottom: "20%",
               }}
               animate={{
-                y: [-10, -30, -10],
+                y: [-10, -40, -10],
                 opacity: [0.2, 0.5, 0.2],
               }}
               transition={{
-                duration: 6 + i * 2,
+                duration: 8 + i * 3,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: i * 2,

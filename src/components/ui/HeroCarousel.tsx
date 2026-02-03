@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePlanetNavigation } from "@/hooks/usePlanetNavigation";
 
 export interface CarouselItem {
   headline: string;
@@ -19,6 +20,7 @@ export function HeroCarousel({
   interval = 6000,
   className = "",
 }: HeroCarouselProps) {
+  const { currentPlanet } = usePlanetNavigation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -56,13 +58,13 @@ export function HeroCarousel({
         >
           <h3
             className="text-2xl md:text-3xl font-semibold mb-2"
-            style={{ color: "var(--text-primary)" }}
+            style={{ color: currentPlanet.text.primary }}
           >
             {items[currentIndex].headline}
           </h3>
           <p
             className="text-lg md:text-xl max-w-2xl mx-auto"
-            style={{ color: "var(--text-secondary)" }}
+            style={{ color: currentPlanet.text.secondary }}
           >
             {items[currentIndex].subtext}
           </p>
