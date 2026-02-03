@@ -132,12 +132,12 @@ export function SkillsSection() {
           transition={{ duration: 0.8 }}
           className="flex items-center justify-center gap-3 mb-8"
         >
-          <span className="text-4xl" role="img" aria-label="Crystal Planet">💎</span>
+          <span className="text-4xl" role="img" aria-label={currentPlanet.name}>{currentPlanet.emoji}</span>
           <span
             className="text-sm font-medium tracking-wider uppercase"
             style={{ color: currentPlanet.text.accent }}
           >
-            Crystal Station
+            {currentPlanet.name} Station
           </span>
         </motion.div>
 

@@ -16,7 +16,7 @@ interface PlanetSurfaceProps {
 export function PlanetSurface({ planet }: PlanetSurfaceProps) {
   const commonStyle = {
     "--atmosphere-glow": planet.atmosphere.accent,
-    "--atmosphere-tint": `${planet.atmosphere.bottom}80`,
+    "--atmosphere-tint": `${planet.atmosphere.lower}80`,
     "--aurora-color": planet.atmosphere.accent,
     "--surface-glow": planet.surface.glow,
   } as React.CSSProperties;

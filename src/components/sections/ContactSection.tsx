@@ -192,7 +192,7 @@ export function ContactSection() {
                   className="px-8 py-3 rounded-lg text-sm font-medium"
                   style={{
                     backgroundColor: currentPlanet.text.accent,
-                    color: currentPlanet.atmosphere.top,
+                    color: currentPlanet.atmosphere.deepSpace,
                   }}
                   whileHover={{
                     scale: 1.02,

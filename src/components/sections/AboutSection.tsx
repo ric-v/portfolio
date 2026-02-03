@@ -151,7 +151,7 @@ export function AboutSection() {
             <div
               className="absolute inset-0 z-20"
               style={{
-                background: `linear-gradient(to bottom, transparent 0%, ${currentPlanet.atmosphere.bottom} 100%)`
+                background: `linear-gradient(to bottom, transparent 0%, ${currentPlanet.atmosphere.lower} 100%)`
               }}
             />
             <div

@@ -51,16 +51,34 @@ export function HeroSection() {
 
   // Earth Dark (Sunset) Colors (From palette)
   const darkPalette = currentPlanet.palettes?.dark;
+  const darkPrimary = darkPalette?.primary || "#ffffff";
+  const darkSecondary = darkPalette?.secondary || "#c6d8e6";
+  const darkMuted = darkPalette?.muted || "#9ca3af";
   const darkAccentHex = darkPalette?.accent || "#64b5f6";
   const darkGlowHex = darkPalette?.glow || "#4caf50";
 
   // Earth Light (Sunrise) Colors (From palette)
   const lightPalette = currentPlanet.palettes?.light;
+  const lightPrimary = lightPalette?.primary || "#000000";
+  const lightSecondary = lightPalette?.secondary || "#2f3e4c";
+  const lightMuted = lightPalette?.muted || "#4b5563";
   const lightAccent = lightPalette?.accent || "#d97706";
   const lightGlow = lightPalette?.glow || "#fb923c";
 
   // Current Interpolated Colors
   const isLightModeSupported = !!currentPlanet.palettes;
+
+  const activePrimary = isLightModeSupported
+    ? interpolateColor(darkPrimary, lightPrimary, visualProgress)
+    : currentPlanet.text.primary;
+
+  const activeSecondary = isLightModeSupported
+    ? interpolateColor(darkSecondary, lightSecondary, visualProgress)
+    : currentPlanet.text.secondary;
+
+  const activeMuted = isLightModeSupported
+    ? interpolateColor(darkMuted, lightMuted, visualProgress)
+    : currentPlanet.text.muted;
 
   const activeAccent = isLightModeSupported
     ? interpolateColor(darkAccentHex, lightAccent, visualProgress)
@@ -85,7 +103,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
           className="text-lg md:text-xl mb-6"
-          style={{ color: currentPlanet.text.muted }}
+          style={{ color: activeMuted }}
         >
           <TypewriterText
             text={`Hello, I'm ${portfolioConfig.personalInfo.name}`}
@@ -99,7 +117,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight"
-          style={{ color: currentPlanet.text.primary }}
+          style={{ color: activePrimary }}
         >
           <span className="block md:inline">
             <TypewriterText
@@ -128,7 +146,11 @@ export function HeroSection() {
           transition={{ duration: 1, delay: 1 }}
           className="mb-12"
         >
-          <HeroCarousel items={portfolioConfig.hero.carouselItems} />
+          <HeroCarousel
+            items={portfolioConfig.hero.carouselItems}
+            primaryColor={activePrimary}
+            secondaryColor={activeSecondary}
+          />
         </motion.div>
 
         {/* Scroll Indicator */}
@@ -145,7 +167,7 @@ export function HeroSection() {
           >
             <span
               className="text-sm tracking-wider"
-              style={{ color: currentPlanet.text.muted }}
+              style={{ color: activeMuted }}
             >
               Explore the universe
             </span>

@@ -21,15 +21,17 @@ const fragmentShader = `
   uniform vec2 uResolution;
   
   // Current planet colors
-  uniform vec3 uAtmosphereTop;
+  uniform vec3 uAtmosphereDeepSpace;
+  uniform vec3 uAtmosphereUpper;
   uniform vec3 uAtmosphereMid;
-  uniform vec3 uAtmosphereBottom;
+  uniform vec3 uAtmosphereLower;
   uniform vec3 uAtmosphereAccent;
   
   // Target planet colors (for transition)
-  uniform vec3 uTargetTop;
+  uniform vec3 uTargetDeepSpace;
+  uniform vec3 uTargetUpper;
   uniform vec3 uTargetMid;
-  uniform vec3 uTargetBottom;
+  uniform vec3 uTargetLower;
   uniform vec3 uTargetAccent;
   
   uniform float uStarDensity;
@@ -89,9 +91,10 @@ const fragmentShader = `
     float time = uTime * 0.08; // Slow movement
     
     // Mix current and target colors based on transition
-    vec3 topColor = mix(uAtmosphereTop, uTargetTop, uTransition);
+    vec3 deepSpaceColor = mix(uAtmosphereDeepSpace, uTargetDeepSpace, uTransition);
+    vec3 upperColor = mix(uAtmosphereUpper, uTargetUpper, uTransition);
     vec3 midColor = mix(uAtmosphereMid, uTargetMid, uTransition);
-    vec3 bottomColor = mix(uAtmosphereBottom, uTargetBottom, uTransition);
+    vec3 lowerColor = mix(uAtmosphereLower, uTargetLower, uTransition);
     vec3 accentColor = mix(uAtmosphereAccent, uTargetAccent, uTransition);
     
     // Create flowing noise distortion
@@ -104,23 +107,25 @@ const fragmentShader = `
     float waveY = sin(adjustedUv.x * 3.14159 * 2.0 + time) * 0.03;
     float gradientPos = distortedUv.y + waveY + noise1 * 0.08;
     
-    // Sky gradient
+    // Sky gradient (4 stops: Lower -> Mid -> Upper -> Deep Space)
     vec3 skyColor;
-    if (gradientPos < 0.35) {
-      skyColor = mix(bottomColor, midColor, gradientPos / 0.35);
-    } else if (gradientPos < 0.7) {
-      skyColor = mix(midColor, topColor, (gradientPos - 0.35) / 0.35);
+    if (gradientPos < 0.25) {
+      skyColor = mix(lowerColor, midColor, gradientPos / 0.25);
+    } else if (gradientPos < 0.55) {
+      skyColor = mix(midColor, upperColor, (gradientPos - 0.25) / 0.3);
+    } else if (gradientPos < 0.85) {
+      skyColor = mix(upperColor, deepSpaceColor, (gradientPos - 0.55) / 0.3);
     } else {
-      skyColor = topColor;
+      skyColor = deepSpaceColor;
     }
     
     // Horizon glow
-    float horizonGlow = smoothstep(0.5, 0.15, abs(gradientPos - 0.25));
+    float horizonGlow = smoothstep(0.4, 0.1, abs(gradientPos - 0.15));
     skyColor += accentColor * horizonGlow * uGlowIntensity * 0.4;
     
     // Stars (more visible at top)
     float stars = 0.0;
-    float starFade = smoothstep(0.3, 0.7, gradientPos);
+    float starFade = smoothstep(0.35, 0.65, gradientPos);
     
     // Multiple star layers
     float starNoise1 = snoise(adjustedUv * 100.0);
@@ -177,14 +182,16 @@ function AtmosphereMesh({ currentPlanet, targetPlanet, transition }: AtmosphereM
       uTransition: { value: 0 },
       uResolution: { value: new THREE.Vector2(size.width, size.height) },
 
-      uAtmosphereTop: { value: new THREE.Color(currentPlanet.atmosphere.top) },
+      uAtmosphereDeepSpace: { value: new THREE.Color(currentPlanet.atmosphere.deepSpace) },
+      uAtmosphereUpper: { value: new THREE.Color(currentPlanet.atmosphere.upper) },
       uAtmosphereMid: { value: new THREE.Color(currentPlanet.atmosphere.mid) },
-      uAtmosphereBottom: { value: new THREE.Color(currentPlanet.atmosphere.bottom) },
+      uAtmosphereLower: { value: new THREE.Color(currentPlanet.atmosphere.lower) },
       uAtmosphereAccent: { value: new THREE.Color(currentPlanet.atmosphere.accent) },
 
-      uTargetTop: { value: new THREE.Color(targetPlanet.atmosphere.top) },
+      uTargetDeepSpace: { value: new THREE.Color(targetPlanet.atmosphere.deepSpace) },
+      uTargetUpper: { value: new THREE.Color(targetPlanet.atmosphere.upper) },
       uTargetMid: { value: new THREE.Color(targetPlanet.atmosphere.mid) },
-      uTargetBottom: { value: new THREE.Color(targetPlanet.atmosphere.bottom) },
+      uTargetLower: { value: new THREE.Color(targetPlanet.atmosphere.lower) },
       uTargetAccent: { value: new THREE.Color(targetPlanet.atmosphere.accent) },
 
       uStarDensity: { value: currentPlanet.effects.starDensity },
@@ -209,14 +216,16 @@ function AtmosphereMesh({ currentPlanet, targetPlanet, transition }: AtmosphereM
     material.uniforms.uTransition.value = transition;
 
     // Update colors
-    material.uniforms.uAtmosphereTop.value.set(currentPlanet.atmosphere.top);
+    material.uniforms.uAtmosphereDeepSpace.value.set(currentPlanet.atmosphere.deepSpace);
+    material.uniforms.uAtmosphereUpper.value.set(currentPlanet.atmosphere.upper);
     material.uniforms.uAtmosphereMid.value.set(currentPlanet.atmosphere.mid);
-    material.uniforms.uAtmosphereBottom.value.set(currentPlanet.atmosphere.bottom);
+    material.uniforms.uAtmosphereLower.value.set(currentPlanet.atmosphere.lower);
     material.uniforms.uAtmosphereAccent.value.set(currentPlanet.atmosphere.accent);
 
-    material.uniforms.uTargetTop.value.set(targetPlanet.atmosphere.top);
+    material.uniforms.uTargetDeepSpace.value.set(targetPlanet.atmosphere.deepSpace);
+    material.uniforms.uTargetUpper.value.set(targetPlanet.atmosphere.upper);
     material.uniforms.uTargetMid.value.set(targetPlanet.atmosphere.mid);
-    material.uniforms.uTargetBottom.value.set(targetPlanet.atmosphere.bottom);
+    material.uniforms.uTargetLower.value.set(targetPlanet.atmosphere.lower);
     material.uniforms.uTargetAccent.value.set(targetPlanet.atmosphere.accent);
 
     // Interpolate effects
@@ -288,103 +297,7 @@ export function PlanetaryBackground({
           transition={transition}
         />
       </Canvas>
-
-      {/* Surface horizon arc at bottom */}
-      <PlanetSurface
-        currentPlanet={currentPlanet}
-        targetPlanet={targetPlanet}
-        transition={transition}
-      />
     </div>
-  );
-}
-
-interface PlanetSurfaceProps {
-  currentPlanet: PlanetConfig;
-  targetPlanet: PlanetConfig;
-  transition: number;
-}
-
-function PlanetSurface({ currentPlanet, targetPlanet, transition }: PlanetSurfaceProps) {
-  // Interpolate surface colors
-  const surfacePrimary = interpolateColor(
-    currentPlanet.surface.primary,
-    targetPlanet.surface.primary,
-    transition
-  );
-  const surfaceSecondary = interpolateColor(
-    currentPlanet.surface.secondary,
-    targetPlanet.surface.secondary,
-    transition
-  );
-  const surfaceGlow = interpolateColor(
-    currentPlanet.surface.glow,
-    targetPlanet.surface.glow,
-    transition
-  );
-
-  return (
-    <>
-      {/* Surface glow */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse 120% 100% at 50% 100%, ${surfaceGlow}40 0%, transparent 70%)`,
-          transition: 'background 0.5s ease-out',
-        }}
-      />
-
-      {/* Main surface arc */}
-      <div
-        className="absolute bottom-0 left-0 right-0 pointer-events-none overflow-hidden"
-        style={{ height: '15vh' }}
-      >
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2"
-          style={{
-            width: '200vw',
-            height: '200vw',
-            borderRadius: '50%',
-            background: `linear-gradient(to top, ${surfacePrimary} 0%, ${surfaceSecondary} 30%, transparent 50%)`,
-            transform: 'translateX(-50%) translateY(96%)',
-            transition: 'background 0.5s ease-out',
-          }}
-        />
-      </div>
-
-      {/* Surface texture overlay */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none opacity-30"
-        style={{
-          background: `repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 2px,
-            ${surfaceSecondary}20 2px,
-            ${surfaceSecondary}20 4px
-          )`,
-        }}
-      />
-
-      {/* Saturn rings effect */}
-      {(currentPlanet.effects.hasRings || (targetPlanet.effects.hasRings && transition > 0.5)) && (
-        <motion.div
-          className="absolute bottom-16 left-0 right-0 h-8 pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: transition > 0.5 ? 1 : (currentPlanet.effects.hasRings ? 1 : 0) }}
-          transition={{ duration: 1 }}
-          style={{
-            background: `linear-gradient(to bottom, 
-              transparent 0%, 
-              ${surfaceGlow}30 20%, 
-              ${surfaceGlow}50 40%, 
-              ${surfaceGlow}30 60%, 
-              transparent 80%
-            )`,
-          }}
-        />
-      )}
-    </>
   );
 }
 

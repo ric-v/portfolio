@@ -22,7 +22,7 @@ const sceneVariants: Variants = {
     y: 0, // No dip
     scale: 1,
     // @ts-ignore
-    transition: { duration: 0.4, ease: "easeOut" as any }
+    transition: { duration: 0.2, ease: "easeOut" as any }
   },
 
   liftoff: {
@@ -31,7 +31,7 @@ const sceneVariants: Variants = {
     opacity: 0.2, // Fade out instead
     filter: "blur(10px)",
     // @ts-ignore
-    transition: { duration: 0.8, ease: "easeInOut" }
+    transition: { duration: 0.6, ease: "easeInOut" }
   },
 
   drift: {
@@ -40,7 +40,7 @@ const sceneVariants: Variants = {
     opacity: 0, // Hidden behind warp
     filter: "blur(20px)",
     // @ts-ignore
-    transition: { duration: 1.6, ease: "linear" }
+    transition: { duration: 0.8, ease: "linear" }
   },
 
   landing: {
@@ -49,7 +49,7 @@ const sceneVariants: Variants = {
     opacity: 0.2, // Fade in
     filter: "blur(10px)",
     // @ts-ignore
-    transition: { duration: 1.2, ease: "easeOut" }
+    transition: { duration: 0.8, ease: "easeOut" }
   },
 
   settle: {
@@ -66,7 +66,7 @@ export function GlobalSceneWrapper({ children, className }: GlobalSceneWrapperPr
   const { phase } = usePlanetNavigation();
 
   return (
-    <div className={`relative w-full h-full overflow-hidden bg-black ${className}`}>
+    <div className={`relative w-full h-full bg-black ${className}`}>
       {/* The Main Content Scene */}
       <motion.div
         className="relative z-10 w-full h-full origin-center will-change-transform"

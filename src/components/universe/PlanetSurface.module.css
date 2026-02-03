@@ -69,99 +69,9 @@
   pointer-events: none;
 }
 
+
 /* --- New Atmosphere Layers (Aurora & Clouds) --- */
-.auroraLayer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40vh;
-  background: linear-gradient(90deg,
-      transparent 0%,
-      var(--aurora-color) 20%,
-      transparent 40%,
-      var(--aurora-color) 60%,
-      transparent 100%);
-  /* Reduced opacity for darker effect */
-  opacity: 0.2;
-  filter: blur(40px);
-  mask-image: linear-gradient(to top, black 20%, transparent 100%);
-  animation: auroraFlow 60s linear infinite;
-  mix-blend-mode: screen;
-  z-index: 2;
-}
-
-.cloudLayer {
-  position: absolute;
-  bottom: -10%;
-  left: -50%;
-  right: -50%;
-  height: 50vh;
-  background: radial-gradient(ellipse at 50% 100%,
-      var(--atmosphere-tint) 10%,
-      transparent 60%);
-  filter: blur(30px);
-  opacity: 0.3;
-  /* Reduced from 0.5 */
-  mix-blend-mode: screen;
-  animation: cloudDrift 120s linear infinite alternate;
-  z-index: 2;
-}
-
-.cloudLayer:nth-of-type(2) {
-  bottom: -5%;
-  height: 40vh;
-  opacity: 0.15;
-  /* Reduced from 0.3 */
-  animation-duration: 180s;
-  animation-direction: alternate-reverse;
-  background: radial-gradient(ellipse at 60% 100%,
-      var(--surface-glow) 20%,
-      transparent 70%);
-}
-
-.cloudLayer:nth-of-type(3) {
-  bottom: -15%;
-  height: 60vh;
-  opacity: 0.1;
-  /* Reduced from 0.2 */
-  animation-duration: 240s;
-  animation-delay: -60s;
-  background: radial-gradient(ellipse at 40% 100%,
-      var(--atmosphere-tint) 15%,
-      transparent 50%);
-}
-
-.cloudLayer:nth-of-type(4) {
-  bottom: 0%;
-  height: 35vh;
-  opacity: 0.15;
-  /* Reduced from 0.25 */
-  animation-duration: 150s;
-  /* Faster foreground drift */
-  animation-direction: reverse;
-  background: radial-gradient(ellipse at 70% 100%,
-      var(--surface-glow) 10%,
-      transparent 60%);
-}
-
-.auroraLayer:nth-of-type(2) {
-  bottom: 5%;
-  /* Slightly higher */
-  height: 45vh;
-  opacity: 0.15;
-  /* Reduced from 0.3 */
-  animation-duration: 90s;
-  /* Slower, out of phase */
-  animation-direction: reverse;
-  background: linear-gradient(90deg,
-      transparent 0%,
-      var(--aurora-color) 30%,
-      transparent 50%,
-      var(--aurora-color) 70%,
-      transparent 100%);
-  filter: blur(50px);
-}
+/* Unused layers removed */
 
 @keyframes surfaceBreathe {
   0% {
@@ -170,31 +80,5 @@
 
   100% {
     transform: translateX(-50%) scale(1.02) rotate(1deg);
-  }
-}
-
-@keyframes auroraFlow {
-  0% {
-    transform: translateX(-10%);
-    opacity: 0.3;
-  }
-
-  50% {
-    opacity: 0.6;
-  }
-
-  100% {
-    transform: translateX(10%);
-    opacity: 0.3;
-  }
-}
-
-@keyframes cloudDrift {
-  0% {
-    transform: translateX(-5%);
-  }
-
-  100% {
-    transform: translateX(5%);
   }
 }

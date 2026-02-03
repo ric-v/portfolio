@@ -74,9 +74,10 @@ export interface PlanetConfig {
   };
 
   atmosphere: {
-    top: string;
+    deepSpace: string;
+    upper: string;
     mid: string;
-    bottom: string;
+    lower: string;
     accent: string;
   };
   surface: {
@@ -148,56 +149,62 @@ export const planets: Record<PlanetId, PlanetConfig> = {
     path: '/',
     emoji: '🌍',
     surfaceImage: '/earth.png',
+    colors: {
+      primary: '#0F2E44', // Ocean Shadow
+      secondary: '#2C4B3F', // Land (Muted Green)
+      tertiary: '#1F6FA8', // Ocean Highlight
+    },
     atmosphere: {
-      top: '#0a1628',      // Deep night blue
-      mid: '#1e3a5f',      // Ocean blue
-      bottom: '#4a90a4',   // Sky blue
-      accent: '#64b5f6',   // Light blue glow
+      deepSpace: '#070C12', // Cold near-black
+      upper: '#0D1A2B',     // Midnight blue
+      mid: '#122B45',       // Deep ocean blue
+      lower: '#1E4E7A',     // Atmospheric blue
+      accent: '#4FC3F7',    // Primary glow
     },
     surface: {
-      primary: '#1a472a',   // Forest green
-      secondary: '#2d5a3c', // Lighter green
-      glow: '#4caf50',      // Green glow
+      primary: '#0F2E44',   // Ocean Surface
+      secondary: '#1F6FA8', // Ocean Highlight
+      glow: '#4FC3F7',      // Primary Glow
     },
     effects: {
       starDensity: 0.9,
-      cloudOpacity: 0.4,
-      glowIntensity: 0.5
+      cloudOpacity: 0.4,    // Keep soft
+      glowIntensity: 0.4,   // Reduced for sharpness
+      hasRings: false,
+      hasDust: false,
     },
     text: PLANET_VARS,
     palettes: {
       dark: {
-        // Previously Earth used 'var(--earth-text-primary)' which fell back to globals.css
-        // globals.css: --earth-text-primary: #e0f2f1; (Cyber Cyan)
-        primary: '#e0f2f1',   // Soft Teal/White (Original CSS default inferred) - actually global defaults were used. Let's start fresh with visually verified values.
-        secondary: '#b2dfdb',
-        muted: '#80cbc4',
-        accent: '#64b5f6', // Matches accent
+        primary: '#F4FAFF',
+        secondary: '#C6D8E6',
+        muted: '#9FB4C6',
+        accent: '#2ED4A4',
       },
       light: {
-        primary: '#1c1917',   // Stone 900
-        secondary: '#44403c', // Stone 700
-        muted: '#78716c',     // Stone 500
-        accent: '#d97706',    // Amber 600
-        glow: '#fb923c',      // Orange 400
+        primary: '#0E2233',   // Deep slate blue (Headline)
+        secondary: '#2F3E4C', // Neutral charcoal-blue (Body)
+        muted: '#5E6F7E',     // Muted Blue-Grey (Metadata)
+        accent: '#1E5C85',    // Muted steel blue (Emphasis)
+        glow: '#4FC3F7',
       }
     },
     ambientLayer: {
       dark: {
         primary: {
           type: 'clouds-low',
-          options: { speed: 'ultra-slow', opacity: 0.12, color: '#b0bec5' }
+          options: { speed: 'ultra-slow', opacity: 0.12, color: '#E6F1FA' } // Cloud base
         },
         secondary: {
-          type: 'comets',
-          options: { speed: 'fast', interval: 30000, color: '#ffffff' }
+          type: 'clouds-high', // Replaced comets with high clouds for depth, or aurora? User mentioned Aurora night only.
+          options: { speed: 'slow', opacity: 0.05, color: '#3DE3C3' } // Aurora (very low opacity)
         },
         stars: true
       },
       light: {
         primary: {
           type: 'clouds-high',
-          options: { speed: 'ultra-slow', opacity: 0.08, color: '#ffffff' }
+          options: { speed: 'ultra-slow', opacity: 0.15, color: '#FFFFFF' }
         },
         secondary: {
           type: 'birds',
@@ -210,10 +217,10 @@ export const planets: Record<PlanetId, PlanetConfig> = {
       text: { primary: '', secondary: '', muted: '', accent: '' }, // Deprecated
       fluidBackground: {
         sunrise: {
-          top: '#e8f4f8',
-          mid: '#c0e8f0',
-          bottom: '#ffe0b2',
-          accent: '#ffb74d',
+          top: '#EAF4FF',   // Sky top
+          mid: '#CFE8FF',   // Sky mid
+          bottom: '#FFD9A8', // Horizon (Sunrise)
+          accent: '#FFF1DC', // Atmospheric wash
         },
         sunset: {
           top: '#030a0c',
@@ -232,15 +239,16 @@ export const planets: Record<PlanetId, PlanetConfig> = {
     emoji: '🔴',
     surfaceImage: '/mars.png',
     colors: {
-      primary: '#ff7043',
-      secondary: '#d84315',
+      primary: '#D28A4C', // Desaturated Rust
+      secondary: '#9C6236', // Darker Rust
       tertiary: '#bf360c',
     },
     atmosphere: {
-      top: '#2d0a05',
-      mid: '#5d1a0e',
-      bottom: '#8c2815',
-      accent: '#ff5722',
+      deepSpace: '#0F0B09', // Almost black, warm-neutral
+      upper: '#1C1511',     // Cold brown
+      mid: '#2A1D16',       // Dusty umber
+      lower: '#3A2418',     // Subtle warmth
+      accent: '#D28A4C',    // Thin horizon glow
     },
     surface: {
       primary: '#d84315',
@@ -249,40 +257,39 @@ export const planets: Record<PlanetId, PlanetConfig> = {
     },
     effects: {
       starDensity: 1.5,
-      cloudOpacity: 0.6,
-      glowIntensity: 0.8,
+      cloudOpacity: 0.2, // Reduced thinned dust
+      glowIntensity: 0.3, // Thinner, sharper glow
       hasDust: true,
     },
     text: PLANET_VARS,
     palettes: {
       dark: {
-        primary: '#ffe0b2',
-        secondary: '#ffcc80',
-        muted: '#e65100',
-        accent: '#ff5722',
+        primary: '#E9E3DD',
+        secondary: '#C7B8AD',
+        muted: '#9A8A7F',
+        accent: '#D28A4C',
       },
       light: {
-        primary: '#3f1a16', // Dark Brown/Rust
+        primary: '#3f1a16',
         secondary: '#5d2924',
         muted: '#8c3d35',
-        accent: '#e65100', // Deep Orange
-        glow: '#ff8a65',   // Light Salmon
+        accent: '#e65100',
+        glow: '#ff8a65',
       }
     },
     ambientLayer: {
       dark: {
         primary: {
           type: 'dust-haze',
-          options: { speed: 'ultra-slow', opacity: 0.1, color: '#d84315' }
+          options: { speed: 'ultra-slow', opacity: 0.08, color: '#D28A4C' } // 8% opacity
         },
         secondary: {
           type: 'particulates',
-          options: { speed: 'slow', opacity: 0.28, color: '#ffcc80' }
+          options: { speed: 'slow', opacity: 0.05, color: '#9C6236' } // 5% opacity
         }
-        // No stars near surface
       },
       light: {
-        primary: { type: 'dust-haze', options: { opacity: 0.14, color: '#d84315' } },
+        primary: { type: 'dust-haze', options: { opacity: 0.14, color: '#C48A54' } },
         secondary: { type: 'particulates', options: { opacity: 0.2 } }
       }
     },
@@ -291,13 +298,13 @@ export const planets: Record<PlanetId, PlanetConfig> = {
       text: { primary: '', secondary: '', muted: '', accent: '' }, // Deprecated
       fluidBackground: {
         sunrise: {
-          top: '#fff7ed',    // Pale Peach (Orange 50)
-          mid: '#fed7aa',    // Dusty Rose (Orange 200)
-          bottom: '#ef4444', // Mars Red (Red 500)
-          accent: '#f97316', // Bright Red-Orange (Orange 500)
+          top: '#EFE6DA',    // Sky top (Pale Sand)
+          mid: '#E3C6A4',    // Sky mid (Beige)
+          bottom: '#D9A36B', // Horizon (Warm Sand)
+          accent: '#C48A54', // Dust Wash
         },
         sunset: {
-          top: '#2d0a05',    // Deep Mars
+          top: '#2d0a05',
           mid: '#5d1a0e',
           bottom: '#8c2815',
           accent: '#ff5722',
@@ -308,8 +315,8 @@ export const planets: Record<PlanetId, PlanetConfig> = {
   jupiter: {
     id: 'jupiter',
     name: 'Jupiter',
-    section: 'Skills',
-    path: '/skills',
+    section: 'Experience',
+    path: '/experience',
     emoji: '🟤',
     surfaceImage: '/jupiter.png',
     colors: {
@@ -318,9 +325,10 @@ export const planets: Record<PlanetId, PlanetConfig> = {
       tertiary: '#736a58',
     },
     atmosphere: {
-      top: '#1c1917',
+      deepSpace: '#1c1917',
+      upper: '#1c1917',
       mid: '#292524',
-      bottom: '#44403c',
+      lower: '#44403c',
       accent: '#d6d3d1',
     },
     surface: {
@@ -343,10 +351,10 @@ export const planets: Record<PlanetId, PlanetConfig> = {
         accent: '#a8a29e',
       },
       light: {
-        primary: '#1f2937', // Dark Grey
+        primary: '#1f2937',
         secondary: '#374151',
         muted: '#4b5563',
-        accent: '#991b1b', // Crimson
+        accent: '#991b1b',
         glow: '#ef4444',
       }
     },
@@ -358,13 +366,13 @@ export const planets: Record<PlanetId, PlanetConfig> = {
     },
     lightMode: {
       enabled: true,
-      text: { primary: '', secondary: '', muted: '', accent: '' }, // Deprecated
+      text: { primary: '', secondary: '', muted: '', accent: '' },
       fluidBackground: {
         sunrise: {
-          top: '#f3f4f6',    // Pale Grey
-          mid: '#d1d5db',    // Stormy Tan
-          bottom: '#b91c1c', // Muted Red-Brown
-          accent: '#991b1b', // Crimson
+          top: '#f3f4f6',
+          mid: '#d1d5db',
+          bottom: '#b91c1c',
+          accent: '#991b1b',
         },
         sunset: {
           top: '#1c1917',
@@ -378,8 +386,8 @@ export const planets: Record<PlanetId, PlanetConfig> = {
   saturn: {
     id: 'saturn',
     name: 'Saturn',
-    section: 'Experience',
-    path: '/experience',
+    section: 'Skills',
+    path: '/skills',
     emoji: '🪐',
     surfaceImage: '/saturn.png',
     colors: {
@@ -388,9 +396,10 @@ export const planets: Record<PlanetId, PlanetConfig> = {
       tertiary: '#8d6e3c',
     },
     atmosphere: {
-      top: '#1a1610',
+      deepSpace: '#1a1610',
+      upper: '#1a1610',
       mid: '#2c251a',
-      bottom: '#3d3424',
+      lower: '#3d3424',
       accent: '#fbbf24',
     },
     surface: {
@@ -414,7 +423,7 @@ export const planets: Record<PlanetId, PlanetConfig> = {
         accent: '#fbbf24',
       },
       light: {
-        primary: '#451a03', // Deep Brown
+        primary: '#451a03',
         secondary: '#78350f',
         muted: '#92400e',
         accent: '#d97706',
@@ -429,13 +438,13 @@ export const planets: Record<PlanetId, PlanetConfig> = {
     },
     lightMode: {
       enabled: true,
-      text: { primary: '', secondary: '', muted: '', accent: '' }, // Deprecated
+      text: { primary: '', secondary: '', muted: '', accent: '' },
       fluidBackground: {
         sunrise: {
-          top: '#fefce8',    // Cream (Yellow 50)
-          mid: '#fde68a',    // Pale Gold (Amber 200)
-          bottom: '#d6d3d1', // Soft Beige (Stone 300)
-          accent: '#f59e0b', // Golden Yellow (Amber 500)
+          top: '#fefce8',
+          mid: '#fde68a',
+          bottom: '#d6d3d1',
+          accent: '#f59e0b',
         },
         sunset: {
           top: '#1a1610',
@@ -458,9 +467,10 @@ export const planets: Record<PlanetId, PlanetConfig> = {
       tertiary: '#006064',
     },
     atmosphere: {
-      top: '#04181a',
+      deepSpace: '#04181a',
+      upper: '#04181a',
       mid: '#002529',
-      bottom: '#00363a',
+      lower: '#00363a',
       accent: '#00e5ff',
     },
     surface: {
@@ -483,7 +493,7 @@ export const planets: Record<PlanetId, PlanetConfig> = {
         accent: '#18ffff',
       },
       light: {
-        primary: '#164e63', // Slate Like Cyan Dark
+        primary: '#164e63',
         secondary: '#155e75',
         muted: '#0e7490',
         accent: '#06b6d4',
@@ -498,13 +508,13 @@ export const planets: Record<PlanetId, PlanetConfig> = {
     },
     lightMode: {
       enabled: true,
-      text: { primary: '', secondary: '', muted: '', accent: '' }, // Deprecated
+      text: { primary: '', secondary: '', muted: '', accent: '' },
       fluidBackground: {
         sunrise: {
-          top: '#ffffff',    // Pure White
-          mid: '#cffafe',    // Icy Blue (Cyan 100)
-          bottom: '#e0e7ff', // Soft Lavender (Indigo 100)
-          accent: '#06b6d4', // Bright Cyan (Cyan 500)
+          top: '#ffffff',
+          mid: '#cffafe',
+          bottom: '#e0e7ff',
+          accent: '#06b6d4',
         },
         sunset: {
           top: '#04181a',
@@ -528,10 +538,11 @@ export const planets: Record<PlanetId, PlanetConfig> = {
       tertiary: '#4b5563',
     },
     atmosphere: {
-      top: '#0f1419',      // Deep frozen black
-      mid: '#1f2937',      // Dark ice grey
-      bottom: '#374151',   // Slate grey
-      accent: '#d1d5db',   // Pale ice white
+      deepSpace: '#0f1419',
+      upper: '#0f1419',
+      mid: '#1f2937',
+      lower: '#374151',
+      accent: '#d1d5db',
     },
     surface: {
       primary: '#6b7280',
@@ -539,25 +550,25 @@ export const planets: Record<PlanetId, PlanetConfig> = {
       glow: '#9ca3af',
     },
     effects: {
-      starDensity: 0.95,   // Extremely distant, clear view of stars
-      cloudOpacity: 0.1,   // Very thin atmosphere
-      glowIntensity: 0.3,  // Dim, distant from sun
+      starDensity: 0.95,
+      cloudOpacity: 0.1,
+      glowIntensity: 0.3,
       hasRings: false,
       hasIce: true,
     },
     text: PLANET_VARS,
     palettes: {
       dark: {
-        primary: '#f3f4f6',   // Very light grey (almost white)
+        primary: '#f3f4f6',
         secondary: '#e5e7eb',
         muted: '#d1d5db',
         accent: '#9ca3af',
       },
       light: {
-        primary: '#111827',   // Deep grey/black
+        primary: '#111827',
         secondary: '#1f2937',
         muted: '#374151',
-        accent: '#6366f1',    // Indigo accent
+        accent: '#6366f1',
         glow: '#818cf8',
       }
     },
@@ -569,13 +580,13 @@ export const planets: Record<PlanetId, PlanetConfig> = {
     },
     lightMode: {
       enabled: true,
-      text: { primary: '', secondary: '', muted: '', accent: '' }, // Deprecated
+      text: { primary: '', secondary: '', muted: '', accent: '' },
       fluidBackground: {
         sunrise: {
-          top: '#f9fafb',       // Almost white (Grey 50)
-          mid: '#e5e7eb',       // Light grey (Grey 200)
-          bottom: '#9ca3af',    // Medium grey (Grey 400)
-          accent: '#6366f1',    // Indigo (for contrast)
+          top: '#f9fafb',
+          mid: '#e5e7eb',
+          bottom: '#9ca3af',
+          accent: '#6366f1',
         },
         sunset: {
           top: '#0f1419',

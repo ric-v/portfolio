@@ -60,19 +60,19 @@ export function PlanetNavigationProvider({ children }: { children: ReactNode }) 
 
     // 6. Orchestration Logic
 
-    // Phase 1: Anticipation (0.4s)
+    // Phase 1: Anticipation (0.2s)
     setPhase("anticipation");
-    await wait(400);
+    await wait(200);
 
-    // Phase 2: Lift-off (0.8s)
+    // Phase 2: Lift-off (0.6s)
     setPhase("liftoff");
-    await wait(800);
+    await wait(600);
 
-    // Phase 3: Drift (Space) (1.6s total)
+    // Phase 3: Drift (Space) (0.8s total)
     setPhase("drift");
 
     // Wait part of drift before swapping
-    await wait(600);
+    await wait(300);
 
     // 🔥 Swap page HERE (user should not notice)
     // We update state immediately but visual content is hidden/blurred/scaled down
@@ -80,11 +80,11 @@ export function PlanetNavigationProvider({ children }: { children: ReactNode }) 
     setCurrentPlanet(target);
 
     // Continue drift to let route settle
-    await wait(1000);
+    await wait(500);
 
-    // Phase 4: Re-entry (1.2s)
+    // Phase 4: Re-entry (0.8s)
     setPhase("landing");
-    await wait(1200);
+    await wait(800);
 
     // Phase 5: Settle (0.4s)
     setPhase("settle");

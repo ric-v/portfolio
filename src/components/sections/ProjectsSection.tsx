@@ -42,7 +42,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               background: `radial-gradient(circle at 30% 30%, 
                 ${currentPlanet.text.accent}40 0%, 
                 ${currentPlanet.surface.primary} 60%,
-                ${currentPlanet.atmosphere.top} 100%)`,
+                ${currentPlanet.atmosphere.deepSpace} 100%)`,
             }}
             animate={{
               scale: isHovered ? 1.05 : 1,
@@ -96,7 +96,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <motion.div
             className="absolute inset-0 flex items-center justify-center gap-4"
             style={{
-              backgroundColor: `${currentPlanet.atmosphere.top}e0`,
+              backgroundColor: `${currentPlanet.atmosphere.deepSpace}e0`,
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}

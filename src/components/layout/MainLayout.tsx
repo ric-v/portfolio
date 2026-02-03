@@ -15,10 +15,8 @@ export function MainLayout({ children, className = "" }: MainLayoutProps) {
       {/* Top Navigation */}
       <Navigation />
 
-      {/* Theme Toggle (Fixed Top Right) */}
-      <div className="fixed top-4 right-4 z-50">
-        <ThemeToggle />
-      </div>
+      {/* Theme Toggle (Removed - handled globally by PlanetaryLayoutWrapper) */}
+
 
       {/* Page Navigator (Fixed Bottom Right) */}
       <div className="fixed bottom-8 right-8 z-50">

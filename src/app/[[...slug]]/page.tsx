@@ -21,9 +21,9 @@ export default function Home() {
       case 'mars':
         return <AboutSection />;
       case 'jupiter':
-        return <SkillsSection />;
-      case 'saturn':
         return <ExperienceSection />;
+      case 'saturn':
+        return <SkillsSection />;
       case 'uranus':
         return <ProjectsSection />;
       case 'pluto':

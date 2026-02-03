@@ -40,9 +40,9 @@ export default function RootLayout({
         className={`${gantari.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider defaultTheme="sunset">
+          <CursorGlow />
+          <BackgroundMusic />
           <PlanetaryLayoutWrapper>
-            <CursorGlow />
-            <BackgroundMusic />
             <main id="main-content" className="relative z-10">
               {children}
             </main>
