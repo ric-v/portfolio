@@ -1,0 +1,84 @@
+.surfaceContainer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Shared Base --- */
+.surfaceObject {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  will-change: transform;
+  user-select: none;
+}
+
+/* --- Emoji Style (North Pole) --- */
+.emojiSurface {
+  top: 85vh;
+  /* Push down to show only the top curvature */
+  font-size: 150vh;
+  line-height: 1;
+
+  /* Atmospheric softening */
+  filter: blur(8px) contrast(1.1);
+  opacity: 0.95;
+
+  /* Subtle organic motion */
+  animation: surfaceBreathe 60s ease-in-out infinite alternate;
+}
+
+/* --- Image Style (Full Screen with Vignette) --- */
+.imageSurface {
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  filter: brightness(0.6) contrast(1);
+  opacity: 0.4;
+  animation: none;
+  transform: none;
+  left: 0;
+
+  /* Hide the top 85%, fading in only at the very bottom */
+  mask-image: linear-gradient(to bottom,
+      transparent 75%,
+      black 100%);
+  /* Fallback for webkit */
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 75%,
+      black 100%);
+}
+
+/* Atmospheric glow overlay - Only used for Emoji style */
+.atmosphereOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  background: radial-gradient(ellipse at 50% 100%,
+      var(--atmosphere-glow) 0%,
+      transparent 70%);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+
+/* --- New Atmosphere Layers (Aurora & Clouds) --- */
+/* Unused layers removed */
+
+@keyframes surfaceBreathe {
+  0% {
+    transform: translateX(-50%) scale(1) rotate(0deg);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1.02) rotate(1deg);
+  }
+}

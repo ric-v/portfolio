@@ -21,7 +21,18 @@
   --glow-secondary: rgba(255, 170, 108, 0.3);
   --highlight: #fff8f0;
 
-  /* Text Colors */
+  /* Global Planet Text Variables (Default: Earth Dark) */
+  /* These are dynamically updated by PlanetaryLayoutWrapper based on the current planet */
+  --planet-text-primary: #e0f2f1;
+  --planet-text-secondary: #b2dfdb;
+  --planet-text-muted: #80cbc4;
+  --planet-text-accent: #64b5f6;
+
+  /* Legacy Earth Vars - keeping for safety or removing if fully migrated */
+  --earth-text-primary: #e0f2f1;
+  --earth-text-secondary: #b2dfdb;
+  --earth-text-muted: #80cbc4;
+  --earth-text-accent: #64b5f6;
   --text-primary: #0d2f2f;
   --text-secondary: #1a4a4a;
   --text-muted: #3d7070;
@@ -40,7 +51,7 @@
   --glow-opacity: 0.6;
   --shadow-depth: 0.1;
   --transition-duration: 5000ms;
-
+  /* Optimized from 10s to 5s */
   /* Gradient Stops for Background Shader */
   --gradient-start-r: 0.94;
   --gradient-start-g: 0.98;
@@ -55,6 +66,10 @@
   /* Sunrise Animation Colors */
   --sun-color: #ff9500;
   --horizon-glow: rgba(255, 180, 100, 0.8);
+}
+
+[data-theme="sunrise"] {
+  /* Earth Specific Variables are now injected via JS from planets.ts config */
 }
 
 [data-theme="sunset"] {
@@ -272,6 +287,17 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-secondary);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* =====================================================

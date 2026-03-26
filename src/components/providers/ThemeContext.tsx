@@ -1,7 +1,8 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, useRef, useEffect } from "react";
+import { createContext, useContext, useState, useCallback, useRef, useEffect, type ReactNode } from "react";
 import gsap from "gsap";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export type Theme = "sunrise" | "sunset";
 export type TransitionDirection = "sunrise-to-sunset" | "sunset-to-sunrise" | null;
@@ -74,9 +75,14 @@ export function ThemeProvider({ children, defaultTheme = "sunset" }: ThemeProvid
     progressRef.current.value = 0;
     setTransitionProgress(0);
 
-    // Duration: Slower for "proper" sunrise/sunset feel
-    // Sunrise (Sunset -> Sunrise) should be slower, more gradual
-    const duration = isSunriseToSunset ? 5.0 : 4.0;
+    // Duration: Optimized for smooth yet responsive transitions
+    // Respect user's reduced motion preference
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const duration = prefersReducedMotion
+      ? 0.3
+      : (isSunriseToSunset ? 5.0 : 3.0);
 
     // Create the transition timeline
     const tl = gsap.timeline({

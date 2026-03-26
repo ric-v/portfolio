@@ -2,16 +2,13 @@ import type { Metadata } from "next";
 import { Gantari, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeContext";
-import { FluidBackground } from "@/components/ui/FluidBackground";
 import { CursorGlow } from "@/components/ui/CursorGlow";
-import { CinematicIntro } from "@/components/ui/CinematicIntro";
-
 import { BackgroundMusic } from "@/components/ui/BackgroundMusic";
-import { PageNavigator } from "@/components/ui/PageNavigator";
 import { portfolioConfig } from "@/config/portfolio";
+import { PlanetaryLayoutWrapper } from "@/components/layout/PlanetaryLayoutWrapper";
 
 const gantari = Gantari({
-  variable: "--font-geist-sans", // Reuse existing variable to propagate change globally
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
@@ -43,14 +40,13 @@ export default function RootLayout({
         className={`${gantari.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider defaultTheme="sunset">
-          <CinematicIntro />
-          <FluidBackground />
           <CursorGlow />
           <BackgroundMusic />
-          <PageNavigator />
-          <main id="main-content" className="relative z-10">
-            {children}
-          </main>
+          <PlanetaryLayoutWrapper>
+            <main id="main-content" className="relative z-10">
+              {children}
+            </main>
+          </PlanetaryLayoutWrapper>
         </ThemeProvider>
       </body>
     </html>

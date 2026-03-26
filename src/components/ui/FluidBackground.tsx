@@ -160,63 +160,6 @@ const fragmentShader = `
       stars = (bigStars + mediumStars + smallStars + tinyStars) * nightIntensity;
       stars *= smoothstep(0.15, 0.5, gradientPos); // Fade out near bottom
       
-      // Shooting star effect - subtle and distant
-      float shootingStarCycle = 12.0; // seconds per shooting star cycle
-      float shootingTime = mod(uTime, shootingStarCycle);
-      float shootingLength = 3.0; // Duration of one star event
-      
-      // Active window of time
-      float shootingActive = smoothstep(0.0, 0.5, shootingTime) * smoothstep(shootingLength, shootingLength - 1.0, shootingTime);
-      
-      if (shootingActive > 0.01) {
-        // Randomize position based on cycle
-        float cycleId = floor(uTime / shootingStarCycle);
-        float randX = fract(sin(cycleId * 12.9898) * 43758.5453) * aspect; // Spread across aspect
-        float randY = fract(sin(cycleId * 78.233) * 43758.5453);
-        
-        vec2 shootStart = vec2(0.3 * aspect + randX * 0.4, 0.5 + randY * 0.4);
-        
-        // Direction: Moving Right and slightly Down
-        vec2 shootDir = normalize(vec2(1.0, -0.3));
-        
-        // Position update
-        float shootProgress = shootingTime / shootingLength;
-        vec2 shootPos = shootStart + shootDir * shootProgress * 0.4; // Speed scale
-        
-        // Geometry calculations for Trail
-        // adjustedUv is used for correct shape
-        vec2 toPixel = adjustedUv - shootPos;
-        
-        // Project relative position onto movement direction
-        float u = dot(toPixel, shootDir); // Distance along path (negative is behind)
-        float v = length(toPixel - u * shootDir); // Perpendicular distance
-        
-        // Trail parameters
-        float trailLen = 0.2; // Length of the tail
-        float trailWidth = 0.002; // Thickness
-        
-        // Initialize star glow
-        float glow = 0.0;
-        
-        // Check if pixel is behind the head (u < 0) and within trail length
-        if (u < 0.0 && u > -trailLen) {
-           // Fade trail as it gets further back (linear fade)
-           float trailFade = smoothstep(-trailLen, 0.0, u); // 0 at back, 1 at head
-           
-           // Thin trail with soft edges
-           float trailShape = smoothstep(trailWidth * 3.0, 0.0, v);
-           
-           glow += trailFade * trailShape * 0.6;
-        }
-        
-        // Star Head (Bright dot at u ~= 0, v ~= 0)
-        float headDist = length(toPixel);
-        float headGlow = smoothstep(0.008, 0.001, headDist);
-        glow += headGlow * 1.5; // Brighter head
-        
-        // Add to scene
-        stars += glow * shootingActive * nightIntensity;
-      }
     }
     
     // Mix between themes based on progress
@@ -240,9 +183,13 @@ const fragmentShader = `
 
 interface FluidMeshProps {
   themeProgress: number;
+  colors: {
+    sunrise: { top: string; mid: string; bottom: string; accent: string };
+    sunset: { top: string; mid: string; bottom: string; accent: string };
+  };
 }
 
-function FluidMesh({ themeProgress }: FluidMeshProps) {
+function FluidMesh({ themeProgress, colors }: FluidMeshProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const mouseRef = useRef({ x: 0.5, y: 0.5, vx: 0, vy: 0 });
   const { viewport, size } = useThree();
@@ -254,18 +201,18 @@ function FluidMesh({ themeProgress }: FluidMeshProps) {
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
       uResolution: { value: new THREE.Vector2(size.width, size.height) },
       uMouseVelocity: { value: 0 },
-      // Sunrise colors (warm, light)
-      uSunriseTop: { value: new THREE.Color("#e8f4f8") },
-      uSunriseMid: { value: new THREE.Color("#c0e8f0") },
-      uSunriseBottom: { value: new THREE.Color("#ffe0b2") }, // Pale Orange
-      uSunriseAccent: { value: new THREE.Color("#ffb74d") }, // Lighter Orange
-      // Sunset colors (dark, teal/emerald)
-      uSunsetTop: { value: new THREE.Color("#030a0c") },
-      uSunsetMid: { value: new THREE.Color("#051a1f") },
-      uSunsetBottom: { value: new THREE.Color("#0a2a30") },
-      uSunsetAccent: { value: new THREE.Color("rgba(120, 72, 197, 0.5)") }, // Violet 700 - Darker shade of glow
+      // Sunrise colors (from config)
+      uSunriseTop: { value: new THREE.Color(colors.sunrise.top) },
+      uSunriseMid: { value: new THREE.Color(colors.sunrise.mid) },
+      uSunriseBottom: { value: new THREE.Color(colors.sunrise.bottom) },
+      uSunriseAccent: { value: new THREE.Color(colors.sunrise.accent) },
+      // Sunset colors (from config)
+      uSunsetTop: { value: new THREE.Color(colors.sunset.top) },
+      uSunsetMid: { value: new THREE.Color(colors.sunset.mid) },
+      uSunsetBottom: { value: new THREE.Color(colors.sunset.bottom) },
+      uSunsetAccent: { value: new THREE.Color(colors.sunset.accent) },
     }),
-    []
+    [colors] // Re-create uniforms if colors change
   );
 
   useEffect(() => {
@@ -322,10 +269,35 @@ function FluidMesh({ themeProgress }: FluidMeshProps) {
   );
 }
 
-export function FluidBackground() {
+export interface FluidBackgroundProps {
+  config?: {
+    sunrise: { top: string; mid: string; bottom: string; accent: string };
+    sunset: { top: string; mid: string; bottom: string; accent: string };
+  };
+}
+
+export function FluidBackground({ config }: FluidBackgroundProps) {
   const { theme, visualProgress } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Default colors if no config provided
+  const defaultColors = {
+    sunrise: {
+      top: '#e8f4f8',
+      mid: '#c0e8f0',
+      bottom: '#ffe0b2',
+      accent: '#ffb74d',
+    },
+    sunset: {
+      top: '#030a0c',
+      mid: '#051a1f',
+      bottom: '#0a2a30',
+      accent: 'rgba(120, 72, 197, 0.5)',
+    },
+  };
+
+  const colors = config || defaultColors;
 
   // visualProgress is now handled centrally: 0 = Sunset (Dark), 1 = Sunrise (Light)
   const animatedProgress = visualProgress;
@@ -344,7 +316,7 @@ export function FluidBackground() {
     return (
       <div
         className="fixed inset-0 -z-10"
-        style={{ backgroundColor: theme === "sunrise" ? "#e8f4f8" : "#050f12" }}
+        style={{ backgroundColor: theme === "sunrise" ? colors.sunrise.top : colors.sunset.top }}
       />
     );
   }
@@ -360,116 +332,31 @@ export function FluidBackground() {
         }}
         camera={{ position: [0, 0, 1] }}
       >
-        <FluidMesh themeProgress={animatedProgress} />
+        <FluidMesh themeProgress={animatedProgress} colors={colors} />
       </Canvas>
 
       {/* Global Atmosphere Overlay - Simulates directional light from top-right source */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0"
+      <Canvas
+        className="z-[1] absolute inset-0"
+        camera={{ position: [0, 0, 5], fov: 75 }}
+        dpr={[1, 1.5]} // Limit pixel ratio for performance
+        performance={{ min: 0.5 }} // Allow frame skipping under load
+        gl={{
+          antialias: false, // Disable for better performance
+          powerPreference: "high-performance",
+          alpha: true,
+        }}
         style={{
           background: theme === "sunrise"
             ? "linear-gradient(225deg, rgba(255, 183, 77, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 80%)"
             : "linear-gradient(225deg, rgba(139, 92, 246, 0.1) 0%, rgba(15, 23, 42, 0) 50%, transparent 80%)",
           transition: "background 2.5s ease-in-out"
         }}
-      />
+      >
+        {/* You might render a simple plane or other elements here for the overlay if needed */}
+      </Canvas>
 
-      {/* Animated Clouds for Dark Mode - Lower Half - Optimized for Mobile */}
-      {theme === "sunset" && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
-          {/* Cloud Layer 1 - Large, slow clouds at the bottom */}
-          <div
-            className="absolute"
-            style={{
-              bottom: isMobile ? '2%' : '5%',
-              left: isMobile ? '-10%' : '-20%',
-              width: isMobile ? '80%' : '50%',
-              height: isMobile ? '100px' : '150px',
-              background: 'radial-gradient(ellipse 100% 100% at 50% 100%, rgba(109, 40, 217, 0.3) 0%, rgba(124, 58, 237, 0.15) 40%, transparent 70%)',
-              filter: isMobile ? 'blur(25px)' : 'blur(40px)',
-              animation: 'cloudDrift 80s linear infinite',
-              opacity: isMobile ? 0.8 : 1
-            }}
-          />
-          <div
-            className="absolute"
-            style={{
-              bottom: isMobile ? '5%' : '8%',
-              left: isMobile ? '20%' : '30%',
-              width: isMobile ? '90%' : '60%',
-              height: isMobile ? '90px' : '130px',
-              background: 'radial-gradient(ellipse 100% 100% at 50% 100%, rgba(91, 33, 182, 0.25) 0%, rgba(109, 40, 217, 0.15) 50%, transparent 75%)',
-              filter: isMobile ? 'blur(20px)' : 'blur(35px)',
-              animation: 'cloudDrift 100s linear infinite',
-              animationDelay: '-30s',
-              opacity: isMobile ? 0.7 : 1
-            }}
-          />
-          <div
-            className="absolute"
-            style={{
-              bottom: '2%',
-              left: isMobile ? '10%' : '-10%',
-              width: isMobile ? '80%' : '70%',
-              height: isMobile ? '70px' : '100px',
-              background: 'radial-gradient(ellipse 100% 100% at 50% 100%, rgba(124, 58, 237, 0.25) 0%, rgba(139, 92, 246, 0.15) 45%, transparent 70%)',
-              filter: isMobile ? 'blur(15px)' : 'blur(30px)',
-              animation: 'cloudDrift 70s linear infinite',
-              animationDelay: '-50s',
-              opacity: isMobile ? 0.6 : 1
-            }}
-          />
-        </div>
-      )}
-
-      {/* Bird Flock for Light Mode - Top Right Horizon - V Formation - Optimized for Mobile */}
-      {theme === "sunrise" && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
-          {Array.from({ length: isMobile ? 7 : 14 }).map((_, i) => { // Reduce bird count on mobile
-            // V-formation math
-            const row = Math.floor((i + 1) / 2);
-            const side = i % 2 === 0 ? 1 : -1;
-
-            // Base position (Leader at front)
-            const baseX = isMobile ? 85 : 75; // Move further right on mobile
-            const baseY = isMobile ? 12 : 15;
-
-            // Offsets for larger V shape
-            const offsetX = -row * (isMobile ? 1.0 : 1.5); // Tighter formation on mobile
-            const offsetY = row * side * (isMobile ? 0.8 : 1.2);
-
-            return (
-              <div
-                key={i}
-                className="absolute"
-                style={{
-                  left: `${baseX + offsetX}%`,
-                  top: `${baseY + offsetY}%`,
-                  // Cohesive movement: synchronized duration with minimal variance
-                  animation: `fly-away ${22 + Math.random() * 2}s linear infinite`,
-                  // Slight stagger for natural feel, but mostly together
-                  animationDelay: `${i * 0.2}s`,
-                  opacity: 0,
-                  transform: isMobile ? 'scale(0.7)' : 'scale(1)' // Smaller birds on mobile
-                }}
-              >
-                <div
-                  style={{
-                    animation: 'fly-cycle 0.5s ease-in-out infinite alternate',
-                    animationDelay: `${Math.random()}s`,
-                    transformOrigin: 'center center'
-                  }}
-                >
-                  {/* Smaller V-shape bird svg */}
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 14C6 14 8 8 12 14C16 8 18 14 22 14" stroke="#0d2f2f" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      {/* Animated Clouds removed - replaced by PlanetAmbientLayer */}
 
     </div>
   );
