@@ -204,7 +204,7 @@ export const portfolioConfig: PortfolioConfig = {
           title: "Associate Manager — Software Development",
           period: "Apr 2026 — Present",
           did: [
-            "Leading Super Switch, a new, not-yet-announced product vertical for VisoryHealth (stealth project).",
+            "Leading Super Switch, a new product vertical for VisoryHealth.",
             "Working with the team to enable new leadership on the core claim-processing PBM product.",
             "Helping teams improve process with AI and automation on other projects, such as Caremetrix for a different client.",
           ],
@@ -212,6 +212,11 @@ export const portfolioConfig: PortfolioConfig = {
         {
           title: "Tech Lead — Software Development",
           period: "Apr 2024 — Mar 2026",
+          promotion: [
+            "Took the lead on Super Switch, a new product vertical for VisoryHealth: a new step on top of claim processing, built to work with other clients and bring new products to market.",
+            "Worked with the team to enable new leadership on the core claim-processing PBM product, so it keeps running well without me as the single point of ownership.",
+            "Helped teams improve their process with AI and automation across other projects, such as Caremetrix for a different client.",
+          ],
         },
         {
           title: "Principal Engineer",
