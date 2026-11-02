@@ -42,7 +42,7 @@ export default function Home() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ok opacity-60 motion-reduce:hidden" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-ok" />
               </span>
-              Currently leading the claims platform team at Worklife Tech
+              Currently Associate Manager, Software Development at Worklife Tech
             </p>
             <h1
               className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl"
@@ -68,8 +68,8 @@ export default function Home() {
               data-reveal
               style={{ ["--reveal-delay" as string]: "160ms" }}
             >
-              I&apos;m {personal.shortName}, a Tech Lead with {years}+ years designing distributed Go services, tuning
-              databases and leading small teams that ship production-grade software — currently real-time claim
+              I&apos;m {personal.shortName}, an engineering leader with {years}+ years designing distributed Go services, tuning
+              databases and leading teams that ship production-grade software — currently real-time claim
               processing for a U.S. pharmacy-benefits platform.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3" data-reveal style={{ ["--reveal-delay" as string]: "240ms" }}>
