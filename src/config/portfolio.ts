@@ -312,12 +312,14 @@ export const portfolioConfig: PortfolioConfig = {
       liveLabel: "drawdown.astrx.dev",
     },
     {
-      // TODO: add a link and a one-line description, then remove `draft`.
       title: "Asterix OS",
-      kind: "OS",
-      description: "",
-      tags: [],
-      draft: true,
+      kind: "Browser desktop",
+      description:
+        "A portfolio that boots like an operating system: draggable windows, a dock, a terminal, a file explorer that browses my GitHub repos live, and a command palette, all in the browser.",
+      tags: ["Next.js", "TypeScript", "Zustand", "Framer Motion"],
+      github: "https://github.com/ric-v/dev-asterix-portfolio",
+      live: "https://astrx.dev",
+      liveLabel: "astrx.dev",
     },
     {
       title: "Glog",
