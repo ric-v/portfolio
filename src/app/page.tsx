@@ -4,12 +4,13 @@ import { portfolioConfig, yearsOfExperience } from "@/config/portfolio";
 import Link from "next/link";
 import { scenarios } from "@/lib/scenarios";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PerfNote } from "@/components/ui/PerfNote";
 
 const icons = { github: FiGithub, linkedin: FiLinkedin, resume: FiFileText, email: FiMail };
 
 function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string; title: string; intro?: string }) {
   return (
-    <div className="mb-8 max-w-2xl">
+    <div className="mb-8 max-w-2xl" data-reveal>
       <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">{kicker}</p>
       <h2 id={id} className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
         {title}
@@ -29,20 +30,48 @@ export default function Home() {
 
       <main id="main" className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Hero */}
-        <section id="top" className="grid gap-10 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
+        <section id="top" className="relative isolate grid gap-10 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
+          <div aria-hidden className="dot-grid pointer-events-none absolute inset-y-0 inset-x-0 -z-10 sm:-inset-x-6" />
           <div>
-            <p className="font-mono text-[12px] text-dim">
-              {personal.name} · {personal.title} · {personal.location}
+            <p
+              className="surface inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 font-mono text-[11.5px] text-ink-soft"
+              data-reveal
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ok opacity-60 motion-reduce:hidden" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-ok" />
+              </span>
+              Currently leading the claims platform team at Worklife Tech
             </p>
-            <h1 className="mt-5 max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
-              {personal.headline}
+            <h1
+              className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl"
+              data-reveal
+              style={{ ["--reveal-delay" as string]: "80ms" }}
+            >
+              {(() => {
+                // Hand-drawn underline on the phrase that matters most.
+                const key = "stay fast";
+                const i = personal.headline.indexOf(key);
+                if (i < 0) return personal.headline;
+                return (
+                  <>
+                    {personal.headline.slice(0, i)}
+                    <span className="draw-underline">{key}</span>
+                    {personal.headline.slice(i + key.length)}
+                  </>
+                );
+              })()}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
+            <p
+              className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft"
+              data-reveal
+              style={{ ["--reveal-delay" as string]: "160ms" }}
+            >
               I&apos;m {personal.shortName}, a Tech Lead with {years}+ years designing distributed Go services, tuning
               databases and leading small teams that ship production-grade software — currently real-time claim
               processing for a U.S. pharmacy-benefits platform.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-3" data-reveal style={{ ["--reveal-delay" as string]: "240ms" }}>
               <a href="#work" className="btn btn-primary !px-4 !py-2 !text-sm">
                 See my work
               </a>
@@ -60,7 +89,7 @@ export default function Home() {
                       rel="noopener noreferrer"
                       aria-label={s.label}
                       title={s.label}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-md text-dim hover:bg-subtle hover:text-ink"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-md text-dim transition-all hover:-translate-y-0.5 hover:bg-subtle hover:text-ink"
                     >
                       <Icon className="h-[18px] w-[18px]" aria-hidden />
                     </a>
@@ -70,9 +99,9 @@ export default function Home() {
             </div>
           </div>
 
-          <aside className="rounded-2xl border border-line bg-panel p-5">
+          <aside className="surface lift rounded-2xl border border-line p-5" data-reveal style={{ ["--reveal-delay" as string]: "200ms" }}>
             <div className="flex items-center gap-4">
-              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-line">
+              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-line shadow-[3px_4px_10px_-4px_var(--shadow-far)]">
                 <Image src={personal.portrait.src} alt={personal.portrait.alt} fill sizes="64px" className="object-cover" priority />
               </div>
               <div>
@@ -94,7 +123,7 @@ export default function Home() {
 
         {/* Lab teaser — the deep dive is opt-in */}
         <section aria-labelledby="lab-teaser-title" className="border-t border-line py-14">
-          <div className="grid grid-cols-1 gap-8 rounded-2xl border border-line bg-panel p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
+          <div data-reveal className="surface grid grid-cols-1 gap-8 rounded-2xl border border-line p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
             <div className="flex flex-col">
               <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">The lab · how I think</p>
               <h2 id="lab-teaser-title" className="mt-2 text-3xl font-semibold tracking-tight text-ink">
@@ -118,7 +147,7 @@ export default function Home() {
                   <li key={sc.id}>
                     <Link
                       href={`/lab?incident=${sc.id}#incidents`}
-                      className="group flex items-center gap-4 px-4 py-3 transition-colors hover:bg-subtle"
+                      className="group flex items-center gap-4 px-4 py-3 transition-[background-color,padding] duration-300 hover:bg-subtle hover:pl-5"
                     >
                       <span className="font-mono text-[11px] text-dim">0{i + 1}</span>
                       <span className="min-w-0 flex-1">
@@ -147,7 +176,7 @@ export default function Home() {
           />
           <ol className="space-y-5">
             {experience.map((job) => (
-              <li key={job.company} className="grid gap-6 rounded-2xl border border-line bg-panel p-5 sm:p-7 md:grid-cols-[230px_minmax(0,1fr)]">
+              <li key={job.company} className="surface grid gap-6 rounded-2xl border border-line p-5 sm:p-7 md:grid-cols-[230px_minmax(0,1fr)]" data-reveal>
                 <div>
                   <p className="font-mono text-[11px] text-dim">{job.period}</p>
                   <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-ink">{job.company}</h3>
@@ -201,7 +230,7 @@ export default function Home() {
             {projects.map((p) => {
               const href = p.live ?? p.github;
               return (
-                <li key={p.title} className="group relative flex flex-col rounded-xl border border-line bg-panel p-5 transition-colors hover:border-line-strong">
+                <li key={p.title} className="surface lift group relative flex flex-col rounded-xl border border-line p-5" data-reveal>
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-semibold text-ink">
                       {href ? (
@@ -252,7 +281,7 @@ export default function Home() {
                   <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-dim">{g.label}</dt>
                   <dd className="mt-2 flex flex-wrap gap-1.5">
                     {g.items.map((it) => (
-                      <span key={it} className="rounded-md border border-line bg-panel px-2 py-0.5 text-[13px] text-ink">
+                      <span key={it} className="rounded-md border border-line bg-panel px-2 py-0.5 text-[13px] text-ink transition-colors hover:border-accent hover:text-accent">
                         {it}
                       </span>
                     ))}
@@ -289,7 +318,7 @@ export default function Home() {
 
         {/* Contact */}
         <section id="contact" aria-labelledby="contact-title" className="scroll-mt-16 border-t border-line py-14">
-          <div className="rounded-2xl border border-line bg-panel p-6 sm:p-10">
+          <div className="surface rounded-2xl border border-line p-6 sm:p-10" data-reveal>
             <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">Contact</p>
             <h2 id="contact-title" className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
               Let&apos;s talk
@@ -323,6 +352,7 @@ export default function Home() {
           <p>
             © {new Date().getFullYear()} {personal.name} · {personal.location}
           </p>
+          <PerfNote />
           <a href="#top" className="shrink-0 hover:text-ink">
             Back to top ↑
           </a>

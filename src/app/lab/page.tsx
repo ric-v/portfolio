@@ -108,7 +108,7 @@ export default async function LabPage({ searchParams }: { searchParams: Promise<
           />
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {REAL_WORLD.map((r) => (
-              <li key={r.lever} className="rounded-xl border border-line bg-panel p-5">
+              <li key={r.lever} className="surface lift rounded-xl border border-line p-5" data-reveal>
                 <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">{r.lever}</p>
                 <p className="mt-2 text-[15px] leading-relaxed text-ink">{r.proof}</p>
                 <p className="mt-3 text-sm text-dim">{r.where}</p>
@@ -116,7 +116,7 @@ export default async function LabPage({ searchParams }: { searchParams: Promise<
             ))}
           </ul>
 
-          <div className="mt-10 flex flex-col items-start gap-4 rounded-2xl border border-line bg-panel p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div className="surface mt-10 flex flex-col items-start gap-4 rounded-2xl border border-line p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
             <div>
               <p className="text-xl font-semibold tracking-tight text-ink">Like how this thinks?</p>
               <p className="mt-1 text-ink-soft">See the work behind it, or get in touch.</p>

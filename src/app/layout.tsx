@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { portfolioConfig } from "@/config/portfolio";
+import { Ambient } from "@/components/ui/Ambient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,8 +52,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f3ee" },
-    { media: "(prefers-color-scheme: dark)", color: "#0c0c0e" },
+    { media: "(prefers-color-scheme: light)", color: "#f3f1ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0d" },
   ],
 };
 
@@ -68,14 +69,19 @@ const personJsonLd = {
   sameAs: personal.socials.filter((s) => s.icon !== "resume").map((s) => s.url),
 };
 
+// Runs before first paint: picks the saved theme (or the OS preference) so there's no flash,
+// and flags that JS is available so scroll-reveal styles can opt in.
+const themeInitScript = `(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.dataset.theme=t;}catch(e){d.dataset.theme='light';}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -89,6 +95,7 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <Ambient />
       </body>
     </html>
   );

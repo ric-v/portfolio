@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { portfolioConfig } from "@/config/portfolio";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const NAV = {
   home: [
@@ -38,7 +39,7 @@ export function SiteHeader({ current }: { current: "home" | "lab" }) {
             <a
               key={href}
               href={href}
-              className="hidden rounded-md px-2.5 py-1 text-ink-soft hover:bg-subtle hover:text-ink md:inline-block"
+              className="hidden rounded-md px-2.5 py-1 text-ink-soft transition-colors hover:bg-subtle hover:text-ink md:inline-block"
             >
               {label}
             </a>
@@ -46,7 +47,7 @@ export function SiteHeader({ current }: { current: "home" | "lab" }) {
           {current === "home" ? (
             <Link
               href="/lab"
-              className="ml-1 inline-flex items-center gap-1.5 rounded-md border border-accent px-2.5 py-1 font-medium text-accent hover:bg-accent-soft"
+              className="ml-1 inline-flex items-center gap-1.5 rounded-md border border-accent px-2.5 py-1 font-medium text-accent transition-colors hover:bg-accent-soft"
             >
               <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent motion-safe:animate-pulse" />
               The lab
@@ -54,16 +55,19 @@ export function SiteHeader({ current }: { current: "home" | "lab" }) {
           ) : (
             <Link
               href="/"
-              className="ml-1 rounded-md border border-line-strong px-2.5 py-1 text-ink hover:bg-subtle"
+              className="ml-1 rounded-md border border-line-strong px-2.5 py-1 text-ink transition-colors hover:bg-subtle"
             >
               ← Portfolio
             </Link>
           )}
+          <span className="ml-1">
+            <ThemeToggle />
+          </span>
           <a
             href={personal.resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-1 rounded-md bg-ink px-3 py-1 font-medium text-paper hover:opacity-85"
+            className="ml-1 hidden rounded-md bg-ink px-3 py-1 font-medium text-paper transition-opacity hover:opacity-85 sm:inline-block"
           >
             Resume
           </a>

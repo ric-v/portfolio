@@ -29,7 +29,7 @@ export function Panel({
   return (
     <section
       id={id}
-      className={`rounded-xl border bg-panel transition-shadow ${
+      className={`surface rounded-xl border ${
         focused ? "border-accent shadow-[0_0_0_3px_var(--accent-soft)]" : "border-line"
       } ${className}`}
     >

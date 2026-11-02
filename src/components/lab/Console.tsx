@@ -32,7 +32,7 @@ function StatusBar() {
   ].filter(Boolean);
 
   return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-line bg-panel px-4 py-2.5">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 surface rounded-xl border border-line px-4 py-2.5">
       <span className="flex items-center gap-2 text-sm font-semibold" style={{ color: tone }}>
         <span className="relative flex h-2.5 w-2.5">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-50 motion-reduce:hidden" style={{ background: tone }} />

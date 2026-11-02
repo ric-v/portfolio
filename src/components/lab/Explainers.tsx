@@ -6,7 +6,7 @@ import { fmtMs } from "./bits";
 
 function Card({ n, title, children, formula }: { n: string; title: string; formula: string; children: React.ReactNode }) {
   return (
-    <article className="flex flex-col rounded-xl border border-line bg-panel p-5">
+    <article className="surface lift flex flex-col rounded-xl border border-line p-5" data-reveal>
       <p className="font-mono text-[10.5px] text-dim">{n}</p>
       <h3 className="mt-1 text-lg font-semibold tracking-tight text-ink">{title}</h3>
       <p className="mt-2 inline-block self-start rounded-md bg-subtle px-2 py-1 font-mono text-[12px] text-ink">{formula}</p>
