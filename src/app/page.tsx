@@ -107,7 +107,22 @@ export default function Home() {
           <aside className="surface lift rounded-2xl border border-line p-5" data-reveal style={{ ["--reveal-delay" as string]: "200ms" }}>
             <div className="flex items-center gap-4">
               <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-line shadow-[3px_4px_10px_-4px_var(--shadow-far)]">
-                <Image src={personal.portrait.src} alt={personal.portrait.alt} fill sizes="64px" className="object-cover" priority />
+                <Image
+                  src={personal.portrait.lightSrc ?? personal.portrait.src}
+                  alt={personal.portrait.alt}
+                  fill
+                  sizes="64px"
+                  className="show-light object-cover"
+                  priority
+                />
+                <Image
+                  src={personal.portrait.darkSrc ?? personal.portrait.src}
+                  alt={personal.portrait.alt}
+                  fill
+                  sizes="64px"
+                  className="show-dark object-cover"
+                  priority
+                />
               </div>
               <div>
                 <p className="font-semibold text-ink">{personal.name}</p>
@@ -238,7 +253,32 @@ export default function Home() {
               <div className="flex flex-col">
                 <div className="mb-3 flex items-center gap-3">
                   <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg border border-line bg-subtle p-1">
-                    <Image src="/projects/nexql-core.png" alt="NexQL logo" width={28} height={28} className="h-full w-full object-contain" />
+                    {typeof nexql.logo === "object" && nexql.logo !== null ? (
+                      <>
+                        <Image
+                          src={nexql.logo.light}
+                          alt={`${nexql.name} logo`}
+                          width={28}
+                          height={28}
+                          className="show-light h-full w-full object-contain"
+                        />
+                        <Image
+                          src={nexql.logo.dark}
+                          alt={`${nexql.name} logo`}
+                          width={28}
+                          height={28}
+                          className="show-dark h-full w-full object-contain"
+                        />
+                      </>
+                    ) : (
+                      <Image
+                        src={typeof nexql.logo === "string" ? nexql.logo : "/projects/nexql-core-light.png"}
+                        alt={`${nexql.name} logo`}
+                        width={28}
+                        height={28}
+                        className="h-full w-full object-contain"
+                      />
+                    )}
                   </div>
                   <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
                     <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />

@@ -306,6 +306,17 @@ body::after {
     box-shadow 0.4s ease !important;
 }
 
+/* =========================================================================
+   Theme-aware image and element visibility
+   ========================================================================= */
+html:not([data-theme="dark"]) .show-dark {
+  display: none !important;
+}
+
+html[data-theme="dark"] .show-light {
+  display: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

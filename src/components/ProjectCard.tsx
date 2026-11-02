@@ -5,23 +5,44 @@ import type { Project } from "@/config/portfolio";
 /** A project card. The whole card links to the live site (or source); inner links stay clickable. */
 export function ProjectCard({ project: p, compact = false }: { project: Project; compact?: boolean }) {
   const href = p.live ?? p.github;
+  const image = p.image;
+
   return (
     <article
       className={`surface lift group relative flex h-full flex-col overflow-hidden rounded-xl border border-line ${compact ? "p-3.5" : "p-4 sm:p-5"}`}
     >
-      {p.image && (
+      {image && (
         <div
           className={`relative overflow-hidden rounded-lg border border-line bg-subtle ${
             compact ? "mb-3 aspect-[16/10]" : "mb-3.5 aspect-[16/10]"
           }`}
         >
-          <Image
-            src={p.image}
-            alt={p.imageAlt ?? p.title}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          />
+          {typeof image === "object" ? (
+            <>
+              <Image
+                src={image.light}
+                alt={p.imageAlt ?? p.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="show-light object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+              <Image
+                src={image.dark}
+                alt={p.imageAlt ?? p.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="show-dark object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+            </>
+          ) : (
+            <Image
+              src={image}
+              alt={p.imageAlt ?? p.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            />
+          )}
         </div>
       )}
       <div className="flex items-start justify-between gap-3">

@@ -38,6 +38,11 @@ export interface Experience {
   technologies: string[];
 }
 
+export interface ProjectImage {
+  light: string;
+  dark: string;
+}
+
 export interface Project {
   title: string;
   description: string;
@@ -51,8 +56,8 @@ export interface Project {
   group?: "nexql";
   /** Set to true to hide a project until its details are ready. */
   draft?: boolean;
-  /** Preview or screenshot image path in /public */
-  image?: string;
+  /** Preview or screenshot image path in /public, or light/dark variants */
+  image?: string | ProjectImage;
   /** Accessible description of the preview image */
   imageAlt?: string;
 }
@@ -63,6 +68,7 @@ export interface ProjectGroup {
   description: string;
   github: string;
   live?: string;
+  logo?: string | ProjectImage;
 }
 
 export interface SkillGroup {
@@ -92,7 +98,7 @@ export interface PortfolioConfig {
     intro: string;
     /** Used to compute "N+ years" automatically. */
     careerStartYear: number;
-    portrait: { src: string; alt: string };
+    portrait: { src: string; alt: string; lightSrc?: string; darkSrc?: string };
     email: string;
     resumeUrl: string;
     socials: SocialLink[];
@@ -136,6 +142,8 @@ export const portfolioConfig: PortfolioConfig = {
       "Tech Lead with {years}+ years of experience designing distributed microservices, tuning databases, and leading small teams that ship production-grade software — currently for a U.S. pharmacy-benefits platform processing insurance claims in real time.",
     careerStartYear: 2018,
     portrait: {
+      lightSrc: "/dp-light.png",
+      darkSrc: "/dp-dark.png",
       src: "/dp-dark.png",
       alt: "Portrait of Richie Varghese",
     },
@@ -236,6 +244,10 @@ export const portfolioConfig: PortfolioConfig = {
         "An open-source toolkit for working with Postgres: an editor extension for building, exploring and querying databases faster, an MCP server that lets AI assistants understand your data models safely, and a matching set of editor themes. (Formerly PgStudio.)",
       github: "https://github.com/NexQL-OSS",
       live: "https://nexql.astrx.dev",
+      logo: {
+        light: "/projects/nexql-core-light.png",
+        dark: "/projects/nexql-core-dark.png",
+      },
     },
   },
 
@@ -244,7 +256,10 @@ export const portfolioConfig: PortfolioConfig = {
       title: "NexQL for VS Code",
       kind: "VS Code extension",
       group: "nexql",
-      image: "/projects/nexql-core.png",
+      image: {
+        light: "/projects/nexql-core-light.png",
+        dark: "/projects/nexql-core-dark.png",
+      },
       imageAlt: "NexQL for VS Code - Intelligent PostgreSQL tooling inside the editor",
       description:
         "Intelligent PostgreSQL tooling inside the editor — build, explore and query Postgres faster, with AI-assisted help. Formerly PgStudio.",
@@ -257,7 +272,10 @@ export const portfolioConfig: PortfolioConfig = {
       title: "NexQL MCP",
       kind: "MCP server",
       group: "nexql",
-      image: "/projects/nexql-mcp.png",
+      image: {
+        light: "/projects/nexql-mcp-light.png",
+        dark: "/projects/nexql-mcp-dark.png",
+      },
       imageAlt: "NexQL MCP Server - Model Context Protocol for Postgres and AI assistants",
       description:
         "A Model Context Protocol server that lets AI assistants and agents — Claude, Cursor and others — safely read and understand your Postgres data models.",
@@ -270,7 +288,10 @@ export const portfolioConfig: PortfolioConfig = {
       title: "NexQL Themes",
       kind: "Editor themes",
       group: "nexql",
-      image: "/projects/nexql-themes.png",
+      image: {
+        light: "/projects/nexql-themes-light.png",
+        dark: "/projects/nexql-themes-dark.png",
+      },
       imageAlt: "NexQL Editor Themes - Color schemes for VS Code and open-source forks",
       description: "Colour schemes from NexQL for VS Code and its open-source forks.",
       tags: ["VS Code", "Themes"],
@@ -281,7 +302,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Pacpad",
       kind: "Terminal app",
-      image: "/projects/pacpad.png",
+      image: {
+        light: "/projects/pacpad-light.png",
+        dark: "/projects/pacpad-dark.png",
+      },
       imageAlt: "Pacpad - Arch Linux terminal application and package manager in Rust and Ratatui",
       description:
         "A terminal app manager for Arch Linux: browse, search and manage packages, web apps and TUI launchers from one place.",
@@ -291,7 +315,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "And the time is…",
       kind: "Web app",
-      image: "/projects/timeis.png",
+      image: {
+        light: "/projects/timeis-light.png",
+        dark: "/projects/timeis-dark.png",
+      },
       imageAlt: "And the time is... - Global timezone dashboard and real-time world clock",
       description:
         "Find the current time across time zones at a glance, and compare any zone against your own — past or future.",
@@ -303,7 +330,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Drawdown",
       kind: "Web app",
-      image: "/projects/drawdown.png",
+      image: {
+        light: "/projects/drawdown-light.png",
+        dark: "/projects/drawdown-dark.png",
+      },
       imageAlt: "Drawdown - Bloomberg terminal-inspired PnL tracker and trading journal",
       description: "A daily portfolio tracker and trading journal.",
       tags: ["Next.js", "React", "Tailwind CSS"],
@@ -314,7 +344,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Asterix OS",
       kind: "Browser desktop",
-      image: "/projects/asterixos.png",
+      image: {
+        light: "/projects/asterixos-light.png",
+        dark: "/projects/asterixos-dark.png",
+      },
       imageAlt: "Asterix OS - Browser desktop portfolio with draggable windows and live terminal",
       description:
         "A portfolio that boots like an operating system: draggable windows, a dock, a terminal, a file explorer that browses my GitHub repos live, and a command palette, all in the browser.",
@@ -326,7 +359,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Glog",
       kind: "Go library",
-      image: "/projects/glog.png",
+      image: {
+        light: "/projects/glog-light.png",
+        dark: "/projects/glog-dark.png",
+      },
       imageAlt: "Glog - Concurrent, thread-safe logger for Go with zero dependencies",
       description:
         "A concurrent, file-based logger for Go. Channel-based streaming keeps logging thread-safe and low-overhead, with zero external dependencies.",
@@ -338,7 +374,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Go Func Collections",
       kind: "Go library",
-      image: "/projects/gofunc.png",
+      image: {
+        light: "/projects/gofunc-light.png",
+        dark: "/projects/gofunc-dark.png",
+      },
       imageAlt: "Go Func Collections - Generic slice utilities and algorithms for Go 1.18+",
       description: "Commonly used helper functions for everyday Go — the small things you'd otherwise rewrite in every project.",
       tags: ["Go", "Generics", "Library"],
@@ -349,7 +388,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Task Master",
       kind: "Go library",
-      image: "/projects/taskmaster.png",
+      image: {
+        light: "/projects/taskmaster-light.png",
+        dark: "/projects/taskmaster-dark.png",
+      },
       imageAlt: "Task Master - Customisable task-execution system and scheduler for Go",
       description: "A customisable task-execution system and scheduler library for Go, written with no dependencies.",
       tags: ["Go", "Scheduling", "Zero deps"],
@@ -358,7 +400,10 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Divulge",
       kind: "Web app",
-      image: "/projects/divulge.png",
+      image: {
+        light: "/projects/divulge-light.png",
+        dark: "/projects/divulge-dark.png",
+      },
       imageAlt: "Divulge - Web UI for embedded key-value databases in Go and React",
       description:
         "A web UI for managing embedded key-value databases like BoltDB and BuntDB — a Go backend with a React front end.",
