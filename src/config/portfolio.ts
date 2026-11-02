@@ -245,8 +245,8 @@ export const portfolioConfig: PortfolioConfig = {
       github: "https://github.com/NexQL-OSS",
       live: "https://nexql.astrx.dev",
       logo: {
-        light: "/projects/nexql-core-light.png",
-        dark: "/projects/nexql-core-dark.png",
+        light: "/projects/nexql-logo-light.png",
+        dark: "/projects/nexql-logo-dark.png",
       },
     },
   },

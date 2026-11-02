@@ -272,7 +272,7 @@ export default function Home() {
                       </>
                     ) : (
                       <Image
-                        src={typeof nexql.logo === "string" ? nexql.logo : "/projects/nexql-core-light.png"}
+                        src={typeof nexql.logo === "string" ? nexql.logo : "/projects/nexql-logo.png"}
                         alt={`${nexql.name} logo`}
                         width={28}
                         height={28}
