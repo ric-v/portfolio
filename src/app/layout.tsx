@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   authors: [{ name: personal.name, url: site.url }],
   keywords: [
     personal.name,
+    "Associate Manager",
     "Tech Lead",
     "Principal Engineer",
     "Backend Engineer",

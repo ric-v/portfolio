@@ -23,6 +23,12 @@ export interface FocusArea {
 export interface Role {
   title: string;
   period: string;
+  /** Short year label shown on the timeline, e.g. "2021". Defaults to the start year of `period`. */
+  year?: string;
+  /** What I owned and delivered in this role. */
+  did?: string[];
+  /** What I did that earned the next role. Leave out for the current role. */
+  promotion?: string[];
 }
 
 export interface Experience {
@@ -32,6 +38,8 @@ export interface Experience {
   location: string;
   period: string;
   domain: string;
+  /** Short story of the whole stint, shown by default (with the newest role selected). */
+  journey?: string;
   /** Role progression, newest first. */
   roles: Role[];
   highlights: string[];
@@ -115,20 +123,20 @@ const RESUME_URL =
 export const portfolioConfig: PortfolioConfig = {
   site: {
     url: "https://me.astrx.dev",
-    title: "Richie Varghese — Tech Lead & Backend Engineer",
+    title: "Richie Varghese — Associate Manager & Backend Engineer",
     description:
-      "Resume of Richie Varghese — Tech Lead and backend engineer in Bengaluru building fast, reliable distributed systems in Go, Rust and PostgreSQL.",
+      "Resume of Richie Varghese — Associate Manager and backend engineer in Bengaluru building fast, reliable distributed systems in Go, Rust and PostgreSQL.",
   },
 
   personal: {
     name: "Richie Varghese",
     shortName: "Richie",
-    title: "Tech Lead · Principal Engineer",
+    title: "Associate Manager · Software Development",
     location: "Bengaluru, India",
     headline: "I build backend systems that stay fast under real-world load.",
     /** `{years}` is replaced with years since careerStartYear. */
     intro:
-      "Tech Lead with {years}+ years of experience designing distributed microservices, tuning databases, and leading small teams that ship production-grade software — currently for a U.S. pharmacy-benefits platform processing insurance claims in real time.",
+      "Engineering leader with {years}+ years of experience designing distributed microservices, tuning databases, and leading teams that ship production-grade software — currently for a U.S. pharmacy-benefits platform processing insurance claims in real time.",
     careerStartYear: 2018,
     portrait: {
       lightSrc: "/dp-light.png",
@@ -146,7 +154,7 @@ export const portfolioConfig: PortfolioConfig = {
   },
 
   metrics: [
-    { value: "<100ms", label: "response time on real-time insurance claim processing" },
+    { value: "20ms", label: "system latency on real-time claim processing, down from 60ms" },
     { value: "10×", label: "faster high-volume Cassandra inserts via a custom Java ASM writer" },
     { value: "10K+", label: "metrics per second through Go telemetry collectors" },
     { value: "60%", label: "efficiency gain from containerisation, telemetry and testing on Azure" },
@@ -155,7 +163,7 @@ export const portfolioConfig: PortfolioConfig = {
   about: {
     paragraphs: [
       "I'm a backend-focused engineer who likes working close to the fundamentals — concurrency, data flow, query plans and the critical path of a request. Most of my career has been spent on systems where latency and correctness both matter.",
-      "Today I lead a small team at Worklife Tech building the claims-processing platform behind VisoryHealth, a U.S. pharmacy benefit management program. Before that, I was one of the first engineers at Algomox, building the data-collection backbone for its AIOps and MLOps platforms.",
+      "Today I lead teams at Worklife Tech as Associate Manager, building the claims-processing platform behind VisoryHealth, a U.S. pharmacy benefit management program. Before that, I was one of the first engineers at Algomox, building the data-collection backbone for its AIOps and MLOps platforms.",
       "Outside the day job I build developer tools — most recently NexQL, an open-source PostgreSQL toolkit for VS Code and AI agents — and I hold a Master's in Computer Science focused on system design and data engineering.",
     ],
     focusAreas: [
@@ -189,11 +197,56 @@ export const portfolioConfig: PortfolioConfig = {
       location: "Bengaluru, India",
       period: "Jun 2021 — Present",
       domain: "Pharmacy Benefit Management · Client: VisoryHealth (XIL Health)",
+      journey:
+        "Joined in June 2021 as an Engineer and moved through five roles in under five years to Associate Manager. Along the way I took ownership of the claim-processing workflow behind VisoryHealth, brought system latency down from 60ms to 20ms, re-engineered Postgres functions for 50–500ms savings per query, raised delivery efficiency by 60% through containerisation, telemetry and testing on Azure, and introduced the coding standards, quality gates and internal tools the team still uses. Today I lead teams on the PBM platform and on a new product vertical.",
       roles: [
-        { title: "Tech Lead — Software Development", period: "Apr 2024 — Present" },
-        { title: "Principal Engineer", period: "Apr 2023 — Mar 2024" },
-        { title: "Senior Engineer", period: "Oct 2021 — Mar 2023" },
-        { title: "Engineer", period: "Jun 2021 — Sep 2021" },
+        {
+          title: "Associate Manager — Software Development",
+          period: "Apr 2026 — Present",
+          did: [
+            "Leading Super Switch, a new product vertical for VisoryHealth.",
+            "Working with the team to enable new leadership on the core claim-processing PBM product.",
+            "Helping teams improve process with AI and automation on other projects, such as Caremetrix for a different client.",
+          ],
+        },
+        {
+          title: "Tech Lead — Software Development",
+          period: "Apr 2024 — Mar 2026",
+          promotion: [
+            "Took the lead on Super Switch, a new product vertical for VisoryHealth: a new step on top of claim processing, working with other clients to experiment with and introduce new products to market.",
+            "Worked with the team to enable new leadership on the core claim-processing PBM product.",
+            "Helped teams improve their process with AI and automation across other projects, such as Caremetrix for a different client.",
+          ],
+        },
+        {
+          title: "Principal Engineer",
+          period: "Apr 2023 — Mar 2024",
+          promotion: [
+            "Managed a team of three developers: knowledge transfer, code reviews and delivery.",
+            "Re-architected the product to take it to the next level, reducing redundancy and cutting latency further, from 30ms to 20ms.",
+            "Worked on infrastructure optimisation, security and system stability.",
+            "Introduced coding standards, quality gates and automated quality assessment, and kept building internal tools and improving process.",
+          ],
+        },
+        {
+          title: "Senior Engineer",
+          period: "Oct 2021 — Mar 2023",
+          promotion: [
+            "Improved system reliability and took ownership of the claim-processing workflow and its architecture.",
+            "Raised code quality and improved infrastructure and DevOps pipelines.",
+            "Cut system latency from 60ms to 30ms.",
+            "Introduced internal developer tools that speed up daily dev and QA tasks, automate maintenance and scheduled jobs, and enforce the quality-adherence process.",
+          ],
+        },
+        {
+          title: "Engineer",
+          period: "Jun 2021 — Sep 2021",
+          promotion: [
+            "Learned a new domain quickly and started working on the claim-processing workflow.",
+            "Improved code quality and maintainability.",
+            "Introduced system design principles that the team still practises today.",
+          ],
+        },
       ],
       highlights: [
         "Lead a team of three delivering features to a live, regulated healthcare system — planning, delegation, code review and release ownership.",
@@ -210,9 +263,9 @@ export const portfolioConfig: PortfolioConfig = {
       companyNote: "self-developed product · astrx.dev",
       url: "https://nexql.astrx.dev",
       location: "Open source",
-      period: "Ongoing",
+      period: "Apr 2025 — Present",
       domain: "Developer tools · PostgreSQL & AI agents",
-      roles: [{ title: "Creator & Maintainer", period: "Ongoing" }],
+      roles: [{ title: "Creator & Maintainer", period: "Apr 2025 — Present" }],
       highlights: [
         "Designed, built and ship NexQL end to end as a production-grade, open-source PostgreSQL toolkit (formerly PgStudio) — product, architecture, implementation, release and docs.",
         "VS Code extension for building, exploring and querying Postgres with AI-assisted help, built in TypeScript.",
@@ -226,9 +279,20 @@ export const portfolioConfig: PortfolioConfig = {
       location: "Bengaluru, India",
       period: "Jun 2018 — May 2021",
       domain: "AIOps & MLOps platforms",
+      journey:
+        "Joined in June 2018 as part of the founding engineering team and spent three years helping build the AIOps and MLOps platforms. I built Go telemetry collectors load-tested past 10,000 metrics per second, a Java ASM Cassandra insert path that made writes 10× faster, and wore the senior Go developer, system admin and source-control hats while running client demos for Cisco and Mindtree.",
       roles: [
         { title: "Software Engineer L2", period: "Jun 2019 — May 2021" },
-        { title: "Software Engineer L1", period: "Jun 2018 — May 2019" },
+        {
+          title: "Software Engineer L1",
+          period: "Jun 2018 — May 2019",
+          promotion: [
+            "As an initial employee, worked as the main backend engineer alongside source-control management and infrastructure management.",
+            "Worked with others to improve the product and introduced key architectural design changes.",
+            "Researched and built new concepts in Go and Python to improve the core product, and worked with the team to design and co-lead products.",
+            "Removed Cassandra bottlenecks on high-volume inserts using ASM-based dynamic Java classes that capture live KPIs from Prometheus into TimescaleDB.",
+          ],
+        },
       ],
       highlights: [
         "Joined as part of the founding engineering team and helped build two core products: the AIOps and MLOps platforms.",
