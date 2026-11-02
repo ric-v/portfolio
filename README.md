@@ -27,10 +27,18 @@ Old section URLs (`/about`, `/projects`, …) redirect to the matching anchor on
 
 ## Concept: "Break it"
 
-A deliberately minimal site built around a live chaos lab: a small simulated system
-(load balancer, three Go API nodes, Redis, Postgres) that visitors can break — kill nodes,
-slow or take down the database, spike traffic — and then watch health checks, timeouts,
-retries, a circuit breaker and load shedding keep it up. Turn the defences off to see it fall over.
+The site is built around a live chaos lab: a simulated request-processing backend
+(load balancer → three Go API nodes → Redis + Postgres) that visitors can break and defend.
 
-- Simulation engine: [`src/lib/chaos.ts`](src/lib/chaos.ts)
-- Lab UI: [`src/components/chaos/Lab.tsx`](src/components/chaos/Lab.tsx)
+- **Guided incidents** — five step-by-step walkthroughs (node failure, slow database, traffic
+  spike, cache outage, retry storm / metastable failure) that inject faults, point at what to
+  watch and explain *why* the system reacts the way it does: [`src/lib/scenarios.ts`](src/lib/scenarios.ts)
+- **Console** — live diagram with per-node worker slots and queues, availability / p99 /
+  goodput / load amplification, outcome breakdown, latency histogram, a request inspector that
+  shows one live request span-by-span, component explainers and an event log
+- **How it works** — Little's law, queueing (ρ/(1−ρ)), circuit-breaker state machine and retry
+  amplification, each with a chart driven by the same live simulation
+- **Engine** — [`src/lib/chaos.ts`](src/lib/chaos.ts): worker pools sized by Little's law,
+  queues, 400 sampled requests per tick, breaker state machine, capped retries
+
+The model is deliberately simple and is labelled as illustrative on the page.

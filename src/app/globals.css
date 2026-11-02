@@ -1,99 +1,114 @@
 @import "tailwindcss";
 
-/* Minimal palette: paper, ink, and three signal colours. Follows the OS theme. */
+/* Ops-console palette. Follows the OS light/dark setting. */
 :root {
-  --paper: #f6f5f0;
-  --ink: #141414;
-  --dim: #6b6b66;
-  --line: #d6d4cc;
-  --ok: #0f7b4f;
-  --warn: #b25e00;
-  --bad: #c8261b;
-  --bad-soft: rgba(200, 38, 27, 0.07);
+  --paper: #f4f3ee;
+  --panel: #fbfaf7;
+  --subtle: #ecebe5;
+  --ink: #16161a;
+  --ink-soft: #3d3d44;
+  --dim: #74747c;
+  --line: #e0ded6;
+  --line-strong: #c7c5bc;
+  --ok: #12805c;
+  --warn: #b45f06;
+  --bad: #d0312d;
+  --bad-soft: rgba(208, 49, 45, 0.07);
+  --accent: #4f46e5;
+  --accent-soft: rgba(79, 70, 229, 0.1);
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #111110;
-    --ink: #ecebe6;
-    --dim: #8e8d87;
-    --line: #2f2e2b;
-    --ok: #3ccf8e;
-    --warn: #f0a33a;
-    --bad: #ff5a4e;
-    --bad-soft: rgba(255, 90, 78, 0.1);
+    --paper: #0c0c0e;
+    --panel: #131317;
+    --subtle: #1b1b21;
+    --ink: #ececf1;
+    --ink-soft: #c2c2cc;
+    --dim: #8a8a95;
+    --line: #26262e;
+    --line-strong: #383842;
+    --ok: #34d399;
+    --warn: #f5a524;
+    --bad: #ff5d55;
+    --bad-soft: rgba(255, 93, 85, 0.1);
+    --accent: #8b85ff;
+    --accent-soft: rgba(139, 133, 255, 0.14);
     color-scheme: dark;
   }
 }
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-subtle: var(--subtle);
   --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
   --color-dim: var(--dim);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
   --color-bad: var(--bad);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
 }
 
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 15px;
+  font-family: var(--font-sans);
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent);
+  color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-}
-
-a:hover {
-  text-decoration-thickness: 2px;
-}
-
 .btn {
-  border: 1px solid var(--ink);
-  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.8rem;
   font-size: 0.8rem;
-  transition: background-color 0.15s, color 0.15s;
+  color: var(--ink);
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
 }
 
-.btn:hover {
-  background: var(--ink);
-  color: var(--paper);
+.btn:hover:not(:disabled) {
+  background: var(--subtle);
 }
 
-.btn-bad {
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent);
+  opacity: 0.9;
+}
+
+.btn-danger {
   border-color: var(--bad);
   color: var(--bad);
 }
 
-.btn-bad:hover {
+.btn-danger:hover:not(:disabled) {
   background: var(--bad);
-  color: var(--paper);
-}
-
-.btn-on-bad {
-  background: var(--bad);
-  border-color: var(--bad);
   color: var(--paper);
 }
 
@@ -108,11 +123,23 @@ a:hover {
   }
 }
 
+/* Attention pulse used by guided incidents */
+.focus-pulse {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .flow {
+  .flow,
+  .focus-pulse {
     animation: none;
   }
 }
