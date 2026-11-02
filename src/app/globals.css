@@ -1,332 +1,102 @@
 @import "tailwindcss";
 
-/* =========================================================================
-   Theme tokens
-   Light is the default; [data-theme="dark"] is set before paint by the
-   inline script in layout.tsx (system preference, or the visitor's choice).
-   One light source — top-left — drives every highlight and shadow.
-   ========================================================================= */
+/* =====================================================
+   Design tokens
+   ===================================================== */
+/* Trace UI is dark-only: it mirrors the APM tools it's inspired by. */
 :root {
-  --paper: #f3f1ea;
-  --panel: #faf9f5;
-  --subtle: #ebe9e1;
-  --ink: #16161a;
-  --ink-soft: #3d3d44;
-  --dim: #72727a;
-  --line: #dfddd4;
-  --line-strong: #c6c3b8;
-  --ok: #12805c;
-  --warn: #b45f06;
-  --bad: #d0312d;
-  --bad-soft: rgba(208, 49, 45, 0.07);
-  --accent: #4f46e5;
-  --accent-soft: rgba(79, 70, 229, 0.1);
-  --accent-on: #ffffff;
-
-  /* lighting */
-  --sheen: rgba(255, 255, 255, 0.95);
-  --edge-light: rgba(255, 255, 255, 0.9);
-  --edge-dark: rgba(60, 50, 30, 0.05);
-  --shadow-near: rgba(60, 50, 30, 0.06);
-  --shadow-far: rgba(60, 50, 30, 0.12);
-  --spot: rgba(79, 70, 229, 0.07);
-  --room-light: rgba(255, 214, 150, 0.35);
-  --grain-opacity: 0.045;
-  --dot: rgba(22, 22, 26, 0.09);
-  color-scheme: light;
-}
-
-[data-theme="dark"] {
-  --paper: #0b0b0d;
-  --panel: #131317;
-  --subtle: #1b1b21;
-  --ink: #ececf1;
-  --ink-soft: #c2c2cc;
-  --dim: #8a8a95;
-  --line: #24242c;
-  --line-strong: #363640;
-  --ok: #34d399;
+  --bg: #0a0b0e;
+  --bg-elevated: #101217;
+  --bg-subtle: #171a21;
+  --border: #22252e;
+  --border-strong: #323642;
+  --fg: #e9eaee;
+  --fg-muted: #a1a5b1;
+  --fg-subtle: #6f7480;
+  --accent: #f5a524;
+  --accent-fg: #1a1205;
+  --accent-soft: rgba(245, 165, 36, 0.09);
+  --ring: rgba(245, 165, 36, 0.5);
+  --ok: #3fd18a;
+  --ok-soft: rgba(63, 209, 138, 0.12);
   --warn: #f5a524;
   --bad: #ff5d55;
   --bad-soft: rgba(255, 93, 85, 0.1);
-  --accent: #8b85ff;
-  --accent-soft: rgba(139, 133, 255, 0.14);
-  --accent-on: #14122e;
 
-  --sheen: rgba(255, 255, 255, 0.055);
-  --edge-light: rgba(255, 255, 255, 0.085);
-  --edge-dark: rgba(0, 0, 0, 0.35);
-  --shadow-near: rgba(0, 0, 0, 0.35);
-  --shadow-far: rgba(0, 0, 0, 0.55);
-  --spot: rgba(139, 133, 255, 0.1);
-  --room-light: rgba(139, 133, 255, 0.13);
-  --grain-opacity: 0.06;
-  --dot: rgba(236, 236, 241, 0.07);
+  /* Service colours (one per "service" in the trace) */
+  --svc-richie: #9aa3b5;
+  --svc-education: #a78bfa;
+  --svc-algomox: #38bdf8;
+  --svc-worklife: #f5a524;
+
+  /* Lab / shared surface tokens */
+  --paper: #0b0b0d;
+  --panel: #131317;
+  --subtle: #171a21;
+  --ink: #e9eaee;
+  --ink-soft: #a1a5b1;
+  --dim: #6f7480;
+  --line: #22252e;
+  --line-strong: #323642;
+  --accent-on: #1a1205;
   color-scheme: dark;
 }
 
 @theme inline {
+  --color-bg: var(--bg);
+  --color-elevated: var(--bg-elevated);
+  --color-subtle: var(--bg-subtle);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-faint: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
   --color-paper: var(--paper);
   --color-panel: var(--panel);
-  --color-subtle: var(--subtle);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-dim: var(--dim);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
   --color-bad: var(--bad);
-  --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-/* =========================================================================
+/* =====================================================
    Base
-   ========================================================================= */
+   ===================================================== */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--paper);
-  /* The room's light source: a soft glow from the top-left. */
-  background-image: radial-gradient(70rem 45rem at -10% -15%, var(--room-light), transparent 65%);
-  background-attachment: fixed;
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-sans);
-  overflow-x: clip;
-}
-
-/* Film grain — gives flat colour a tactile, printed feel. */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: var(--grain-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-fg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* =========================================================================
-   Surfaces — "window" elements lit from the top-left
-   ========================================================================= */
-.surface {
-  --sheen-img: radial-gradient(140% 90% at 0% 0%, var(--sheen), transparent 55%);
-  background-color: var(--panel);
-  background-image: var(--sheen-img);
-  box-shadow:
-    inset 1px 1px 0 var(--edge-light),
-    inset -1px -1px 0 var(--edge-dark),
-    2px 3px 6px -2px var(--shadow-near),
-    10px 16px 36px -18px var(--shadow-far);
-  transition:
-    translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color 0.25s ease,
-    background-color 0.35s ease;
-}
-
-/* Interactive cards: lift towards the light and follow the cursor with a soft spotlight. */
-.lift:hover {
-  /* `translate` (not `transform`) so it never fights the scroll-reveal animation. */
-  translate: -1px -3px;
-  border-color: var(--line-strong);
-  background-image:
-    radial-gradient(320px circle at var(--mx, 30%) var(--my, 20%), var(--spot), transparent 70%),
-    var(--sheen-img);
-  box-shadow:
-    inset 1px 1px 0 var(--edge-light),
-    inset -1px -1px 0 var(--edge-dark),
-    4px 8px 14px -6px var(--shadow-near),
-    18px 28px 48px -22px var(--shadow-far);
-}
-
-/* Dot grid behind the hero, fading away from the light. */
-.dot-grid {
-  background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
-  background-size: 22px 22px;
-  mask-image: radial-gradient(ellipse 80% 70% at 15% 10%, #000 20%, transparent 75%);
-}
-
-/* Hand-drawn style underline that draws itself in. */
-.draw-underline {
-  background-image: linear-gradient(transparent 82%, var(--accent-soft) 82%, var(--accent-soft) 96%, transparent 96%),
-    linear-gradient(var(--accent), var(--accent));
-  background-repeat: no-repeat;
-  background-size:
-    100% 100%,
-    0% 3px;
-  background-position:
-    0 0,
-    0 94%;
-  animation: draw 1.1s 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-
-@keyframes draw {
-  to {
-    background-size:
-      100% 100%,
-      100% 3px;
-  }
-}
-
-/* =========================================================================
-   Buttons
-   ========================================================================= */
-.btn {
-  border: 1px solid var(--line-strong);
-  border-radius: 0.5rem;
-  padding: 0.35rem 0.8rem;
-  font-size: 0.8rem;
-  color: var(--ink);
-  background-color: var(--panel);
-  background-image: linear-gradient(to bottom, var(--sheen), transparent 70%);
-  box-shadow:
-    inset 1px 1px 0 var(--edge-light),
-    1px 2px 4px -2px var(--shadow-near);
-  transition:
-    translate 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.btn:hover:not(:disabled) {
-  translate: 0 -1px;
-  background-color: var(--subtle);
-  box-shadow:
-    inset 1px 1px 0 var(--edge-light),
-    2px 5px 10px -4px var(--shadow-far);
-}
-
-.btn:active:not(:disabled) {
-  translate: 0 0;
-  box-shadow: inset 1px 1px 3px var(--shadow-near);
-}
-
-.btn-primary {
-  background-color: var(--accent);
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18), transparent 60%);
-  border-color: var(--accent);
-  color: var(--accent-on);
-  box-shadow:
-    inset 1px 1px 0 rgba(255, 255, 255, 0.25),
-    2px 4px 12px -4px var(--accent);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: var(--accent);
-  box-shadow:
-    inset 1px 1px 0 rgba(255, 255, 255, 0.3),
-    3px 8px 20px -6px var(--accent);
-}
-
-.btn-danger {
-  border-color: var(--bad);
-  color: var(--bad);
-}
-
-.btn-danger:hover:not(:disabled) {
-  background: var(--bad);
-  color: var(--paper);
-}
-
-/* =========================================================================
-   Motion
-   ========================================================================= */
-.flow {
-  animation: flow linear infinite;
-}
-
-@keyframes flow {
-  to {
-    stroke-dashoffset: -16;
-  }
-}
-
-.focus-pulse {
-  animation: pulse 1.6s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  50% {
-    opacity: 0.35;
-  }
-}
-
-/* Scroll reveal — content is visible without JS; JS opts elements in. */
-.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-
-.js [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Theme switch: circular reveal via the View Transitions API… */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-/* …or a cross-fade where it isn't supported. */
-.theme-fade,
-.theme-fade *,
-.theme-fade *::before,
-.theme-fade *::after {
-  transition:
-    background-color 0.4s ease,
-    border-color 0.4s ease,
-    color 0.4s ease,
-    fill 0.4s ease,
-    stroke 0.4s ease,
-    box-shadow 0.4s ease !important;
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .flow,
-  .focus-pulse,
-  .draw-underline {
-    animation: none;
-  }
-  .draw-underline {
-    background-size:
-      100% 100%,
-      100% 3px;
-  }
-  .js [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .lift:hover,
-  .btn:hover:not(:disabled) {
-    translate: none;
   }
 }
