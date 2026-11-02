@@ -1,296 +1,333 @@
-import { type IconType } from "react-icons";
+/**
+ * Single source of truth for all site content.
+ * Edit this file to update the portfolio — no component changes needed.
+ * See CUSTOMIZE.md for details.
+ */
 
-export interface CarouselItem {
-  headline: string;
-  subtext: string;
+export interface SocialLink {
+  label: string;
+  url: string;
+  icon: "github" | "linkedin" | "resume" | "email";
 }
 
-export interface Project {
-  id: number;
+export interface Metric {
+  value: string;
+  label: string;
+}
+
+export interface FocusArea {
   title: string;
   description: string;
-  tags: string[];
-  image: string;
-  link: string;
-  github?: string;
-  isOpenSource?: boolean;
-  stars?: number;
 }
 
-export interface Skill {
-  name: string;
-  category: "languages" | "frameworks" | "cloud" | "databases" | "tools";
+export interface Role {
+  title: string;
+  period: string;
 }
 
 export interface Experience {
-  id: number;
   company: string;
-  role: string;
-  duration: string;
+  companyNote?: string;
+  url?: string;
   location: string;
-  description: string[];
+  period: string;
+  domain: string;
+  /** Role progression, newest first. */
+  roles: Role[];
+  highlights: string[];
   technologies: string[];
 }
 
-export interface SocialLink {
-  platform: string;
-  url: string;
-  icon?: IconType;
+export interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  github?: string;
+  live?: string;
+  liveLabel?: string;
+  featured?: boolean;
+}
+
+export interface SkillGroup {
+  label: string;
+  items: string[];
+}
+
+export interface Education {
+  school: string;
+  degree: string;
+  period: string;
+  notes?: string[];
 }
 
 export interface PortfolioConfig {
-  personalInfo: {
-    name: string;
-    role: string;
-    tagline: string;
+  site: {
+    url: string;
+    title: string;
     description: string;
+  };
+  personal: {
+    name: string;
+    shortName: string;
+    title: string;
     location: string;
-    bio: string[];
-    quote: string;
-    profileImage: {
-      light: string;
-      dark: string;
-    };
+    headline: string;
+    intro: string;
+    /** Used to compute "N+ years" automatically. */
+    careerStartYear: number;
+    portrait: { src: string; alt: string };
+    email: string;
+    resumeUrl: string;
     socials: SocialLink[];
   };
-  hero: {
-    carouselItems: CarouselItem[];
+  metrics: Metric[];
+  about: {
+    paragraphs: string[];
+    focusAreas: FocusArea[];
   };
-  skills: Skill[];
   experience: Experience[];
   projects: Project[];
+  skills: SkillGroup[];
+  education: Education[];
+  certifications: string[];
   contact: {
-    email: string;
-  };
-  footer: {
-    tagline: string;
-    subTagline: string;
+    heading: string;
+    message: string;
   };
 }
 
+const RESUME_URL =
+  "https://drive.google.com/file/d/1-34NxUJF_Fj6-s4vUZVZIjIVO0VD-WX9/view?usp=sharing";
+
 export const portfolioConfig: PortfolioConfig = {
-  personalInfo: {
+  site: {
+    url: "https://me.astrx.dev",
+    title: "Richie Varghese — Tech Lead & Backend Engineer",
+    description:
+      "Tech Lead and backend engineer in Bengaluru building fast, reliable distributed systems in Go, Rust and PostgreSQL.",
+  },
+
+  personal: {
     name: "Richie Varghese",
-    role: "I Engineer Scalable Systems",
-    tagline: "Tech Lead & Principal Engineer",
-    description: "Building high-performance distributed systems that scale.",
+    shortName: "Richie",
+    title: "Tech Lead · Principal Engineer",
     location: "Bengaluru, India",
-    bio: [
-      "I'm a Tech Lead and Principal Engineer focused on building scalable, high-performance systems that operate reliably under real-world load.",
-      "My work spans distributed backends, data-intensive platforms, and cloud-native architectures, with a strong emphasis on latency, reliability, and observability. I design systems that remain predictable as traffic grows—and debuggable when things go wrong.",
-      "I work close to the fundamentals: system design, concurrency, data flow, and performance tuning. Whether it's optimizing critical paths, simplifying complex architectures, or mentoring engineers, I care about building software that earns trust over time.",
-      "Outside core product work, I build developer tooling and internal utilities to improve visibility, productivity, and operational clarity.",
-    ],
-    quote: "If it aint broke, break it, make it better.",
-    profileImage: {
-      light: "/dp-light.png",
-      dark: "/dp-dark.png",
+    headline: "I build backend systems that stay fast under real-world load.",
+    /** `{years}` is replaced with years since careerStartYear. */
+    intro:
+      "Tech Lead with {years}+ years of experience designing distributed microservices, tuning databases, and leading small teams that ship production-grade software — currently for a U.S. pharmacy-benefits platform processing insurance claims in real time.",
+    careerStartYear: 2018,
+    portrait: {
+      src: "/dp-dark.png",
+      alt: "Portrait of Richie Varghese",
     },
+    email: "support@astrx.dev",
+    resumeUrl: RESUME_URL,
     socials: [
-      {
-        platform: "GitHub",
-        url: "https://github.com/ric-v",
-      },
-      {
-        platform: "LinkedIn",
-        url: "https://linkedin.com/in/ric-v",
-      },
-      {
-        platform: "Resume",
-        url: "https://drive.google.com/file/d/1-34NxUJF_Fj6-s4vUZVZIjIVO0VD-WX9/view?usp=sharing",
-      },
+      { label: "GitHub", url: "https://github.com/ric-v", icon: "github" },
+      { label: "LinkedIn", url: "https://linkedin.com/in/ric-v", icon: "linkedin" },
+      { label: "Resume", url: RESUME_URL, icon: "resume" },
     ],
   },
-  hero: {
-    carouselItems: [
-      {
-        headline: "Distributed systems at production scale",
-        subtext:
-          "Designing microservices that handle high-frequency traffic with predictable latency.",
-      },
-      {
-        headline: "Performance is a feature",
-        subtext:
-          "Optimized low level systems to achieve sub 100ms response times under real-world load which is used by millions of users.",
-      },
-      {
-        headline: "Data-intensive by design",
-        subtext:
-          "Database query optimization, planning, and schema decisions that reduce latency. When scaling, every microsecond counts.",
-      },
-      {
-        headline: "Built to fail gracefully",
-        subtext:
-          "Systems designed with observability, timeouts, circuit breakers, and degradation in mind. Looking pretty under pressure.",
-      },
-      {
-        headline: "Hands-on technical leadership",
-        subtext:
-          "Leading small teams, reviewing critical code, and owning architectural decisions end-to-end.",
-      },
-      {
-        headline: "Builder beyond the day job",
-        subtext:
-          "Creating developer tools, internal utilities, and experiments to improve self, team, and product.",
-      },
-      {
-        headline: "Break. Build. Repeat.",
-        subtext:
-          "Nothing is permanent. Iterate and improve. If it's not broken, break it, and make it better.",
-      },
-    ],
-  },
-  skills: [
-    // Languages
-    { name: "Go", category: "languages" },
-    { name: "Python", category: "languages" },
-    { name: "Java", category: "languages" },
-    { name: "TypeScript", category: "languages" },
-    { name: "Rust", category: "languages" },
-    { name: "JavaScript", category: "languages" },
-    // Frameworks
-    { name: "React", category: "frameworks" },
-    { name: "Next.js", category: "frameworks" },
-    { name: "Spring Boot", category: "frameworks" },
-    { name: "gRPC", category: "frameworks" },
-    { name: "GraphQL", category: "frameworks" },
-    // Cloud
-    { name: "AWS", category: "cloud" },
-    { name: "GCP", category: "cloud" },
-    { name: "Kubernetes", category: "cloud" },
-    { name: "Docker", category: "cloud" },
-    { name: "Terraform", category: "cloud" },
-    // Databases
-    { name: "PostgreSQL", category: "databases" },
-    { name: "Redis", category: "databases" },
-    { name: "Kafka", category: "databases" },
-    { name: "Elasticsearch", category: "databases" },
-    { name: "MongoDB", category: "databases" },
-    // Tools
-    { name: "Git", category: "tools" },
-    { name: "Linux", category: "tools" },
-    { name: "Prometheus", category: "tools" },
-    { name: "Grafana", category: "tools" },
-    { name: "CI/CD", category: "tools" },
+
+  metrics: [
+    { value: "<100ms", label: "response time on real-time insurance claim processing" },
+    { value: "10×", label: "faster high-volume Cassandra inserts via a custom Java ASM writer" },
+    { value: "10K+", label: "metrics per second through Go telemetry collectors" },
+    { value: "60%", label: "efficiency gain from containerisation, telemetry and testing on Azure" },
   ],
+
+  about: {
+    paragraphs: [
+      "I'm a backend-focused engineer who likes working close to the fundamentals — concurrency, data flow, query plans and the critical path of a request. Most of my career has been spent on systems where latency and correctness both matter.",
+      "Today I lead a small team at Worklife Tech building the claims-processing platform behind VisoryHealth, a U.S. pharmacy benefit management program. Before that, I was one of the first engineers at Algomox, building the data-collection backbone for its AIOps and MLOps platforms.",
+      "Outside the day job I build developer tools — most recently PgStudio, a PostgreSQL extension for VS Code — and I hold a Master's in Computer Science focused on system design and data engineering.",
+    ],
+    focusAreas: [
+      {
+        title: "Distributed systems",
+        description:
+          "Go microservices designed for high-frequency traffic with predictable latency.",
+      },
+      {
+        title: "Database performance",
+        description:
+          "Query plans, schema design and PL/pgSQL rewrites — 50–500ms saved per query.",
+      },
+      {
+        title: "Reliability & observability",
+        description:
+          "Telemetry, monitoring and graceful degradation so systems stay debuggable.",
+      },
+      {
+        title: "Technical leadership",
+        description:
+          "Owning architecture end-to-end, reviewing critical code and mentoring engineers.",
+      },
+    ],
+  },
+
   experience: [
     {
-      id: 1,
       company: "Worklife Tech",
-      role: "Tech Lead / Principal Engineer",
-      duration: "Present",
-      location: "Bengaluru",
-      description: [
-        "Leading technical architecture for scalable backend systems",
-        "Designing and implementing distributed microservices",
-        "Mentoring engineers and driving technical excellence",
+      companyNote: "formerly part of Gipfel & Schnell Consultings",
+      location: "Bengaluru, India",
+      period: "Jun 2021 — Present",
+      domain: "Pharmacy Benefit Management · Client: VisoryHealth (XIL Health)",
+      roles: [
+        { title: "Tech Lead — Software Development", period: "Apr 2024 — Present" },
+        { title: "Principal Engineer", period: "Apr 2023 — Mar 2024" },
+        { title: "Senior Engineer", period: "Oct 2021 — Mar 2023" },
+        { title: "Engineer", period: "Jun 2021 — Sep 2021" },
       ],
-      technologies: ["Go", "Kubernetes", "PostgreSQL", "AWS"],
+      highlights: [
+        "Lead a team of three delivering features to a live, regulated healthcare system — planning, delegation, code review and release ownership.",
+        "Build and maintain microservices that adjudicate pharmacy insurance claims in real time for a U.S. PBM program.",
+        "Optimised core claim-processing logic to respond in under 100ms despite high-frequency request volume.",
+        "Re-engineered PostgreSQL functions, cutting 50–500ms off individual queries.",
+        "Improved delivery efficiency by 60% through containerisation, telemetry, real-time monitoring and unit testing on Microsoft Azure.",
+        "Designed a proof of concept for a new U.S. healthcare product aimed at improving health-plan provider ratings.",
+      ],
+      technologies: ["Go", "PostgreSQL", "PL/pgSQL", "Docker", "Azure", "Prometheus", "Grafana"],
     },
     {
-      id: 2,
-      company: "Previous Company",
-      role: "Senior Software Engineer",
-      duration: "2020 - 2023",
-      location: "Remote",
-      description: [
-        "Built high-performance backend services handling millions of requests",
-        "Optimized database queries reducing latency by 60%",
-        "Implemented observability and monitoring solutions",
+      company: "Algomox",
+      location: "Bengaluru, India",
+      period: "Jun 2018 — May 2021",
+      domain: "AIOps & MLOps platforms",
+      roles: [
+        { title: "Software Engineer L2", period: "Jun 2019 — May 2021" },
+        { title: "Software Engineer L1", period: "Jun 2018 — May 2019" },
       ],
-      technologies: ["Python", "Java", "Redis", "Kafka"],
-    },
-    {
-      id: 3,
-      company: "Earlier Role",
-      role: "Software Engineer",
-      duration: "2017 - 2020",
-      location: "India",
-      description: [
-        "Developed full-stack applications with modern frameworks",
-        "Contributed to open-source projects",
-        "Built internal developer tooling",
+      highlights: [
+        "Joined as part of the founding engineering team and helped build two core products: the AIOps and MLOps platforms.",
+        "Built and deployed Go microservices for telemetry data collection, load-tested at over 10,000 metrics per second.",
+        "Contributed to the system design and optimisation of the telemetry collection engines.",
+        "Wrote a high-volume Cassandra insert path using Java ASM — 10× faster writes and no more slow-query build-up under sustained load.",
+        "Wore several hats — senior Go developer, system administrator and source-control manager — and ran technical demos for clients including Cisco and Mindtree.",
       ],
-      technologies: ["JavaScript", "React", "Node.js", "MongoDB"],
+      technologies: ["Go", "Java", "Cassandra", "Python", "Linux", "Bash"],
     },
   ],
+
   projects: [
     {
-      id: 1,
       title: "PgStudio",
       description:
-        "Intelligent PostgreSQL tooling for VS Code. Build, explore, and query Postgres faster with AI-powered assistance.",
+        "PostgreSQL tooling for VS Code — explore schemas, write and run queries, and get AI-assisted help without leaving the editor.",
       tags: ["TypeScript", "PostgreSQL", "VS Code", "AI"],
-      image: "/projects/pgstudio.jpg",
-      link: "https://github.com/dev-asterix/PgStudio",
       github: "https://github.com/dev-asterix/PgStudio",
-      isOpenSource: true,
-      stars: 4,
+      featured: true,
     },
     {
-      id: 2,
-      title: "Divulge DB UI",
+      title: "Glog",
       description:
-        "Simple DB CRUD operating service for Key-Value databases in Go with a React frontend.",
-      tags: ["Go", "React", "BoltDB", "Material-UI"],
-      image: "/projects/divulge.jpg",
-      link: "https://github.com/ric-v/divulge-keyvalue-db-ui",
-      github: "https://github.com/ric-v/divulge-keyvalue-db-ui",
-      isOpenSource: true,
-      stars: 2,
+        "A concurrent, file-based logger for Go. Channel-based streaming keeps logging thread-safe and low-overhead, with zero external dependencies.",
+      tags: ["Go", "Concurrency", "Library"],
+      github: "https://github.com/ric-v/glog",
+      live: "https://pkg.go.dev/github.com/ric-v/glog",
+      liveLabel: "pkg.go.dev",
     },
     {
-      id: 3,
+      title: "And the time is…",
+      description:
+        "Find the current time across time zones at a glance, and compare any zone against your own — past or future.",
+      tags: ["Next.js", "Redux", "Tailwind CSS"],
+      github: "https://github.com/dev-asterix/and-the-time-is",
+      live: "https://timeis.astrx.dev",
+      liveLabel: "Live site",
+    },
+    {
+      title: "Divulge",
+      description:
+        "A web UI for managing embedded key-value databases like BoltDB and BuntDB — a Go backend with a React front end.",
+      tags: ["Go", "React", "BoltDB"],
+      github: "https://github.com/ric-v/divulge-keyvalue-db-ui",
+    },
+    {
+      title: "Task Master",
+      description:
+        "A customisable task-execution system and library for Go, written with no dependencies.",
+      tags: ["Go", "Scheduling", "Zero deps"],
+      github: "https://github.com/dev-asterix/task-master.go",
+    },
+    {
       title: "Go Func Collections",
       description:
-        "Commonly used Go functions to reduce code bulk. A utility library for everyday Go development.",
-      tags: ["Go", "Utilities", "Library"],
-      image: "/projects/gofunc.jpg",
-      link: "https://github.com/ric-v/go-func-collections",
+        "Generic helpers for everyday Go — the small functions you'd otherwise rewrite in every project.",
+      tags: ["Go", "Generics", "Library"],
       github: "https://github.com/ric-v/go-func-collections",
-      isOpenSource: true,
-      stars: 3,
     },
     {
-      id: 4,
-      title: "And The Time Is",
-      description:
-        "Simple application to display current time in real-time for different time zones. Built with Next.js and Redux.",
-      tags: ["Next.js", "Redux", "TypeScript"],
-      image: "/projects/timeis.jpg",
-      link: "https://github.com/dev-asterix/and-the-time-is",
-      github: "https://github.com/dev-asterix/and-the-time-is",
-      isOpenSource: true,
-    },
-    {
-      id: 5,
-      title: "Task Master Go",
-      description:
-        "Customizable task execution system and library written in Go with no dependencies.",
-      tags: ["Go", "Task Runner", "Zero Dependencies"],
-      image: "/projects/taskmaster.jpg",
-      link: "https://github.com/dev-asterix/task-master.go",
-      github: "https://github.com/dev-asterix/task-master.go",
-      isOpenSource: true,
-    },
-    {
-      id: 6,
       title: "DSA & System Design",
       description:
-        "Comprehensive exercises from Scaler Academy covering DSA, Data Engineering, and System Design patterns.",
-      tags: ["Python", "Go", "System Design", "DSA"],
-      image: "/projects/scaler.jpg",
-      link: "https://github.com/ric-v/scaler-academy-interviewbit",
+        "Worked solutions and notes from my Master's coursework — data structures, algorithms, data engineering and system design.",
+      tags: ["Python", "Go", "System Design"],
       github: "https://github.com/ric-v/scaler-academy-interviewbit",
-      isOpenSource: true,
-      stars: 12,
     },
   ],
+
+  skills: [
+    {
+      label: "Languages",
+      items: ["Go", "Rust", "Python", "TypeScript", "JavaScript", "Java", "SQL / PL/pgSQL", "Bash"],
+    },
+    {
+      label: "Backend & APIs",
+      items: ["Microservices", "gRPC", "REST", "GraphQL", "Gin", "GORM", "Flask", "Spring Boot"],
+    },
+    {
+      label: "Data",
+      items: ["PostgreSQL", "Cassandra", "Redis", "Kafka", "Elasticsearch", "MongoDB"],
+    },
+    {
+      label: "Cloud & Ops",
+      items: ["Docker", "Kubernetes", "Azure", "AWS", "GCP", "Terraform", "CI/CD", "Linux"],
+    },
+    {
+      label: "Observability",
+      items: ["Prometheus", "Grafana", "Telemetry pipelines"],
+    },
+    {
+      label: "Frontend",
+      items: ["React", "Next.js", "Redux", "Tailwind CSS", "Material UI"],
+    },
+  ],
+
+  education: [
+    {
+      school: "Woolf University · Scaler Neovarsity",
+      degree: "Master's in Computer Science",
+      period: "2022 — 2024",
+      notes: ["Advanced data structures & algorithms, high- and low-level system design, data engineering."],
+    },
+    {
+      school: "College of Engineering, Kidangoor",
+      degree: "B.Tech, Information Technology",
+      period: "2014 — 2018",
+      notes: [
+        "President of SWIFT, the IT department's student association (2017–18).",
+        "Organised Innovate '18, the department's first inter-college tech fest.",
+        "Final-year project Hazel, a Linux chatbot, received a KSCSTE innovation grant.",
+      ],
+    },
+  ],
+
+  certifications: [
+    "Applied Concurrency in Go",
+    "The Complete Rust Programming Course",
+    "Go (Basic)",
+    "React Hooks",
+    "Tailwind CSS Essential Training",
+  ],
+
   contact: {
-    email: "support@astrx.dev",
-  },
-  footer: {
-    tagline: "Building Systems That Scale",
-    subTagline: "Crafting reliable software, one microservice at a time",
+    heading: "Let's talk",
+    message:
+      "Open to conversations about backend and platform roles, technical leadership, or interesting systems problems. Email is the fastest way to reach me.",
   },
 };
+
+export function yearsOfExperience(startYear = portfolioConfig.personal.careerStartYear) {
+  return new Date().getFullYear() - startYear;
+}

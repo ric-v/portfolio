@@ -1,356 +1,140 @@
 @import "tailwindcss";
 
-/* =====================================================
-   LIVING CANVAS PORTFOLIO - Theme System
-   Sunrise ↔ Sunset with Fluid Animations
-   ===================================================== */
+/* Class-based dark mode driven by <html data-theme="..."> */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/* =====================================================
+   Design tokens
+   ===================================================== */
 :root {
-  /* Core Theme Variables - Sunrise (Light) Default */
-  --bg-primary: #f0f9fa;
-  --bg-secondary: #d4eef2;
-  --bg-tertiary: #b8e4eb;
-
-  /* Accent Colors - Warm Orange for Sunrise */
-  --accent-primary: #ff7e33;
-  --accent-secondary: #ffaa6c;
-  --accent-tertiary: #ffd4a8;
-
-  /* Glow & Highlights */
-  --glow-color: rgba(255, 126, 51, 0.5);
-  --glow-secondary: rgba(255, 170, 108, 0.3);
-  --highlight: #fff8f0;
-
-  /* Global Planet Text Variables (Default: Earth Dark) */
-  /* These are dynamically updated by PlanetaryLayoutWrapper based on the current planet */
-  --planet-text-primary: #e0f2f1;
-  --planet-text-secondary: #b2dfdb;
-  --planet-text-muted: #80cbc4;
-  --planet-text-accent: #64b5f6;
-
-  /* Legacy Earth Vars - keeping for safety or removing if fully migrated */
-  --earth-text-primary: #e0f2f1;
-  --earth-text-secondary: #b2dfdb;
-  --earth-text-muted: #80cbc4;
-  --earth-text-accent: #64b5f6;
-  --text-primary: #0d2f2f;
-  --text-secondary: #1a4a4a;
-  --text-muted: #3d7070;
-
-  /* Glass Effects */
-  --glass-bg: rgba(255, 255, 255, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-shadow: rgba(255, 126, 51, 0.15);
-
-  /* Neon Strokes */
-  --neon-stroke: rgba(255, 126, 51, 0.8);
-  --neon-glow: 0 0 20px rgba(255, 126, 51, 0.5);
-
-  /* Animation Variables */
-  --light-intensity: 1;
-  --glow-opacity: 0.6;
-  --shadow-depth: 0.1;
-  --transition-duration: 5000ms;
-  /* Optimized from 10s to 5s */
-  /* Gradient Stops for Background Shader */
-  --gradient-start-r: 0.94;
-  --gradient-start-g: 0.98;
-  --gradient-start-b: 0.98;
-  --gradient-mid-r: 0.83;
-  --gradient-mid-g: 0.93;
-  --gradient-mid-b: 0.95;
-  --gradient-end-r: 0.72;
-  --gradient-end-g: 0.89;
-  --gradient-end-b: 0.92;
-
-  /* Sunrise Animation Colors */
-  --sun-color: #ff9500;
-  --horizon-glow: rgba(255, 180, 100, 0.8);
+  --bg: #fafaf9;
+  --bg-elevated: #ffffff;
+  --bg-subtle: #f4f4f2;
+  --border: #e5e4e0;
+  --border-strong: #d4d3ce;
+  --fg: #17171a;
+  --fg-muted: #55565e;
+  --fg-subtle: #7d7f87;
+  --accent: #b45309;
+  --accent-fg: #ffffff;
+  --accent-soft: rgba(180, 83, 9, 0.08);
+  --ring: rgba(180, 83, 9, 0.45);
+  --glow: rgba(217, 119, 6, 0.12);
+  color-scheme: light;
 }
 
-[data-theme="sunrise"] {
-  /* Earth Specific Variables are now injected via JS from planets.ts config */
+[data-theme="dark"] {
+  --bg: #0b0c0f;
+  --bg-elevated: #121318;
+  --bg-subtle: #16171d;
+  --border: #23252d;
+  --border-strong: #31343e;
+  --fg: #ececef;
+  --fg-muted: #a3a6b0;
+  --fg-subtle: #74777f;
+  --accent: #f5a524;
+  --accent-fg: #1a1205;
+  --accent-soft: rgba(245, 165, 36, 0.1);
+  --ring: rgba(245, 165, 36, 0.5);
+  --glow: rgba(245, 165, 36, 0.08);
+  color-scheme: dark;
 }
 
-[data-theme="sunset"] {
-  /* Core Theme Variables - Sunset (Dark) */
-  --bg-primary: #050f12;
-  --bg-secondary: #081a1f;
-  --bg-tertiary: #0c2329;
-
-  /* Accent Colors - Electric Purple/Cyan for Sunset */
-  --accent-primary: #8b5cf6;
-  --accent-secondary: #a78bfa;
-  --accent-tertiary: #c4b5fd;
-
-  /* Glow & Highlights - Magenta/Cyan */
-  --glow-color: rgba(139, 92, 246, 0.6);
-  --glow-secondary: rgba(236, 72, 153, 0.4);
-  --highlight: #22d3ee;
-
-  /* Text Colors */
-  --text-primary: #e8f5f5;
-  --text-secondary: #b8d8d8;
-  --text-muted: #7ab0b0;
-
-  /* Glass Effects - Darker */
-  --glass-bg: rgba(10, 30, 35, 0.6);
-  --glass-border: rgba(139, 92, 246, 0.3);
-  --glass-shadow: rgba(139, 92, 246, 0.25);
-
-  /* Neon Strokes - Purple/Cyan */
-  --neon-stroke: rgba(139, 92, 246, 0.9);
-  --neon-glow: 0 0 25px rgba(139, 92, 246, 0.6), 0 0 50px rgba(236, 72, 153, 0.3);
-
-  /* Animation Variables */
-  --light-intensity: 0.3;
-  --glow-opacity: 0.85;
-  --shadow-depth: 0.5;
-
-  /* Gradient Stops for Background Shader - Deep Teal/Emerald */
-  --gradient-start-r: 0.02;
-  --gradient-start-g: 0.06;
-  --gradient-start-b: 0.07;
-  --gradient-mid-r: 0.03;
-  --gradient-mid-g: 0.10;
-  --gradient-mid-b: 0.12;
-  --gradient-end-r: 0.05;
-  --gradient-end-g: 0.14;
-  --gradient-end-b: 0.16;
-
-  /* Sunset Animation Colors */
-  --sun-color: #8b5cf6;
-  --horizon-glow: rgba(139, 92, 246, 0.5);
-}
-
-/* =====================================================
-   Tailwind Theme Extension
-   ===================================================== */
 @theme inline {
-  --color-background: var(--bg-primary);
-  --color-foreground: var(--text-primary);
-  --color-accent: var(--accent-primary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-elevated: var(--bg-elevated);
+  --color-subtle: var(--bg-subtle);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-faint: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 /* =====================================================
-   Base Styles
+   Base
    ===================================================== */
-* {
-  box-sizing: border-box;
-  /* Apply transition to all color-related properties */
-  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
-  transition-duration: var(--transition-duration);
-  transition-timing-function: ease-in-out;
-}
-
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-sans, system-ui, sans-serif);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* =====================================================
-   Glass Card Utilities
-   ===================================================== */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px var(--glass-shadow);
-}
-
-.glass-strong {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 12px 48px var(--glass-shadow);
-}
-
-/* =====================================================
-   Neon Effects
-   ===================================================== */
-.neon-border {
-  position: relative;
-}
-
-.neon-border::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(135deg,
-      var(--accent-primary),
-      var(--accent-secondary),
-      var(--accent-primary));
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.neon-border:hover::before {
-  opacity: 1;
-}
-
-/* =====================================================
-   Glow Effects
-   ===================================================== */
-.glow {
-  box-shadow: var(--neon-glow);
-}
-
-.glow-text {
-  text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color);
-}
-
-/* =====================================================
-   Animation Utilities
-   ===================================================== */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  33% {
-    transform: translateY(-10px) rotate(1deg);
-  }
-
-  66% {
-    transform: translateY(5px) rotate(-1deg);
-  }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 20px var(--glow-color);
-  }
-
-  50% {
-    box-shadow: 0 0 40px var(--glow-color), 0 0 60px var(--glow-secondary);
-  }
-}
-
-/* =====================================================
-   Selection Styling
-   ===================================================== */
 ::selection {
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Soft ambient glow behind the hero — the only decorative flourish */
+.hero-glow {
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, var(--glow), transparent 70%),
+    radial-gradient(40rem 24rem at -10% 10%, var(--glow), transparent 70%);
+}
+
+/* Faint grid texture, masked so it fades out */
+.grid-texture {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+  opacity: 0.45;
 }
 
 /* =====================================================
-   Scrollbar Styling
+   Scroll reveal (progressive enhancement)
+   Content is visible by default; JS opts elements in.
    ===================================================== */
-::-webkit-scrollbar {
-  width: 8px;
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--accent-primary);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-secondary);
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-/* =====================================================
-   GPU Acceleration Hints
-   ===================================================== */
-.gpu-accelerate {
-  transform: translateZ(0);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-
-/* =====================================================
-   Cloud Animation for Dark Mode
-   ===================================================== */
-@keyframes cloudDrift {
-  0% {
-    transform: translateX(0);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  100% {
-    transform: translateX(120vw);
-  }
-}
-
-/* =====================================================
-   Bird Animation for Light Mode
-   ===================================================== */
-@keyframes fly-cycle {
-  0% {
-    transform: scaleY(1) translateY(0);
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
-  50% {
-    transform: scaleY(0.7) translateY(2px);
-  }
-
-  100% {
-    transform: scaleY(1) translateY(0);
-  }
-}
-
-@keyframes fly-away {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: translate(20vw, -8vh) scale(0.1);
-    opacity: 0;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
