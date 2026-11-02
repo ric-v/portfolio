@@ -1,140 +1,118 @@
 @import "tailwindcss";
 
-/* Class-based dark mode driven by <html data-theme="..."> */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
-/* =====================================================
-   Design tokens
-   ===================================================== */
+/* Minimal palette: paper, ink, and three signal colours. Follows the OS theme. */
 :root {
-  --bg: #fafaf9;
-  --bg-elevated: #ffffff;
-  --bg-subtle: #f4f4f2;
-  --border: #e5e4e0;
-  --border-strong: #d4d3ce;
-  --fg: #17171a;
-  --fg-muted: #55565e;
-  --fg-subtle: #7d7f87;
-  --accent: #b45309;
-  --accent-fg: #ffffff;
-  --accent-soft: rgba(180, 83, 9, 0.08);
-  --ring: rgba(180, 83, 9, 0.45);
-  --glow: rgba(217, 119, 6, 0.12);
+  --paper: #f6f5f0;
+  --ink: #141414;
+  --dim: #6b6b66;
+  --line: #d6d4cc;
+  --ok: #0f7b4f;
+  --warn: #b25e00;
+  --bad: #c8261b;
+  --bad-soft: rgba(200, 38, 27, 0.07);
   color-scheme: light;
 }
 
-[data-theme="dark"] {
-  --bg: #0b0c0f;
-  --bg-elevated: #121318;
-  --bg-subtle: #16171d;
-  --border: #23252d;
-  --border-strong: #31343e;
-  --fg: #ececef;
-  --fg-muted: #a3a6b0;
-  --fg-subtle: #74777f;
-  --accent: #f5a524;
-  --accent-fg: #1a1205;
-  --accent-soft: rgba(245, 165, 36, 0.1);
-  --ring: rgba(245, 165, 36, 0.5);
-  --glow: rgba(245, 165, 36, 0.08);
-  color-scheme: dark;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #111110;
+    --ink: #ecebe6;
+    --dim: #8e8d87;
+    --line: #2f2e2b;
+    --ok: #3ccf8e;
+    --warn: #f0a33a;
+    --bad: #ff5a4e;
+    --bad-soft: rgba(255, 90, 78, 0.1);
+    color-scheme: dark;
+  }
 }
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-elevated: var(--bg-elevated);
-  --color-subtle: var(--bg-subtle);
-  --color-line: var(--border);
-  --color-line-strong: var(--border-strong);
-  --color-fg: var(--fg);
-  --color-muted: var(--fg-muted);
-  --color-faint: var(--fg-subtle);
-  --color-accent: var(--accent);
-  --color-accent-fg: var(--accent-fg);
-  --color-accent-soft: var(--accent-soft);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-line: var(--line);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-/* =====================================================
-   Base
-   ===================================================== */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv11";
-  text-rendering: optimizeLegibility;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 15px;
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--accent-fg);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 :focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 3px;
-  border-radius: 6px;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }
 
-/* Soft ambient glow behind the hero — the only decorative flourish */
-.hero-glow {
-  background:
-    radial-gradient(60rem 30rem at 85% -10%, var(--glow), transparent 70%),
-    radial-gradient(40rem 24rem at -10% 10%, var(--glow), transparent 70%);
+a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
-/* Faint grid texture, masked so it fades out */
-.grid-texture {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
-  opacity: 0.45;
+a:hover {
+  text-decoration-thickness: 2px;
 }
 
-/* =====================================================
-   Scroll reveal (progressive enhancement)
-   Content is visible by default; JS opts elements in.
-   ===================================================== */
-.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
+.btn {
+  border: 1px solid var(--ink);
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  transition: background-color 0.15s, color 0.15s;
 }
 
-.js [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
+.btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-bad {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.btn-bad:hover {
+  background: var(--bad);
+  color: var(--paper);
+}
+
+.btn-on-bad {
+  background: var(--bad);
+  border-color: var(--bad);
+  color: var(--paper);
+}
+
+/* Traffic flowing along diagram edges */
+.flow {
+  animation: flow linear infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -16;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-
-  .js [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  .flow {
+    animation: none;
   }
 }

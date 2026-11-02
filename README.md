@@ -24,3 +24,13 @@ npm run build && npm start
 ```
 
 Old section URLs (`/about`, `/projects`, …) redirect to the matching anchor on the home page.
+
+## Concept: "Break it"
+
+A deliberately minimal site built around a live chaos lab: a small simulated system
+(load balancer, three Go API nodes, Redis, Postgres) that visitors can break — kill nodes,
+slow or take down the database, spike traffic — and then watch health checks, timeouts,
+retries, a circuit breaker and load shedding keep it up. Turn the defences off to see it fall over.
+
+- Simulation engine: [`src/lib/chaos.ts`](src/lib/chaos.ts)
+- Lab UI: [`src/components/chaos/Lab.tsx`](src/components/chaos/Lab.tsx)
