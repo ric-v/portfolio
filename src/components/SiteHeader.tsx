@@ -4,9 +4,9 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const NAV = {
   home: [
-    ["#work", "Work"],
-    ["#projects", "Projects"],
+    ["#work", "Experience"],
     ["#skills", "Skills"],
+    ["#projects", "Side projects"],
     ["#contact", "Contact"],
   ],
   lab: [

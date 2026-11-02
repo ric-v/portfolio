@@ -10,7 +10,7 @@ Edit it, save, and the page updates — no component changes needed.
 | `metrics` | The four impact numbers under the hero — keep them concrete and measurable |
 | `about` | Bio paragraphs and the "What I focus on" cards |
 | `experience` | One entry per company: period, domain, role progression (newest first), highlights, tech |
-| `projectGroups`, `projects` | Project cards. Projects with `group: "nexql"` appear together in the featured block; `draft: true` hides a project until it's ready |
+| `products` | One-line summaries of side projects, linking out to each product's site and to the full showcase on astrx.dev. Keep them short — the deep dive belongs on astrx.dev |
 | `skills` | Grouped skill lists |
 | `education`, `certifications` | Education history and certificates |
 | `contact` | Heading and message in the contact block |
@@ -18,7 +18,7 @@ Edit it, save, and the page updates — no component changes needed.
 ### Tips
 
 - `personal.intro` can include `{years}` — it's replaced with years since `careerStartYear`.
-- Project cards link to `live` if set, otherwise to `github`. `liveLabel` customises the link text.
+- Each product links to `url` (labelled with `urlLabel`) and optionally to `github`.
 - Images go in `public/` and are referenced as `/file.png`.
 - Social `icon` is one of `github`, `linkedin`, `resume`, `email`.
 
