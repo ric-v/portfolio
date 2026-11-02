@@ -51,6 +51,10 @@ export interface Project {
   group?: "nexql";
   /** Set to true to hide a project until its details are ready. */
   draft?: boolean;
+  /** Preview or screenshot image path in /public */
+  image?: string;
+  /** Accessible description of the preview image */
+  imageAlt?: string;
 }
 
 export interface ProjectGroup {
@@ -240,6 +244,8 @@ export const portfolioConfig: PortfolioConfig = {
       title: "NexQL for VS Code",
       kind: "VS Code extension",
       group: "nexql",
+      image: "/projects/nexql-core.png",
+      imageAlt: "NexQL for VS Code - Intelligent PostgreSQL tooling inside the editor",
       description:
         "Intelligent PostgreSQL tooling inside the editor — build, explore and query Postgres faster, with AI-assisted help. Formerly PgStudio.",
       tags: ["TypeScript", "PostgreSQL", "VS Code", "AI agents"],
@@ -251,6 +257,8 @@ export const portfolioConfig: PortfolioConfig = {
       title: "NexQL MCP",
       kind: "MCP server",
       group: "nexql",
+      image: "/projects/nexql-mcp.png",
+      imageAlt: "NexQL MCP Server - Model Context Protocol for Postgres and AI assistants",
       description:
         "A Model Context Protocol server that lets AI assistants and agents — Claude, Cursor and others — safely read and understand your Postgres data models.",
       tags: ["Rust", "MCP", "PostgreSQL", "LLMs"],
@@ -262,6 +270,8 @@ export const portfolioConfig: PortfolioConfig = {
       title: "NexQL Themes",
       kind: "Editor themes",
       group: "nexql",
+      image: "/projects/nexql-themes.png",
+      imageAlt: "NexQL Editor Themes - Color schemes for VS Code and open-source forks",
       description: "Colour schemes from NexQL for VS Code and its open-source forks.",
       tags: ["VS Code", "Themes"],
       github: "https://github.com/NexQL-OSS/vsc-themes",
@@ -271,6 +281,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Pacpad",
       kind: "Terminal app",
+      image: "/projects/pacpad.png",
+      imageAlt: "Pacpad - Arch Linux terminal application and package manager in Rust and Ratatui",
       description:
         "A terminal app manager for Arch Linux: browse, search and manage packages, web apps and TUI launchers from one place.",
       tags: ["Rust", "TUI", "Arch Linux"],
@@ -279,6 +291,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "And the time is…",
       kind: "Web app",
+      image: "/projects/timeis.png",
+      imageAlt: "And the time is... - Global timezone dashboard and real-time world clock",
       description:
         "Find the current time across time zones at a glance, and compare any zone against your own — past or future.",
       tags: ["Next.js", "Redux", "Tailwind CSS"],
@@ -289,6 +303,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Drawdown",
       kind: "Web app",
+      image: "/projects/drawdown.png",
+      imageAlt: "Drawdown - Bloomberg terminal-inspired PnL tracker and trading journal",
       description: "A daily portfolio tracker and trading journal.",
       tags: ["Next.js", "React", "Tailwind CSS"],
       github: "https://github.com/dev-asterix/drawdown",
@@ -306,6 +322,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Glog",
       kind: "Go library",
+      image: "/projects/glog.png",
+      imageAlt: "Glog - Concurrent, thread-safe logger for Go with zero dependencies",
       description:
         "A concurrent, file-based logger for Go. Channel-based streaming keeps logging thread-safe and low-overhead, with zero external dependencies.",
       tags: ["Go", "Concurrency", "Logging"],
@@ -316,6 +334,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Go Func Collections",
       kind: "Go library",
+      image: "/projects/gofunc.png",
+      imageAlt: "Go Func Collections - Generic slice utilities and algorithms for Go 1.18+",
       description: "Commonly used helper functions for everyday Go — the small things you'd otherwise rewrite in every project.",
       tags: ["Go", "Generics", "Library"],
       github: "https://github.com/ric-v/go-func-collections",
@@ -325,6 +345,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Task Master",
       kind: "Go library",
+      image: "/projects/taskmaster.png",
+      imageAlt: "Task Master - Customisable task-execution system and scheduler for Go",
       description: "A customisable task-execution system and scheduler library for Go, written with no dependencies.",
       tags: ["Go", "Scheduling", "Zero deps"],
       github: "https://github.com/dev-asterix/task-master.go",
@@ -332,6 +354,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Divulge",
       kind: "Web app",
+      image: "/projects/divulge.png",
+      imageAlt: "Divulge - Web UI for embedded key-value databases in Go and React",
       description:
         "A web UI for managing embedded key-value databases like BoltDB and BuntDB — a Go backend with a React front end.",
       tags: ["Go", "React", "BoltDB"],

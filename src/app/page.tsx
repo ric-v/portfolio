@@ -236,11 +236,16 @@ export default function Home() {
           <div className="surface rounded-2xl border border-line p-5 sm:p-7" data-reveal>
             <div className="grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,2fr)] lg:gap-8">
               <div className="flex flex-col">
-                <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
-                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
-                  Featured · open-source org
-                </p>
-                <h3 className="mt-2 text-2xl font-semibold tracking-tight text-ink">{nexql.name}</h3>
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg border border-line bg-subtle p-1">
+                    <Image src="/projects/nexql-core.png" alt="NexQL logo" width={28} height={28} className="h-full w-full object-contain" />
+                  </div>
+                  <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+                    Featured · open-source org
+                  </p>
+                </div>
+                <h3 className="mt-1 text-2xl font-semibold tracking-tight text-ink">{nexql.name}</h3>
                 <p className="mt-1 text-[15px] font-medium text-ink-soft">{nexql.tagline}</p>
                 <p className="mt-3 text-sm leading-relaxed text-ink-soft">{nexql.description}</p>
                 <div className="mt-5 flex flex-wrap gap-2 lg:mt-auto lg:pt-5">
