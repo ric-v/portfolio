@@ -258,9 +258,9 @@ export const portfolioConfig: PortfolioConfig = {
       companyNote: "self-developed product · astrx.dev",
       url: "https://nexql.astrx.dev",
       location: "Open source",
-      period: "Ongoing",
+      period: "Apr 2025 — Present",
       domain: "Developer tools · PostgreSQL & AI agents",
-      roles: [{ title: "Creator & Maintainer", period: "Ongoing" }],
+      roles: [{ title: "Creator & Maintainer", period: "Apr 2025 — Present" }],
       highlights: [
         "Designed, built and ship NexQL end to end as a production-grade, open-source PostgreSQL toolkit (formerly PgStudio) — product, architecture, implementation, release and docs.",
         "VS Code extension for building, exploring and querying Postgres with AI-assisted help, built in TypeScript.",
