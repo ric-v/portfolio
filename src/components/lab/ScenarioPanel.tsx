@@ -4,9 +4,11 @@ import { useState } from "react";
 import { scenarios, type Scenario } from "@/lib/scenarios";
 import { useSim } from "./SimProvider";
 
-export function ScenarioPanel() {
+export function ScenarioPanel({ initialScenarioId }: { initialScenarioId?: string }) {
   const { apply, setFocus, log } = useSim();
-  const [active, setActive] = useState<Scenario | null>(null);
+  const [active, setActive] = useState<Scenario | null>(
+    () => scenarios.find((s) => s.id === initialScenarioId) ?? null,
+  );
   const [stepIdx, setStepIdx] = useState(0);
 
   const goTo = (sc: Scenario, i: number) => {

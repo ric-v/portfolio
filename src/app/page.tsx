@@ -1,39 +1,11 @@
 import Image from "next/image";
-import { FiArrowDown, FiArrowUpRight, FiFileText, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight, FiFileText, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { portfolioConfig, yearsOfExperience } from "@/config/portfolio";
-import { SimProvider } from "@/components/lab/SimProvider";
-import { Console } from "@/components/lab/Console";
-import { Explainers } from "@/components/lab/Explainers";
+import Link from "next/link";
+import { scenarios } from "@/lib/scenarios";
+import { SiteHeader } from "@/components/SiteHeader";
 
 const icons = { github: FiGithub, linkedin: FiLinkedin, resume: FiFileText, email: FiMail };
-
-const REAL_WORLD = [
-  {
-    lever: "Latency budgets",
-    proof: "Kept real-time pharmacy-claim processing under 100ms at high request volume.",
-    where: "Worklife Tech",
-  },
-  {
-    lever: "Slow database",
-    proof: "Re-engineered PostgreSQL functions, cutting 50–500ms off individual queries.",
-    where: "Worklife Tech",
-  },
-  {
-    lever: "Observability",
-    proof: "Containerisation, telemetry and real-time monitoring on Azure — a 60% efficiency gain.",
-    where: "Worklife Tech",
-  },
-  {
-    lever: "Write overload",
-    proof: "A Java ASM-based Cassandra writer: 10× faster inserts, with no slow-query build-up under sustained load.",
-    where: "Algomox",
-  },
-  {
-    lever: "Throughput",
-    proof: "Go telemetry collectors load-tested past 10,000 metrics per second.",
-    where: "Algomox",
-  },
-];
 
 function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string; title: string; intro?: string }) {
   return (
@@ -53,38 +25,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-          <a href="#top" className="font-mono text-[13px] font-semibold text-ink">
-            {personal.name.toLowerCase()}
-            <span className="text-dim"> / break-it</span>
-          </a>
-          <nav aria-label="Primary" className="flex items-center gap-1 text-[13px]">
-            {[
-              ["#lab", "Lab"],
-              ["#how", "How it works"],
-              ["#work", "Work"],
-              ["#contact", "Contact"],
-            ].map(([href, label]) => (
-              <a
-                key={href}
-                href={href}
-                className="hidden rounded-md px-2.5 py-1 text-ink-soft hover:bg-subtle hover:text-ink md:inline-block"
-              >
-                {label}
-              </a>
-            ))}
-            <a
-              href={personal.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-1 rounded-md bg-ink px-3 py-1 font-medium text-paper hover:opacity-85"
-            >
-              Resume
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader current="home" />
 
       <main id="main" className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Hero */}
@@ -93,26 +34,21 @@ export default function Home() {
             <p className="font-mono text-[12px] text-dim">
               {personal.name} · {personal.title} · {personal.location}
             </p>
-            <h1 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
-              If it ain&apos;t broke, break it.
-              <span className="block text-dim">Then make it better.</span>
+            <h1 className="mt-5 max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
+              {personal.headline}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
-              I&apos;m {personal.shortName} — a Tech Lead with {years}+ years building backend systems that stay fast
-              under real-world load. Most recently: real-time claim processing for a U.S. pharmacy-benefits platform.
-            </p>
-            <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
-              Rather than tell you how I think about reliability, I built you a system to break. It&apos;s a live model
-              of a request-processing backend, with the same failure modes as the real thing — and the defences I&apos;d
-              put in front of them.
+              I&apos;m {personal.shortName}, a Tech Lead with {years}+ years designing distributed Go services, tuning
+              databases and leading small teams that ship production-grade software — currently real-time claim
+              processing for a U.S. pharmacy-benefits platform.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#lab" className="btn btn-primary inline-flex items-center gap-2 !px-4 !py-2 !text-sm">
-                Start breaking things <FiArrowDown aria-hidden />
+              <a href="#work" className="btn btn-primary !px-4 !py-2 !text-sm">
+                See my work
               </a>
-              <a href="#work" className="btn !px-4 !py-2 !text-sm">
-                Skip to my work
-              </a>
+              <Link href="/lab" className="btn inline-flex items-center gap-2 !px-4 !py-2 !text-sm">
+                How I think: the lab <FiArrowRight aria-hidden />
+              </Link>
               <span className="ml-1 flex gap-1">
                 {personal.socials.map((s) => {
                   const Icon = icons[s.icon];
@@ -156,42 +92,49 @@ export default function Home() {
           </aside>
         </section>
 
-        <SimProvider>
-          {/* Lab */}
-          <section id="lab" aria-labelledby="lab-title" className="scroll-mt-16 border-t border-line py-14">
-            <SectionHead
-              id="lab-title"
-              kicker="The lab"
-              title="A system you're allowed to break"
-              intro="Three Go API nodes behind a load balancer, with Redis as a cache and Postgres as the source of truth. Pick an incident for a guided walkthrough, or inject faults yourself and toggle the defences to see what each one is really doing."
-            />
-            <Console />
-          </section>
-
-          {/* How it works */}
-          <section id="how" aria-labelledby="how-title" className="scroll-mt-16 border-t border-line py-14">
-            <SectionHead
-              id="how-title"
-              kicker="How it works"
-              title="Four ideas behind every outage"
-              intro="The lab isn't scripted — these four rules produce everything you saw. The charts below are reading from the same live simulation."
-            />
-            <Explainers />
-          </section>
-        </SimProvider>
-
-        {/* Real world */}
-        <section aria-labelledby="real-title" className="border-t border-line py-14">
-          <SectionHead id="real-title" kicker="For real" title="Where I've done this in production" />
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {REAL_WORLD.map((r) => (
-              <li key={r.lever} className="rounded-xl border border-line bg-panel p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">{r.lever}</p>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink">{r.proof}</p>
-                <p className="mt-3 text-sm text-dim">{r.where}</p>
-              </li>
-            ))}
-          </ul>
+        {/* Lab teaser — the deep dive is opt-in */}
+        <section aria-labelledby="lab-teaser-title" className="border-t border-line py-14">
+          <div className="grid grid-cols-1 gap-8 rounded-2xl border border-line bg-panel p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
+            <div className="flex flex-col">
+              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">The lab · how I think</p>
+              <h2 id="lab-teaser-title" className="mt-2 text-3xl font-semibold tracking-tight text-ink">
+                If it ain&apos;t broke, break it.
+              </h2>
+              <p className="mt-3 leading-relaxed text-ink-soft">
+                Rather than list buzzwords, I built a live model of a backend you&apos;re allowed to break — and walk
+                you through why it fails, and how timeouts, retries, circuit breakers and load shedding keep it up.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-dim">About five minutes. Best on a laptop.</p>
+              <div className="mt-6 lg:mt-auto">
+                <Link href="/lab" className="btn btn-primary inline-flex items-center gap-2 !px-4 !py-2 !text-sm">
+                  Open the lab <FiArrowRight aria-hidden />
+                </Link>
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-dim">or jump straight into an incident</p>
+              <ol className="divide-y divide-line rounded-xl border border-line">
+                {scenarios.map((sc, i) => (
+                  <li key={sc.id}>
+                    <Link
+                      href={`/lab?incident=${sc.id}#incidents`}
+                      className="group flex items-center gap-4 px-4 py-3 transition-colors hover:bg-subtle"
+                    >
+                      <span className="font-mono text-[11px] text-dim">0{i + 1}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[15px] font-medium text-ink">{sc.title}</span>
+                        <span className="block truncate text-[13px] text-dim">{sc.tagline}</span>
+                      </span>
+                      <FiArrowRight
+                        aria-hidden
+                        className="h-4 w-4 shrink-0 text-dim transition-transform group-hover:translate-x-0.5 group-hover:text-accent"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
         </section>
 
         {/* Work */}
@@ -247,7 +190,7 @@ export default function Home() {
         </section>
 
         {/* Projects */}
-        <section aria-labelledby="projects-title" className="border-t border-line py-14">
+        <section id="projects" aria-labelledby="projects-title" className="scroll-mt-16 border-t border-line py-14">
           <SectionHead
             id="projects-title"
             kicker="Side projects"
@@ -300,7 +243,7 @@ export default function Home() {
         </section>
 
         {/* Skills & education */}
-        <section aria-labelledby="skills-title" className="border-t border-line py-14">
+        <section id="skills" aria-labelledby="skills-title" className="scroll-mt-16 border-t border-line py-14">
           <SectionHead id="skills-title" kicker="Toolbox" title="Skills & education" />
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
             <dl className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -349,7 +292,7 @@ export default function Home() {
           <div className="rounded-2xl border border-line bg-panel p-6 sm:p-10">
             <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">Contact</p>
             <h2 id="contact-title" className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-              Got a system that needs breaking?
+              Let&apos;s talk
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">{contact.message}</p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -378,8 +321,7 @@ export default function Home() {
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-[12px] leading-relaxed text-dim sm:flex-row sm:justify-between sm:px-6">
           <p>
-            © {new Date().getFullYear()} {personal.name}. The lab is a simplified model — worker pools, queues and 400
-            sampled requests per tick — not a benchmark. The behaviours are real; the numbers are illustrative.
+            © {new Date().getFullYear()} {personal.name} · {personal.location}
           </p>
           <a href="#top" className="shrink-0 hover:text-ink">
             Back to top ↑

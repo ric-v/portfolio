@@ -77,10 +77,10 @@ function EventLog() {
   );
 }
 
-export function Console() {
+export function Console({ initialScenarioId }: { initialScenarioId?: string }) {
   return (
     <div className="space-y-4">
-      <ScenarioPanel />
+      <ScenarioPanel initialScenarioId={initialScenarioId} />
       <StatusBar />
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="min-w-0 space-y-4">

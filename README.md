@@ -27,7 +27,8 @@ Old section URLs (`/about`, `/projects`, …) redirect to the matching anchor on
 
 ## Concept: "Break it"
 
-The site is built around a live chaos lab: a simulated request-processing backend
+The home page is a straightforward portfolio. For visitors who want to see *how I think*,
+an opt-in lab lives at **`/lab`** (incidents can be deep-linked, e.g. `/lab?incident=storm`): a simulated request-processing backend
 (load balancer → three Go API nodes → Redis + Postgres) that visitors can break and defend.
 
 - **Guided incidents** — five step-by-step walkthroughs (node failure, slow database, traffic

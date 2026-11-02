@@ -43,14 +43,34 @@ export function useSim() {
   return ctx;
 }
 
-export function SimProvider({ children }: { children: ReactNode }) {
-  const [faults, setFaults] = useState<Faults>(DEFAULT_FAULTS);
-  const [defences, setDefences] = useState<Defences>(ALL_DEFENCES);
+/** Apply a scenario/control change on top of the current (or default) configuration. */
+export function mergeChange(f: Faults, d: Defences, change: Change): { faults: Faults; defences: Defences } {
+  const baseF = change.reset ? DEFAULT_FAULTS : f;
+  const baseD = change.reset ? ALL_DEFENCES : d;
+  return {
+    faults: { ...baseF, ...change.faults, killed: { ...baseF.killed, ...(change.faults?.killed ?? {}) } },
+    defences: { ...baseD, ...change.defences },
+  };
+}
+
+export function SimProvider({
+  children,
+  initialChange,
+  initialFocus = [],
+}: {
+  children: ReactNode;
+  /** Lets a deep link (e.g. /lab?incident=storm) start mid-scenario. */
+  initialChange?: Change;
+  initialFocus?: Focus[];
+}) {
+  const initial = initialChange ? mergeChange(DEFAULT_FAULTS, ALL_DEFENCES, initialChange) : null;
+  const [faults, setFaults] = useState<Faults>(initial?.faults ?? DEFAULT_FAULTS);
+  const [defences, setDefences] = useState<Defences>(initial?.defences ?? ALL_DEFENCES);
   const [metrics, setMetrics] = useState<Metrics | null>(null);
   const [history, setHistory] = useState<Metrics[]>([]);
   const [events, setEvents] = useState<SimEvent[]>([]);
   const [selected, select] = useState<ComponentId | null>(null);
-  const [focus, setFocus] = useState<Focus[]>([]);
+  const [focus, setFocus] = useState<Focus[]>(initialFocus);
   const [paused, setPaused] = useState(false);
 
   const sim = useRef(initialState());
@@ -87,14 +107,7 @@ export function SimProvider({ children }: { children: ReactNode }) {
         const t = sim.current.t;
         sim.current = { ...initialState(), t };
       }
-      const baseF = change.reset ? DEFAULT_FAULTS : faultsRef.current;
-      const baseD = change.reset ? ALL_DEFENCES : defRef.current;
-      const nextF: Faults = {
-        ...baseF,
-        ...change.faults,
-        killed: { ...baseF.killed, ...(change.faults?.killed ?? {}) },
-      };
-      const nextD: Defences = { ...baseD, ...change.defences };
+      const { faults: nextF, defences: nextD } = mergeChange(faultsRef.current, defRef.current, change);
       // Update refs immediately so the very next tick sees the change.
       faultsRef.current = nextF;
       defRef.current = nextD;
