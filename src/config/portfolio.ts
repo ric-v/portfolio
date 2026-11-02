@@ -136,7 +136,7 @@ export const portfolioConfig: PortfolioConfig = {
       src: "/dp-dark.png",
       alt: "Portrait of Richie Varghese",
     },
-    email: "support@astrx.dev",
+    email: "ric-v@outlook.com",
     resumeUrl: RESUME_URL,
     socials: [
       { label: "GitHub", url: "https://github.com/ric-v", icon: "github" },
@@ -204,6 +204,22 @@ export const portfolioConfig: PortfolioConfig = {
         "Designed a proof of concept for a new U.S. healthcare product aimed at improving health-plan provider ratings.",
       ],
       technologies: ["Go", "PostgreSQL", "PL/pgSQL", "Docker", "Azure", "Prometheus", "Grafana"],
+    },
+    {
+      company: "NexQL",
+      companyNote: "self-developed product · astrx.dev",
+      url: "https://nexql.astrx.dev",
+      location: "Open source",
+      period: "Ongoing",
+      domain: "Developer tools · PostgreSQL & AI agents",
+      roles: [{ title: "Creator & Maintainer", period: "Ongoing" }],
+      highlights: [
+        "Designed, built and ship NexQL end to end as a production-grade, open-source PostgreSQL toolkit (formerly PgStudio) — product, architecture, implementation, release and docs.",
+        "VS Code extension for building, exploring and querying Postgres with AI-assisted help, built in TypeScript.",
+        "Rust MCP server that lets AI assistants and agents such as Claude and Cursor safely read and understand Postgres data models.",
+        "Matching editor theme pack for VS Code and its open-source forks, plus the product site at nexql.astrx.dev.",
+      ],
+      technologies: ["TypeScript", "Rust", "PostgreSQL", "MCP", "VS Code API"],
     },
     {
       company: "Algomox",

@@ -159,14 +159,22 @@ export default function Home() {
             id="work-title"
             kicker="Work"
             title="Experience"
-            intro={`${years}+ years across two companies — from a founding engineer at an AIOps startup to leading a team on a production healthcare platform.`}
+            intro={`${years}+ years of experience — from a founding engineer at an AIOps startup, to leading a team on a production healthcare platform, to building and shipping NexQL as a self-developed product.`}
           />
           <ol className="space-y-5">
             {experience.map((job) => (
               <li key={job.company} className="surface grid gap-6 rounded-2xl border border-line p-5 sm:p-7 md:grid-cols-[230px_minmax(0,1fr)]" data-reveal>
                 <div>
                   <p className="font-mono text-[11px] text-dim">{job.period}</p>
-                  <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-ink">{job.company}</h3>
+                  <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-ink">
+                    {job.url ? (
+                      <a href={job.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+                        {job.company} <FiArrowUpRight aria-hidden className="inline h-4 w-4 align-[-2px]" />
+                      </a>
+                    ) : (
+                      job.company
+                    )}
+                  </h3>
                   {job.companyNote && <p className="text-sm text-dim">{job.companyNote}</p>}
                   <p className="mt-1 text-sm text-ink-soft">{job.location}</p>
                   <ol className="mt-4 space-y-2.5 border-l border-line pl-4" aria-label="Roles">
