@@ -1,42 +1,31 @@
 @import "tailwindcss";
 
-/* Class-based dark mode driven by <html data-theme="..."> */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* =====================================================
    Design tokens
    ===================================================== */
+/* Trace UI is dark-only: it mirrors the APM tools it's inspired by. */
 :root {
-  --bg: #fafaf9;
-  --bg-elevated: #ffffff;
-  --bg-subtle: #f4f4f2;
-  --border: #e5e4e0;
-  --border-strong: #d4d3ce;
-  --fg: #17171a;
-  --fg-muted: #55565e;
-  --fg-subtle: #7d7f87;
-  --accent: #b45309;
-  --accent-fg: #ffffff;
-  --accent-soft: rgba(180, 83, 9, 0.08);
-  --ring: rgba(180, 83, 9, 0.45);
-  --glow: rgba(217, 119, 6, 0.12);
-  color-scheme: light;
-}
-
-[data-theme="dark"] {
-  --bg: #0b0c0f;
-  --bg-elevated: #121318;
-  --bg-subtle: #16171d;
-  --border: #23252d;
-  --border-strong: #31343e;
-  --fg: #ececef;
-  --fg-muted: #a3a6b0;
-  --fg-subtle: #74777f;
+  --bg: #0a0b0e;
+  --bg-elevated: #101217;
+  --bg-subtle: #171a21;
+  --border: #22252e;
+  --border-strong: #323642;
+  --fg: #e9eaee;
+  --fg-muted: #a1a5b1;
+  --fg-subtle: #6f7480;
   --accent: #f5a524;
   --accent-fg: #1a1205;
-  --accent-soft: rgba(245, 165, 36, 0.1);
+  --accent-soft: rgba(245, 165, 36, 0.09);
   --ring: rgba(245, 165, 36, 0.5);
-  --glow: rgba(245, 165, 36, 0.08);
+  --ok: #3fd18a;
+  --ok-soft: rgba(63, 209, 138, 0.12);
+
+  /* Service colours (one per "service" in the trace) */
+  --svc-richie: #9aa3b5;
+  --svc-education: #a78bfa;
+  --svc-algomox: #38bdf8;
+  --svc-worklife: #f5a524;
   color-scheme: dark;
 }
 
@@ -61,7 +50,7 @@
    ===================================================== */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 4.5rem;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -85,56 +74,8 @@ body {
   border-radius: 6px;
 }
 
-/* Soft ambient glow behind the hero — the only decorative flourish */
-.hero-glow {
-  background:
-    radial-gradient(60rem 30rem at 85% -10%, var(--glow), transparent 70%),
-    radial-gradient(40rem 24rem at -10% 10%, var(--glow), transparent 70%);
-}
-
-/* Faint grid texture, masked so it fades out */
-.grid-texture {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
-  opacity: 0.45;
-}
-
-/* =====================================================
-   Scroll reveal (progressive enhancement)
-   Content is visible by default; JS opts elements in.
-   ===================================================== */
-.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-
-.js [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .js [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
   }
 }

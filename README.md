@@ -24,3 +24,9 @@ npm run build && npm start
 ```
 
 Old section URLs (`/about`, `/projects`, …) redirect to the matching anchor on the home page.
+
+## Concept: "The Trace"
+
+This branch renders the career as a distributed trace (think Jaeger / Datadog APM).
+Span data — real start/end months, attributes, events and tags — lives in
+[`src/config/trace.ts`](src/config/trace.ts); text is pulled from `portfolio.ts`.
