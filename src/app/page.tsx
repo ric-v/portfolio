@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { FiArrowRight, FiArrowUpRight, FiFileText, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FiArrowRight, FiFileText, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { portfolioConfig, yearsOfExperience } from "@/config/portfolio";
 import Link from "next/link";
 import { scenarios } from "@/lib/scenarios";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PerfNote } from "@/components/ui/PerfNote";
+import { ProjectCard } from "@/components/ProjectCard";
 
 const icons = { github: FiGithub, linkedin: FiLinkedin, resume: FiFileText, email: FiMail };
 
@@ -23,6 +24,10 @@ function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string;
 export default function Home() {
   const { personal, metrics, experience, projects, skills, education, certifications, contact } = portfolioConfig;
   const years = yearsOfExperience();
+  const visible = projects.filter((p) => !p.draft);
+  const featured = visible.filter((p) => p.group === "nexql");
+  const others = visible.filter((p) => !p.group);
+  const nexql = portfolioConfig.projectGroups.nexql;
 
   return (
     <>
@@ -222,52 +227,55 @@ export default function Home() {
         <section id="projects" aria-labelledby="projects-title" className="scroll-mt-16 border-t border-line py-14">
           <SectionHead
             id="projects-title"
-            kicker="Side projects"
-            title="Things I build for fun"
-            intro="Open-source developer tools and libraries — mostly Go, mostly scratching my own itch."
+            kicker="Projects"
+            title="Things I build outside the day job"
+            intro="Open-source developer tools, libraries and small apps — mostly Go, Rust and TypeScript, mostly scratching my own itch."
           />
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((p) => {
-              const href = p.live ?? p.github;
-              return (
-                <li key={p.title} className="surface lift group relative flex flex-col rounded-xl border border-line p-5" data-reveal>
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-semibold text-ink">
-                      {href ? (
-                        <a href={href} target="_blank" rel="noopener noreferrer" className="after:absolute after:inset-0">
-                          {p.title}
-                        </a>
-                      ) : (
-                        p.title
-                      )}
-                    </h3>
-                    {p.featured ? (
-                      <span className="rounded-full bg-accent-soft px-2 py-0.5 font-mono text-[10px] text-accent">featured</span>
-                    ) : (
-                      <FiArrowUpRight aria-hidden className="h-4 w-4 text-dim transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink" />
-                    )}
-                  </div>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{p.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {p.tags.map((t) => (
-                      <span key={t} className="rounded-md border border-line px-2 py-0.5 font-mono text-[10.5px] text-dim">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  {p.live && p.github && (
-                    <a
-                      href={p.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative z-10 mt-3 self-start font-mono text-[11px] text-dim hover:text-ink"
-                    >
-                      source ↗
+
+          {/* Featured: the NexQL suite */}
+          <div className="surface rounded-2xl border border-line p-5 sm:p-7" data-reveal>
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,2fr)] lg:gap-8">
+              <div className="flex flex-col">
+                <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+                  Featured · open-source org
+                </p>
+                <h3 className="mt-2 text-2xl font-semibold tracking-tight text-ink">{nexql.name}</h3>
+                <p className="mt-1 text-[15px] font-medium text-ink-soft">{nexql.tagline}</p>
+                <p className="mt-3 text-sm leading-relaxed text-ink-soft">{nexql.description}</p>
+                <div className="mt-5 flex flex-wrap gap-2 lg:mt-auto lg:pt-5">
+                  {nexql.live && (
+                    <a href={nexql.live} target="_blank" rel="noopener noreferrer" className="btn btn-primary !px-3.5 !py-1.5">
+                      Website ↗
                     </a>
                   )}
-                </li>
-              );
-            })}
+                  <a
+                    href={nexql.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn inline-flex items-center gap-1.5 !px-3.5 !py-1.5"
+                  >
+                    <FiGithub aria-hidden /> NexQL-OSS
+                  </a>
+                </div>
+              </div>
+              <ul className="grid gap-3 md:grid-cols-3">
+                {featured.map((p) => (
+                  <li key={p.title}>
+                    <ProjectCard project={p} compact />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Everything else */}
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {others.map((p, i) => (
+              <li key={p.title} data-reveal style={{ ["--reveal-delay" as string]: `${(i % 4) * 60}ms` }}>
+                <ProjectCard project={p} />
+              </li>
+            ))}
           </ul>
         </section>
 

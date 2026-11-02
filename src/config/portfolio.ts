@@ -45,7 +45,20 @@ export interface Project {
   github?: string;
   live?: string;
   liveLabel?: string;
-  featured?: boolean;
+  /** Short label shown on the card, e.g. "VS Code extension". */
+  kind?: string;
+  /** Projects in a group are shown together in a featured block. */
+  group?: "nexql";
+  /** Set to true to hide a project until its details are ready. */
+  draft?: boolean;
+}
+
+export interface ProjectGroup {
+  name: string;
+  tagline: string;
+  description: string;
+  github: string;
+  live?: string;
 }
 
 export interface SkillGroup {
@@ -86,6 +99,7 @@ export interface PortfolioConfig {
     focusAreas: FocusArea[];
   };
   experience: Experience[];
+  projectGroups: Record<NonNullable<Project["group"]>, ProjectGroup>;
   projects: Project[];
   skills: SkillGroup[];
   education: Education[];
@@ -141,7 +155,7 @@ export const portfolioConfig: PortfolioConfig = {
     paragraphs: [
       "I'm a backend-focused engineer who likes working close to the fundamentals — concurrency, data flow, query plans and the critical path of a request. Most of my career has been spent on systems where latency and correctness both matter.",
       "Today I lead a small team at Worklife Tech building the claims-processing platform behind VisoryHealth, a U.S. pharmacy benefit management program. Before that, I was one of the first engineers at Algomox, building the data-collection backbone for its AIOps and MLOps platforms.",
-      "Outside the day job I build developer tools — most recently PgStudio, a PostgreSQL extension for VS Code — and I hold a Master's in Computer Science focused on system design and data engineering.",
+      "Outside the day job I build developer tools — most recently NexQL, an open-source PostgreSQL toolkit for VS Code and AI agents — and I hold a Master's in Computer Science focused on system design and data engineering.",
     ],
     focusAreas: [
       {
@@ -210,60 +224,120 @@ export const portfolioConfig: PortfolioConfig = {
     },
   ],
 
+  projectGroups: {
+    nexql: {
+      name: "NexQL",
+      tagline: "Open-source PostgreSQL tooling for developers and AI agents",
+      description:
+        "An open-source toolkit for working with Postgres: an editor extension for building, exploring and querying databases faster, an MCP server that lets AI assistants understand your data models safely, and a matching set of editor themes. (Formerly PgStudio.)",
+      github: "https://github.com/NexQL-OSS",
+      live: "https://nexql.astrx.dev",
+    },
+  },
+
   projects: [
     {
-      title: "PgStudio",
+      title: "NexQL for VS Code",
+      kind: "VS Code extension",
+      group: "nexql",
       description:
-        "PostgreSQL tooling for VS Code — explore schemas, write and run queries, and get AI-assisted help without leaving the editor.",
-      tags: ["TypeScript", "PostgreSQL", "VS Code", "AI"],
-      github: "https://github.com/dev-asterix/PgStudio",
-      featured: true,
+        "Intelligent PostgreSQL tooling inside the editor — build, explore and query Postgres faster, with AI-assisted help. Formerly PgStudio.",
+      tags: ["TypeScript", "PostgreSQL", "VS Code", "AI agents"],
+      github: "https://github.com/NexQL-OSS/core",
+      live: "https://nexql.astrx.dev",
+      liveLabel: "nexql.astrx.dev",
     },
     {
-      title: "Glog",
+      title: "NexQL MCP",
+      kind: "MCP server",
+      group: "nexql",
       description:
-        "A concurrent, file-based logger for Go. Channel-based streaming keeps logging thread-safe and low-overhead, with zero external dependencies.",
-      tags: ["Go", "Concurrency", "Library"],
-      github: "https://github.com/ric-v/glog",
-      live: "https://pkg.go.dev/github.com/ric-v/glog",
-      liveLabel: "pkg.go.dev",
+        "A Model Context Protocol server that lets AI assistants and agents — Claude, Cursor and others — safely read and understand your Postgres data models.",
+      tags: ["Rust", "MCP", "PostgreSQL", "LLMs"],
+      github: "https://github.com/NexQL-OSS/mcp",
+      live: "https://nexql-mcp.astrx.dev",
+      liveLabel: "nexql-mcp.astrx.dev",
+    },
+    {
+      title: "NexQL Themes",
+      kind: "Editor themes",
+      group: "nexql",
+      description: "Colour schemes from NexQL for VS Code and its open-source forks.",
+      tags: ["VS Code", "Themes"],
+      github: "https://github.com/NexQL-OSS/vsc-themes",
+      live: "https://nexql-themes.astrx.dev",
+      liveLabel: "nexql-themes.astrx.dev",
+    },
+    {
+      title: "Pacpad",
+      kind: "Terminal app",
+      description:
+        "A terminal app manager for Arch Linux: browse, search and manage packages, web apps and TUI launchers from one place.",
+      tags: ["Rust", "TUI", "Arch Linux"],
+      github: "https://github.com/ric-v/pacpad",
     },
     {
       title: "And the time is…",
+      kind: "Web app",
       description:
         "Find the current time across time zones at a glance, and compare any zone against your own — past or future.",
       tags: ["Next.js", "Redux", "Tailwind CSS"],
       github: "https://github.com/dev-asterix/and-the-time-is",
       live: "https://timeis.astrx.dev",
-      liveLabel: "Live site",
+      liveLabel: "timeis.astrx.dev",
     },
     {
-      title: "Divulge",
+      title: "Drawdown",
+      kind: "Web app",
+      description: "A daily portfolio tracker and trading journal.",
+      tags: ["Next.js", "React", "Tailwind CSS"],
+      github: "https://github.com/dev-asterix/drawdown",
+      live: "https://drawdown.astrx.dev",
+      liveLabel: "drawdown.astrx.dev",
+    },
+    {
+      // TODO: add a link and a one-line description, then remove `draft`.
+      title: "Asterix OS",
+      kind: "OS",
+      description: "",
+      tags: [],
+      draft: true,
+    },
+    {
+      title: "Glog",
+      kind: "Go library",
       description:
-        "A web UI for managing embedded key-value databases like BoltDB and BuntDB — a Go backend with a React front end.",
-      tags: ["Go", "React", "BoltDB"],
-      github: "https://github.com/ric-v/divulge-keyvalue-db-ui",
+        "A concurrent, file-based logger for Go. Channel-based streaming keeps logging thread-safe and low-overhead, with zero external dependencies.",
+      tags: ["Go", "Concurrency", "Logging"],
+      github: "https://github.com/ric-v/glog",
+      live: "https://pkg.go.dev/github.com/ric-v/glog",
+      liveLabel: "pkg.go.dev",
+    },
+    {
+      title: "Go Func Collections",
+      kind: "Go library",
+      description: "Commonly used helper functions for everyday Go — the small things you'd otherwise rewrite in every project.",
+      tags: ["Go", "Generics", "Library"],
+      github: "https://github.com/ric-v/go-func-collections",
+      live: "https://pkg.go.dev/github.com/ric-v/go-func-collections/array",
+      liveLabel: "pkg.go.dev",
     },
     {
       title: "Task Master",
-      description:
-        "A customisable task-execution system and library for Go, written with no dependencies.",
+      kind: "Go library",
+      description: "A customisable task-execution system and scheduler library for Go, written with no dependencies.",
       tags: ["Go", "Scheduling", "Zero deps"],
       github: "https://github.com/dev-asterix/task-master.go",
     },
     {
-      title: "Go Func Collections",
+      title: "Divulge",
+      kind: "Web app",
       description:
-        "Generic helpers for everyday Go — the small functions you'd otherwise rewrite in every project.",
-      tags: ["Go", "Generics", "Library"],
-      github: "https://github.com/ric-v/go-func-collections",
-    },
-    {
-      title: "DSA & System Design",
-      description:
-        "Worked solutions and notes from my Master's coursework — data structures, algorithms, data engineering and system design.",
-      tags: ["Python", "Go", "System Design"],
-      github: "https://github.com/ric-v/scaler-academy-interviewbit",
+        "A web UI for managing embedded key-value databases like BoltDB and BuntDB — a Go backend with a React front end.",
+      tags: ["Go", "React", "BoltDB"],
+      github: "https://github.com/ric-v/divulge-keyvalue-db-ui",
+      live: "https://ric-v.github.io/divulge-keyvalue-db-ui/",
+      liveLabel: "Demo",
     },
   ],
 

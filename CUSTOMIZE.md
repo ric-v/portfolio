@@ -10,7 +10,7 @@ Edit it, save, and the page updates — no component changes needed.
 | `metrics` | The four impact numbers under the hero — keep them concrete and measurable |
 | `about` | Bio paragraphs and the "What I focus on" cards |
 | `experience` | One entry per company: period, domain, role progression (newest first), highlights, tech |
-| `projects` | Project cards. Set `featured: true` on one project to show it full-width at the top |
+| `projectGroups`, `projects` | Project cards. Projects with `group: "nexql"` appear together in the featured block; `draft: true` hides a project until it's ready |
 | `skills` | Grouped skill lists |
 | `education`, `certifications` | Education history and certificates |
 | `contact` | Heading and message in the contact block |
