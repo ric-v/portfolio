@@ -98,11 +98,11 @@ export default function Home() {
             <div className="flex flex-col">
               <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">The lab · how I think</p>
               <h2 id="lab-teaser-title" className="mt-2 text-3xl font-semibold tracking-tight text-ink">
-                If it ain&apos;t broke, break it.
+                See how I think about failure
               </h2>
               <p className="mt-3 leading-relaxed text-ink-soft">
-                Rather than list buzzwords, I built a live model of a backend you&apos;re allowed to break — and walk
-                you through why it fails, and how timeouts, retries, circuit breakers and load shedding keep it up.
+                Rather than list buzzwords, I built a live model of a backend you can push into failure — then walk
+                through why it fails, and how timeouts, retries, circuit breakers and load shedding keep it up.
               </p>
               <p className="mt-3 text-sm leading-relaxed text-dim">About five minutes. Best on a laptop.</p>
               <div className="mt-6 lg:mt-auto">

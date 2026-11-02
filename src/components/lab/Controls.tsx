@@ -53,7 +53,7 @@ export function Controls() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-2">
-      <Panel title="break things">
+      <Panel title="inject faults">
         <div className="space-y-3 p-4">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
             <span className="w-16 shrink-0 font-mono text-[11px] text-dim">api nodes</span>

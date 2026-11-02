@@ -50,7 +50,7 @@ export function ScenarioPanel({ initialScenarioId }: { initialScenarioId?: strin
       <div className="rounded-xl border border-line bg-panel p-4 sm:p-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h3 className="text-base font-semibold text-ink">Walk through an incident</h3>
-          <p className="text-[12px] text-dim">or skip ahead and break things yourself ↓</p>
+          <p className="text-[12px] text-dim">or inject faults yourself below ↓</p>
         </div>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {scenarios.map((sc, i) => (
