@@ -38,37 +38,27 @@ export interface Experience {
   technologies: string[];
 }
 
-export interface ProjectImage {
-  light: string;
-  dark: string;
-}
-
-export interface Project {
+/** A product or open-source project, summarised in one line. The full showcase lives on astrx.dev. */
+export interface Product {
   title: string;
-  description: string;
+  /** Short label, e.g. "VS Code extension". */
+  kind: string;
+  /** One line: what it is. */
+  summary: string;
   tags: string[];
+  /** Primary link — the product's own site, falling back to its source. */
+  url: string;
+  /** Link text shown for `url`, e.g. "nexql.astrx.dev". */
+  urlLabel: string;
   github?: string;
-  live?: string;
-  liveLabel?: string;
-  /** Short label shown on the card, e.g. "VS Code extension". */
-  kind?: string;
-  /** Projects in a group are shown together in a featured block. */
-  group?: "nexql";
-  /** Set to true to hide a project until its details are ready. */
-  draft?: boolean;
-  /** Preview or screenshot image path in /public, or light/dark variants */
-  image?: string | ProjectImage;
-  /** Accessible description of the preview image */
-  imageAlt?: string;
 }
 
-export interface ProjectGroup {
-  name: string;
-  tagline: string;
-  description: string;
-  github: string;
-  live?: string;
-  logo?: string | ProjectImage;
+export interface Products {
+  heading: string;
+  intro: string;
+  /** Where the full product showcase lives. */
+  showcase: { label: string; url: string };
+  items: Product[];
 }
 
 export interface SkillGroup {
@@ -109,8 +99,7 @@ export interface PortfolioConfig {
     focusAreas: FocusArea[];
   };
   experience: Experience[];
-  projectGroups: Record<NonNullable<Project["group"]>, ProjectGroup>;
-  projects: Project[];
+  products: Products;
   skills: SkillGroup[];
   education: Education[];
   certifications: string[];
@@ -128,7 +117,7 @@ export const portfolioConfig: PortfolioConfig = {
     url: "https://me.astrx.dev",
     title: "Richie Varghese — Tech Lead & Backend Engineer",
     description:
-      "Tech Lead and backend engineer in Bengaluru building fast, reliable distributed systems in Go, Rust and PostgreSQL.",
+      "Resume of Richie Varghese — Tech Lead and backend engineer in Bengaluru building fast, reliable distributed systems in Go, Rust and PostgreSQL.",
   },
 
   personal: {
@@ -147,7 +136,7 @@ export const portfolioConfig: PortfolioConfig = {
       src: "/dp-dark.png",
       alt: "Portrait of Richie Varghese",
     },
-    email: "support@astrx.dev",
+    email: "ric-v@outlook.com",
     resumeUrl: RESUME_URL,
     socials: [
       { label: "GitHub", url: "https://github.com/ric-v", icon: "github" },
@@ -188,7 +177,7 @@ export const portfolioConfig: PortfolioConfig = {
       {
         title: "Technical leadership",
         description:
-          "Owning architecture end-to-end, reviewing critical code and mentoring engineers.",
+          "Owning modules end-to-end, reviewing critical code, and mentoring graduates and junior developers.",
       },
     ],
   },
@@ -217,6 +206,22 @@ export const portfolioConfig: PortfolioConfig = {
       technologies: ["Go", "PostgreSQL", "PL/pgSQL", "Docker", "Azure", "Prometheus", "Grafana"],
     },
     {
+      company: "NexQL",
+      companyNote: "self-developed product · astrx.dev",
+      url: "https://nexql.astrx.dev",
+      location: "Open source",
+      period: "Ongoing",
+      domain: "Developer tools · PostgreSQL & AI agents",
+      roles: [{ title: "Creator & Maintainer", period: "Ongoing" }],
+      highlights: [
+        "Designed, built and ship NexQL end to end as a production-grade, open-source PostgreSQL toolkit (formerly PgStudio) — product, architecture, implementation, release and docs.",
+        "VS Code extension for building, exploring and querying Postgres with AI-assisted help, built in TypeScript.",
+        "Rust MCP server that lets AI assistants and agents such as Claude and Cursor safely read and understand Postgres data models.",
+        "Matching editor theme pack for VS Code and its open-source forks, plus the product site at nexql.astrx.dev.",
+      ],
+      technologies: ["TypeScript", "Rust", "PostgreSQL", "MCP", "VS Code API"],
+    },
+    {
       company: "Algomox",
       location: "Bengaluru, India",
       period: "Jun 2018 — May 2021",
@@ -236,183 +241,79 @@ export const portfolioConfig: PortfolioConfig = {
     },
   ],
 
-  projectGroups: {
-    nexql: {
-      name: "NexQL",
-      tagline: "Open-source PostgreSQL tooling for developers and AI agents",
-      description:
-        "An open-source toolkit for working with Postgres: an editor extension for building, exploring and querying databases faster, an MCP server that lets AI assistants understand your data models safely, and a matching set of editor themes. (Formerly PgStudio.)",
-      github: "https://github.com/NexQL-OSS",
-      live: "https://nexql.astrx.dev",
-      logo: {
-        light: "/projects/nexql-logo-light.png",
-        dark: "/projects/nexql-logo-dark.png",
+  products: {
+    heading: "Products & open source",
+    intro:
+      "Outside the day job I design, build and maintain a small portfolio of developer tools, libraries and apps under the astrx.dev brand. This is the short version — screenshots, demos and write-ups live on astrx.dev.",
+    showcase: { label: "Browse all products on astrx.dev", url: "https://astrx.dev" },
+    items: [
+      {
+        title: "NexQL",
+        kind: "VS Code extension · MCP server · themes",
+        summary:
+          "Open-source PostgreSQL toolkit (formerly PgStudio): an editor extension, a Rust MCP server for AI assistants, and a matching theme pack.",
+        tags: ["TypeScript", "Rust", "PostgreSQL", "MCP"],
+        url: "https://nexql.astrx.dev",
+        urlLabel: "nexql.astrx.dev",
+        github: "https://github.com/NexQL-OSS",
       },
-    },
+      {
+        title: "Pacpad",
+        kind: "Terminal app",
+        summary: "Terminal app manager for Arch Linux, written in Rust with Ratatui.",
+        tags: ["Rust", "TUI"],
+        url: "https://github.com/ric-v/pacpad",
+        urlLabel: "github.com/ric-v/pacpad",
+        github: "https://github.com/ric-v/pacpad",
+      },
+      {
+        title: "And the time is…",
+        kind: "Web app",
+        summary: "Compare the current time across time zones, past or future.",
+        tags: ["Next.js", "Redux", "Tailwind CSS"],
+        url: "https://timeis.astrx.dev",
+        urlLabel: "timeis.astrx.dev",
+        github: "https://github.com/dev-asterix/and-the-time-is",
+      },
+      {
+        title: "Drawdown",
+        kind: "Web app",
+        summary: "Daily portfolio tracker and trading journal.",
+        tags: ["Next.js", "React", "Tailwind CSS"],
+        url: "https://drawdown.astrx.dev",
+        urlLabel: "drawdown.astrx.dev",
+        github: "https://github.com/dev-asterix/drawdown",
+      },
+      {
+        title: "Asterix OS",
+        kind: "Browser desktop",
+        summary: "The astrx.dev site itself — a browser desktop with windows, a terminal and a live GitHub file explorer.",
+        tags: ["Next.js", "TypeScript", "Zustand"],
+        url: "https://astrx.dev",
+        urlLabel: "astrx.dev",
+        github: "https://github.com/dev-asterix/portfolio",
+      },
+      {
+        title: "Go libraries",
+        kind: "Open source",
+        summary:
+          "Glog (zero-dependency concurrent logger), Go Func Collections (generic helpers) and Task Master (dependency-free scheduler).",
+        tags: ["Go", "Concurrency", "Generics"],
+        url: "https://pkg.go.dev/github.com/ric-v/glog",
+        urlLabel: "pkg.go.dev",
+        github: "https://github.com/ric-v/glog",
+      },
+      {
+        title: "Divulge",
+        kind: "Web app",
+        summary: "Web UI for embedded key-value databases like BoltDB and BuntDB — Go backend, React front end.",
+        tags: ["Go", "React", "BoltDB"],
+        url: "https://ric-v.github.io/divulge-keyvalue-db-ui/",
+        urlLabel: "Demo",
+        github: "https://github.com/ric-v/divulge-keyvalue-db-ui",
+      },
+    ],
   },
-
-  projects: [
-    {
-      title: "NexQL for VS Code",
-      kind: "VS Code extension",
-      group: "nexql",
-      image: {
-        light: "/projects/nexql-core-light.png",
-        dark: "/projects/nexql-core-dark.png",
-      },
-      imageAlt: "NexQL for VS Code - Intelligent PostgreSQL tooling inside the editor",
-      description:
-        "Intelligent PostgreSQL tooling inside the editor — build, explore and query Postgres faster, with AI-assisted help. Formerly PgStudio.",
-      tags: ["TypeScript", "PostgreSQL", "VS Code", "AI agents"],
-      github: "https://github.com/NexQL-OSS/core",
-      live: "https://nexql.astrx.dev",
-      liveLabel: "nexql.astrx.dev",
-    },
-    {
-      title: "NexQL MCP",
-      kind: "MCP server",
-      group: "nexql",
-      image: {
-        light: "/projects/nexql-mcp-light.png",
-        dark: "/projects/nexql-mcp-dark.png",
-      },
-      imageAlt: "NexQL MCP Server - Model Context Protocol for Postgres and AI assistants",
-      description:
-        "A Model Context Protocol server that lets AI assistants and agents — Claude, Cursor and others — safely read and understand your Postgres data models.",
-      tags: ["Rust", "MCP", "PostgreSQL", "LLMs"],
-      github: "https://github.com/NexQL-OSS/mcp",
-      live: "https://nexql-mcp.astrx.dev",
-      liveLabel: "nexql-mcp.astrx.dev",
-    },
-    {
-      title: "NexQL Themes",
-      kind: "Editor themes",
-      group: "nexql",
-      image: {
-        light: "/projects/nexql-themes-light.png",
-        dark: "/projects/nexql-themes-dark.png",
-      },
-      imageAlt: "NexQL Editor Themes - Color schemes for VS Code and open-source forks",
-      description: "Colour schemes from NexQL for VS Code and its open-source forks.",
-      tags: ["VS Code", "Themes"],
-      github: "https://github.com/NexQL-OSS/vsc-themes",
-      live: "https://nexql-themes.astrx.dev",
-      liveLabel: "nexql-themes.astrx.dev",
-    },
-    {
-      title: "Pacpad",
-      kind: "Terminal app",
-      image: {
-        light: "/projects/pacpad-light.png",
-        dark: "/projects/pacpad-dark.png",
-      },
-      imageAlt: "Pacpad - Arch Linux terminal application and package manager in Rust and Ratatui",
-      description:
-        "A terminal app manager for Arch Linux: browse, search and manage packages, web apps and TUI launchers from one place.",
-      tags: ["Rust", "TUI", "Arch Linux"],
-      github: "https://github.com/ric-v/pacpad",
-    },
-    {
-      title: "And the time is…",
-      kind: "Web app",
-      image: {
-        light: "/projects/timeis-light.png",
-        dark: "/projects/timeis-dark.png",
-      },
-      imageAlt: "And the time is... - Global timezone dashboard and real-time world clock",
-      description:
-        "Find the current time across time zones at a glance, and compare any zone against your own — past or future.",
-      tags: ["Next.js", "Redux", "Tailwind CSS"],
-      github: "https://github.com/dev-asterix/and-the-time-is",
-      live: "https://timeis.astrx.dev",
-      liveLabel: "timeis.astrx.dev",
-    },
-    {
-      title: "Drawdown",
-      kind: "Web app",
-      image: {
-        light: "/projects/drawdown-light.png",
-        dark: "/projects/drawdown-dark.png",
-      },
-      imageAlt: "Drawdown - Bloomberg terminal-inspired PnL tracker and trading journal",
-      description: "A daily portfolio tracker and trading journal.",
-      tags: ["Next.js", "React", "Tailwind CSS"],
-      github: "https://github.com/dev-asterix/drawdown",
-      live: "https://drawdown.astrx.dev",
-      liveLabel: "drawdown.astrx.dev",
-    },
-    {
-      title: "Asterix OS",
-      kind: "Browser desktop",
-      image: {
-        light: "/projects/asterixos-light.png",
-        dark: "/projects/asterixos-dark.png",
-      },
-      imageAlt: "Asterix OS - Browser desktop portfolio with draggable windows and live terminal",
-      description:
-        "A portfolio that boots like an operating system: draggable windows, a dock, a terminal, a file explorer that browses my GitHub repos live, and a command palette, all in the browser.",
-      tags: ["Next.js", "TypeScript", "Zustand", "Framer Motion"],
-      github: "https://github.com/ric-v/dev-asterix-portfolio",
-      live: "https://astrx.dev",
-      liveLabel: "astrx.dev",
-    },
-    {
-      title: "Glog",
-      kind: "Go library",
-      image: {
-        light: "/projects/glog-light.png",
-        dark: "/projects/glog-dark.png",
-      },
-      imageAlt: "Glog - Concurrent, thread-safe logger for Go with zero dependencies",
-      description:
-        "A concurrent, file-based logger for Go. Channel-based streaming keeps logging thread-safe and low-overhead, with zero external dependencies.",
-      tags: ["Go", "Concurrency", "Logging"],
-      github: "https://github.com/ric-v/glog",
-      live: "https://pkg.go.dev/github.com/ric-v/glog",
-      liveLabel: "pkg.go.dev",
-    },
-    {
-      title: "Go Func Collections",
-      kind: "Go library",
-      image: {
-        light: "/projects/gofunc-light.png",
-        dark: "/projects/gofunc-dark.png",
-      },
-      imageAlt: "Go Func Collections - Generic slice utilities and algorithms for Go 1.18+",
-      description: "Commonly used helper functions for everyday Go — the small things you'd otherwise rewrite in every project.",
-      tags: ["Go", "Generics", "Library"],
-      github: "https://github.com/ric-v/go-func-collections",
-      live: "https://pkg.go.dev/github.com/ric-v/go-func-collections/array",
-      liveLabel: "pkg.go.dev",
-    },
-    {
-      title: "Task Master",
-      kind: "Go library",
-      image: {
-        light: "/projects/taskmaster-light.png",
-        dark: "/projects/taskmaster-dark.png",
-      },
-      imageAlt: "Task Master - Customisable task-execution system and scheduler for Go",
-      description: "A customisable task-execution system and scheduler library for Go, written with no dependencies.",
-      tags: ["Go", "Scheduling", "Zero deps"],
-      github: "https://github.com/dev-asterix/task-master.go",
-    },
-    {
-      title: "Divulge",
-      kind: "Web app",
-      image: {
-        light: "/projects/divulge-light.png",
-        dark: "/projects/divulge-dark.png",
-      },
-      imageAlt: "Divulge - Web UI for embedded key-value databases in Go and React",
-      description:
-        "A web UI for managing embedded key-value databases like BoltDB and BuntDB — a Go backend with a React front end.",
-      tags: ["Go", "React", "BoltDB"],
-      github: "https://github.com/ric-v/divulge-keyvalue-db-ui",
-      live: "https://ric-v.github.io/divulge-keyvalue-db-ui/",
-      liveLabel: "Demo",
-    },
-  ],
 
   skills: [
     {

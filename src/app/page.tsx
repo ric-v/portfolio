@@ -1,11 +1,10 @@
 import Image from "next/image";
-import { FiArrowRight, FiFileText, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight, FiDownload, FiFileText, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { portfolioConfig, yearsOfExperience } from "@/config/portfolio";
 import Link from "next/link";
 import { scenarios } from "@/lib/scenarios";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PerfNote } from "@/components/ui/PerfNote";
-import { ProjectCard } from "@/components/ProjectCard";
 
 const icons = { github: FiGithub, linkedin: FiLinkedin, resume: FiFileText, email: FiMail };
 
@@ -22,12 +21,8 @@ function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string;
 }
 
 export default function Home() {
-  const { personal, metrics, experience, projects, skills, education, certifications, contact } = portfolioConfig;
+  const { personal, metrics, about, experience, products, skills, education, certifications, contact } = portfolioConfig;
   const years = yearsOfExperience();
-  const visible = projects.filter((p) => !p.draft);
-  const featured = visible.filter((p) => p.group === "nexql");
-  const others = visible.filter((p) => !p.group);
-  const nexql = portfolioConfig.projectGroups.nexql;
 
   return (
     <>
@@ -77,12 +72,17 @@ export default function Home() {
               processing for a U.S. pharmacy-benefits platform.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3" data-reveal style={{ ["--reveal-delay" as string]: "240ms" }}>
-              <a href="#work" className="btn btn-primary !px-4 !py-2 !text-sm">
-                See my work
+              <a
+                href={personal.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary inline-flex items-center gap-2 !px-4 !py-2 !text-sm"
+              >
+                <FiDownload aria-hidden /> View resume
               </a>
-              <Link href="/lab" className="btn inline-flex items-center gap-2 !px-4 !py-2 !text-sm">
-                How I think: the lab <FiArrowRight aria-hidden />
-              </Link>
+              <a href={`mailto:${personal.email}`} className="btn inline-flex items-center gap-2 !px-4 !py-2 !text-sm">
+                <FiMail aria-hidden /> Get in touch
+              </a>
               <span className="ml-1 flex gap-1">
                 {personal.socials.map((s) => {
                   const Icon = icons[s.icon];
@@ -129,7 +129,7 @@ export default function Home() {
                 <p className="text-sm text-dim">{personal.title}</p>
               </div>
             </div>
-            <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-dim">in production</p>
+            <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-dim">selected results</p>
             <dl className="mt-2 divide-y divide-line">
               {metrics.map((mt) => (
                 <div key={mt.value} className="flex items-baseline gap-4 py-2.5">
@@ -141,49 +141,16 @@ export default function Home() {
           </aside>
         </section>
 
-        {/* Lab teaser — the deep dive is opt-in */}
-        <section aria-labelledby="lab-teaser-title" className="border-t border-line py-14">
-          <div data-reveal className="surface grid grid-cols-1 gap-8 rounded-2xl border border-line p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
-            <div className="flex flex-col">
-              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">The lab · how I think</p>
-              <h2 id="lab-teaser-title" className="mt-2 text-3xl font-semibold tracking-tight text-ink">
-                See how I think about failure
-              </h2>
-              <p className="mt-3 leading-relaxed text-ink-soft">
-                Rather than list buzzwords, I built a live model of a backend you can push into failure — then walk
-                through why it fails, and how timeouts, retries, circuit breakers and load shedding keep it up.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-dim">About five minutes. Best on a laptop.</p>
-              <div className="mt-6 lg:mt-auto">
-                <Link href="/lab" className="btn btn-primary inline-flex items-center gap-2 !px-4 !py-2 !text-sm">
-                  Open the lab <FiArrowRight aria-hidden />
-                </Link>
-              </div>
-            </div>
-            <div>
-              <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-dim">or jump straight into an incident</p>
-              <ol className="divide-y divide-line rounded-xl border border-line">
-                {scenarios.map((sc, i) => (
-                  <li key={sc.id}>
-                    <Link
-                      href={`/lab?incident=${sc.id}#incidents`}
-                      className="group flex items-center gap-4 px-4 py-3 transition-[background-color,padding] duration-300 hover:bg-subtle hover:pl-5"
-                    >
-                      <span className="font-mono text-[11px] text-dim">0{i + 1}</span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-[15px] font-medium text-ink">{sc.title}</span>
-                        <span className="block truncate text-[13px] text-dim">{sc.tagline}</span>
-                      </span>
-                      <FiArrowRight
-                        aria-hidden
-                        className="h-4 w-4 shrink-0 text-dim transition-transform group-hover:translate-x-0.5 group-hover:text-accent"
-                      />
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
+        {/* Strengths */}
+        <section aria-label="Core strengths" className="border-t border-line py-10">
+          <ul className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
+            {about.focusAreas.map((f, i) => (
+              <li key={f.title} data-reveal style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}>
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">{f.title}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{f.description}</p>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* Work */}
@@ -192,14 +159,22 @@ export default function Home() {
             id="work-title"
             kicker="Work"
             title="Experience"
-            intro={`${years}+ years across two companies — from a founding engineer at an AIOps startup to leading a team on a production healthcare platform.`}
+            intro={`${years}+ years of experience — from a founding engineer at an AIOps startup, to leading a team on a production healthcare platform, to building and shipping NexQL as a self-developed product.`}
           />
           <ol className="space-y-5">
             {experience.map((job) => (
               <li key={job.company} className="surface grid gap-6 rounded-2xl border border-line p-5 sm:p-7 md:grid-cols-[230px_minmax(0,1fr)]" data-reveal>
                 <div>
                   <p className="font-mono text-[11px] text-dim">{job.period}</p>
-                  <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-ink">{job.company}</h3>
+                  <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-ink">
+                    {job.url ? (
+                      <a href={job.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+                        {job.company} <FiArrowUpRight aria-hidden className="inline h-4 w-4 align-[-2px]" />
+                      </a>
+                    ) : (
+                      job.company
+                    )}
+                  </h3>
                   {job.companyNote && <p className="text-sm text-dim">{job.companyNote}</p>}
                   <p className="mt-1 text-sm text-ink-soft">{job.location}</p>
                   <ol className="mt-4 space-y-2.5 border-l border-line pl-4" aria-label="Roles">
@@ -236,92 +211,6 @@ export default function Home() {
               </li>
             ))}
           </ol>
-        </section>
-
-        {/* Projects */}
-        <section id="projects" aria-labelledby="projects-title" className="scroll-mt-16 border-t border-line py-14">
-          <SectionHead
-            id="projects-title"
-            kicker="Projects"
-            title="Things I build outside the day job"
-            intro="Open-source developer tools, libraries and small apps — mostly Go, Rust and TypeScript, mostly scratching my own itch."
-          />
-
-          {/* Featured: the NexQL suite */}
-          <div className="surface rounded-2xl border border-line p-5 sm:p-7" data-reveal>
-            <div className="grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,2fr)] lg:gap-8">
-              <div className="flex flex-col">
-                <div className="mb-3 flex items-center gap-3">
-                  <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg border border-line bg-subtle p-1">
-                    {typeof nexql.logo === "object" && nexql.logo !== null ? (
-                      <>
-                        <Image
-                          src={nexql.logo.light}
-                          alt={`${nexql.name} logo`}
-                          width={28}
-                          height={28}
-                          className="show-light h-full w-full object-contain"
-                        />
-                        <Image
-                          src={nexql.logo.dark}
-                          alt={`${nexql.name} logo`}
-                          width={28}
-                          height={28}
-                          className="show-dark h-full w-full object-contain"
-                        />
-                      </>
-                    ) : (
-                      <Image
-                        src={typeof nexql.logo === "string" ? nexql.logo : "/projects/nexql-logo.png"}
-                        alt={`${nexql.name} logo`}
-                        width={28}
-                        height={28}
-                        className="h-full w-full object-contain"
-                      />
-                    )}
-                  </div>
-                  <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
-                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
-                    Featured · open-source org
-                  </p>
-                </div>
-                <h3 className="mt-1 text-2xl font-semibold tracking-tight text-ink">{nexql.name}</h3>
-                <p className="mt-1 text-[15px] font-medium text-ink-soft">{nexql.tagline}</p>
-                <p className="mt-3 text-sm leading-relaxed text-ink-soft">{nexql.description}</p>
-                <div className="mt-5 flex flex-wrap gap-2 lg:mt-auto lg:pt-5">
-                  {nexql.live && (
-                    <a href={nexql.live} target="_blank" rel="noopener noreferrer" className="btn btn-primary !px-3.5 !py-1.5">
-                      Website ↗
-                    </a>
-                  )}
-                  <a
-                    href={nexql.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn inline-flex items-center gap-1.5 !px-3.5 !py-1.5"
-                  >
-                    <FiGithub aria-hidden /> NexQL-OSS
-                  </a>
-                </div>
-              </div>
-              <ul className="grid gap-3 md:grid-cols-3">
-                {featured.map((p) => (
-                  <li key={p.title}>
-                    <ProjectCard project={p} compact />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Everything else */}
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {others.map((p, i) => (
-              <li key={p.title} data-reveal style={{ ["--reveal-delay" as string]: `${(i % 4) * 60}ms` }}>
-                <ProjectCard project={p} />
-              </li>
-            ))}
-          </ul>
         </section>
 
         {/* Skills & education */}
@@ -365,6 +254,111 @@ export default function Home() {
                 <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-dim">Certifications</p>
                 <p className="mt-2 text-[13px] leading-relaxed text-ink-soft">{certifications.join(" · ")}</p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Products & open source — summary only; the showcase lives on astrx.dev */}
+        <section id="projects" aria-labelledby="projects-title" className="scroll-mt-16 border-t border-line py-14">
+          <SectionHead id="projects-title" kicker="Side projects" title={products.heading} intro={products.intro} />
+          <ul className="divide-y divide-line rounded-2xl border border-line surface" data-reveal>
+            {products.items.map((p) => (
+              <li
+                key={p.title}
+                className="grid gap-x-6 gap-y-1.5 px-5 py-4 sm:grid-cols-[210px_minmax(0,1fr)_auto] sm:items-baseline"
+              >
+                <div>
+                  <h3 className="font-semibold text-ink">{p.title}</h3>
+                  <p className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-dim">{p.kind}</p>
+                </div>
+                <div>
+                  <p className="text-sm leading-relaxed text-ink-soft">{p.summary}</p>
+                  <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="Tech">
+                    {p.tags.map((t) => (
+                      <li key={t} className="rounded-md border border-line px-2 py-0.5 font-mono text-[10.5px] text-dim">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] sm:justify-end">
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-ink-soft transition-colors hover:text-accent"
+                  >
+                    {p.urlLabel} <FiArrowUpRight aria-hidden className="h-3.5 w-3.5" />
+                    <span className="sr-only"> ({p.title})</span>
+                  </a>
+                  {p.github && p.github !== p.url && (
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-dim transition-colors hover:text-ink"
+                    >
+                      <FiGithub aria-hidden className="h-3.5 w-3.5" /> source
+                      <span className="sr-only"> for {p.title}</span>
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5" data-reveal>
+            <a
+              href={products.showcase.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary inline-flex items-center gap-2 !px-4 !py-2 !text-sm"
+            >
+              {products.showcase.label} <FiArrowUpRight aria-hidden />
+            </a>
+          </div>
+        </section>
+
+        {/* Lab teaser — the deep dive is opt-in */}
+        <section aria-labelledby="lab-teaser-title" className="scroll-mt-16 border-t border-line py-14">
+          <div data-reveal className="surface grid grid-cols-1 gap-8 rounded-2xl border border-line p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
+            <div className="flex flex-col">
+              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">The lab · how I think</p>
+              <h2 id="lab-teaser-title" className="mt-2 text-3xl font-semibold tracking-tight text-ink">
+                See how I think about failure
+              </h2>
+              <p className="mt-3 leading-relaxed text-ink-soft">
+                Rather than list buzzwords, I built a live model of a backend you can push into failure — then walk
+                through why it fails, and how timeouts, retries, circuit breakers and load shedding keep it up.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-dim">About five minutes. Best on a laptop.</p>
+              <div className="mt-6 lg:mt-auto">
+                <Link href="/lab" className="btn btn-primary inline-flex items-center gap-2 !px-4 !py-2 !text-sm">
+                  Open the lab <FiArrowRight aria-hidden />
+                </Link>
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-dim">or jump straight into an incident</p>
+              <ol className="divide-y divide-line rounded-xl border border-line">
+                {scenarios.map((sc, i) => (
+                  <li key={sc.id}>
+                    <Link
+                      href={`/lab?incident=${sc.id}#incidents`}
+                      className="group flex items-center gap-4 px-4 py-3 transition-[background-color,padding] duration-300 hover:bg-subtle hover:pl-5"
+                    >
+                      <span className="font-mono text-[11px] text-dim">0{i + 1}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[15px] font-medium text-ink">{sc.title}</span>
+                        <span className="block truncate text-[13px] text-dim">{sc.tagline}</span>
+                      </span>
+                      <FiArrowRight
+                        aria-hidden
+                        className="h-4 w-4 shrink-0 text-dim transition-transform group-hover:translate-x-0.5 group-hover:text-accent"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </section>
