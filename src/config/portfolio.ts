@@ -23,6 +23,12 @@ export interface FocusArea {
 export interface Role {
   title: string;
   period: string;
+  /** Short year label shown on the timeline, e.g. "2021". Defaults to the start year of `period`. */
+  year?: string;
+  /** What I owned and delivered in this role. */
+  did?: string[];
+  /** What I did that earned the next role. Leave out for the current role. */
+  promotion?: string[];
 }
 
 export interface Experience {
@@ -32,6 +38,8 @@ export interface Experience {
   location: string;
   period: string;
   domain: string;
+  /** Short story of the whole stint, shown by default (with the newest role selected). */
+  journey?: string;
   /** Role progression, newest first. */
   roles: Role[];
   highlights: string[];
@@ -189,6 +197,8 @@ export const portfolioConfig: PortfolioConfig = {
       location: "Bengaluru, India",
       period: "Jun 2021 — Present",
       domain: "Pharmacy Benefit Management · Client: VisoryHealth (XIL Health)",
+      journey:
+        "Joined in June 2021 as an Engineer and moved through four roles in under three years to Tech Lead. Along the way I built the microservices that adjudicate pharmacy claims in real time for VisoryHealth, got the core path under 100ms, re-engineered Postgres functions for 50–500ms savings per query, and raised delivery efficiency by 60% through containerisation, telemetry and testing on Azure. Today I lead a team of three on a live, regulated system.",
       roles: [
         { title: "Tech Lead — Software Development", period: "Apr 2024 — Present" },
         { title: "Principal Engineer", period: "Apr 2023 — Mar 2024" },
@@ -226,6 +236,8 @@ export const portfolioConfig: PortfolioConfig = {
       location: "Bengaluru, India",
       period: "Jun 2018 — May 2021",
       domain: "AIOps & MLOps platforms",
+      journey:
+        "Joined in June 2018 as part of the founding engineering team and spent three years helping build the AIOps and MLOps platforms. I built Go telemetry collectors load-tested past 10,000 metrics per second, a Java ASM Cassandra insert path that made writes 10× faster, and wore the senior Go developer, system admin and source-control hats while running client demos for Cisco and Mindtree.",
       roles: [
         { title: "Software Engineer L2", period: "Jun 2019 — May 2021" },
         { title: "Software Engineer L1", period: "Jun 2018 — May 2019" },

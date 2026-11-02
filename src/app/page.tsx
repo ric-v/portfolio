@@ -3,6 +3,7 @@ import { FiArrowRight, FiArrowUpRight, FiDownload, FiFileText, FiGithub, FiLinke
 import { portfolioConfig, yearsOfExperience } from "@/config/portfolio";
 import Link from "next/link";
 import { scenarios } from "@/lib/scenarios";
+import { ExperienceCard } from "@/components/ExperienceCard";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PerfNote } from "@/components/ui/PerfNote";
 
@@ -163,52 +164,7 @@ export default function Home() {
           />
           <ol className="space-y-5">
             {experience.map((job) => (
-              <li key={job.company} className="surface grid gap-6 rounded-2xl border border-line p-5 sm:p-7 md:grid-cols-[230px_minmax(0,1fr)]" data-reveal>
-                <div>
-                  <p className="font-mono text-[11px] text-dim">{job.period}</p>
-                  <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-ink">
-                    {job.url ? (
-                      <a href={job.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
-                        {job.company} <FiArrowUpRight aria-hidden className="inline h-4 w-4 align-[-2px]" />
-                      </a>
-                    ) : (
-                      job.company
-                    )}
-                  </h3>
-                  {job.companyNote && <p className="text-sm text-dim">{job.companyNote}</p>}
-                  <p className="mt-1 text-sm text-ink-soft">{job.location}</p>
-                  <ol className="mt-4 space-y-2.5 border-l border-line pl-4" aria-label="Roles">
-                    {job.roles.map((role, i) => (
-                      <li key={role.title} className="relative">
-                        <span
-                          aria-hidden
-                          className={`absolute -left-[21px] top-1.5 h-2 w-2 rounded-full ${i === 0 ? "bg-accent" : "bg-line-strong"}`}
-                        />
-                        <p className={`text-sm ${i === 0 ? "font-medium text-ink" : "text-ink-soft"}`}>{role.title}</p>
-                        <p className="font-mono text-[10.5px] text-dim">{role.period}</p>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-accent">{job.domain}</p>
-                  <ul className="mt-3 space-y-2.5">
-                    {job.highlights.map((h) => (
-                      <li key={h} className="flex gap-3 text-[15px] leading-relaxed text-ink-soft">
-                        <span aria-hidden className="mt-[10px] h-1 w-1 shrink-0 rounded-full bg-dim" />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
-                    {job.technologies.map((t) => (
-                      <li key={t} className="rounded-md border border-line px-2 py-0.5 font-mono text-[11px] text-ink-soft">
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
+              <ExperienceCard key={job.company} job={job} />
             ))}
           </ol>
         </section>
