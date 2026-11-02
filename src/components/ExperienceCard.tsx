@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import type { Experience } from "@/config/portfolio";
+import { WireframeSurface } from "@/components/ui/WireframeSurface";
 
 /** Year label for a role: explicit `year`, else the first 4-digit year in `period`. */
 function yearOf(period: string, year?: string) {
@@ -21,15 +22,30 @@ export function ExperienceCard({ job }: { job: Experience }) {
 
   return (
     <li
-      className="surface grid gap-6 rounded-2xl border border-line p-5 sm:p-7 md:grid-cols-[230px_minmax(0,1fr)]"
+      className="surface lift group relative grid gap-6 overflow-hidden rounded-2xl border border-line p-5 sm:p-7 md:grid-cols-[230px_minmax(0,1fr)]"
       data-reveal
     >
-      <div>
+      {/* Top light wash falling across the card */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--sheen-soft)] to-transparent opacity-30 transition-opacity duration-700 group-hover:opacity-100" />
+
+      {/* Animated wireframe grid revealing on hover to indicate motion */}
+      <WireframeSurface />
+
+      <div className="relative z-10">
         <p className="font-mono text-[11px] text-dim">{job.period}</p>
         <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-ink">
           {job.url ? (
-            <a href={job.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
-              {job.company} <FiArrowUpRight aria-hidden className="inline h-4 w-4 align-[-2px]" />
+            <a
+              href={job.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/link inline-flex items-center gap-1 transition-colors duration-300 hover:text-accent"
+            >
+              {job.company}
+              <FiArrowUpRight
+                aria-hidden
+                className="h-4 w-4 transition-transform duration-300 ease-out group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+              />
             </a>
           ) : (
             job.company
@@ -45,19 +61,25 @@ export function ExperienceCard({ job }: { job: Experience }) {
               <li key={r.title} className="relative">
                 <span
                   aria-hidden
-                  className={`absolute -left-[17px] top-3.5 h-2 w-2 rounded-full transition-colors ${active ? "bg-accent" : "bg-line-strong"}`}
+                  className={`absolute -left-[17px] top-3.5 h-2 w-2 rounded-full transition-all duration-500 ${
+                    active ? "scale-125 bg-accent shadow-[0_0_10px_var(--accent)]" : "bg-line-strong hover:bg-dim"
+                  }`}
                 />
                 <button
                   type="button"
                   onClick={() => setSelected(i)}
                   aria-pressed={active}
-                  className={`w-full rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-subtle ${active ? "bg-accent-soft" : ""}`}
+                  className={`w-full rounded-md px-2.5 py-1.5 text-left transition-all duration-300 hover:bg-subtle active:scale-[0.99] ${
+                    active ? "bg-accent-soft font-medium shadow-[inset_0_0_0_1px_var(--accent-soft)]" : ""
+                  }`}
                 >
-                  <span className={`block text-sm ${active ? "font-medium text-ink" : "text-ink-soft"}`}>{r.title}</span>
+                  <span className={`block text-sm transition-colors duration-300 ${active ? "font-medium text-ink" : "text-ink-soft"}`}>
+                    {r.title}
+                  </span>
                   <span className="block font-mono text-[10.5px] text-dim">
                     {yearOf(r.period, r.year) ? (
                       <>
-                        <span className={active ? "text-accent" : ""}>{yearOf(r.period, r.year)}</span> · {r.period}
+                        <span className={active ? "font-semibold text-accent" : ""}>{yearOf(r.period, r.year)}</span> · {r.period}
                       </>
                     ) : (
                       r.period
@@ -73,7 +95,11 @@ export function ExperienceCard({ job }: { job: Experience }) {
         )}
       </div>
 
-      <div aria-live="polite">
+      <div
+        aria-live="polite"
+        key={role.title}
+        className="relative z-10 transition-opacity duration-500 ease-out"
+      >
         <p className="text-sm font-medium text-accent">{job.domain}</p>
 
         {isLatest ? (
@@ -106,7 +132,7 @@ export function ExperienceCard({ job }: { job: Experience }) {
               </ul>
             )}
             {next && (
-              <div className="mt-5 rounded-xl border border-line bg-subtle p-4">
+              <div className="mt-5 rounded-xl border border-line bg-subtle p-4 shadow-sm transition-all duration-500 hover:border-accent/40 hover:shadow-md">
                 <p className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-accent">
                   Promoted to {next.title} · {next.period.split("—")[0].trim()}
                 </p>
@@ -124,7 +150,7 @@ export function ExperienceCard({ job }: { job: Experience }) {
 
         <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
           {job.technologies.map((t) => (
-            <li key={t} className="rounded-md border border-line px-2 py-0.5 font-mono text-[11px] text-ink-soft">
+            <li key={t} className="tech-chip">
               {t}
             </li>
           ))}
@@ -136,8 +162,11 @@ export function ExperienceCard({ job }: { job: Experience }) {
 
 function Bullet({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex gap-3 text-[15px] leading-relaxed text-ink-soft">
-      <span aria-hidden className="mt-[10px] h-1 w-1 shrink-0 rounded-full bg-dim" />
+    <li className="group/bullet flex gap-3 text-[15px] leading-relaxed text-ink-soft transition-all duration-300 hover:translate-x-1 hover:text-ink">
+      <span
+        aria-hidden
+        className="mt-[10px] h-1.5 w-1.5 shrink-0 rounded-full bg-dim transition-all duration-300 group-hover/bullet:scale-150 group-hover/bullet:bg-accent group-hover/bullet:shadow-[0_0_8px_var(--accent)]"
+      />
       <span>{children}</span>
     </li>
   );

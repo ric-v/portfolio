@@ -5,7 +5,9 @@ import { usePathname } from "next/navigation";
 
 /**
  * Page-wide polish that needs JS:
- *  - a cursor-following spotlight on `.lift` cards (writes --mx / --my),
+ *  - a cursor-following spotlight on `.lift`, `.surface`, and wireframe areas (writes --mx / --my),
+ *  - global cursor tracking (--mouse-x, --mouse-y) for ambient wireframe backdrops,
+ *  - velocity detection for dynamic motion indications,
  *  - scroll reveals for `[data-reveal]` elements,
  *  - a hello for anyone who opens devtools.
  */
@@ -14,20 +16,56 @@ export function Ambient() {
 
   useEffect(() => {
     let frame = 0;
+    let lastTime = 0;
+    let lastX = 0;
+    let lastY = 0;
+    let stopTimer: ReturnType<typeof setTimeout>;
+
     const onMove = (e: PointerEvent) => {
-      const card = (e.target as Element | null)?.closest?.<HTMLElement>(".lift");
-      if (!card) return;
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty("--mx", `${e.clientX - r.left}px`);
-        card.style.setProperty("--my", `${e.clientY - r.top}px`);
+        const root = document.documentElement;
+
+        // Global mouse coordinates for viewport-wide wireframe backdrops
+        root.style.setProperty("--mouse-x", `${e.clientX}px`);
+        root.style.setProperty("--mouse-y", `${e.clientY}px`);
+
+        // Compute speed / motion velocity to indicate activity
+        const now = performance.now();
+        const dt = Math.max(1, now - lastTime);
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        const speed = Math.min((Math.hypot(dx, dy) / dt) * 8, 30);
+        lastTime = now;
+        lastX = e.clientX;
+        lastY = e.clientY;
+
+        root.style.setProperty("--motion-speed", speed.toFixed(2));
+        root.classList.add("is-pointer-moving");
+
+        clearTimeout(stopTimer);
+        stopTimer = setTimeout(() => {
+          root.classList.remove("is-pointer-moving");
+          root.style.setProperty("--motion-speed", "0");
+        }, 180);
+
+        // Card / surface relative coordinates
+        const card = (e.target as Element | null)?.closest?.<HTMLElement>(
+          ".lift, .surface, [data-wireframe], .interactive-surface"
+        );
+        if (card) {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", `${(e.clientX - r.left).toFixed(1)}px`);
+          card.style.setProperty("--my", `${(e.clientY - r.top).toFixed(1)}px`);
+        }
       });
     };
+
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => {
       window.removeEventListener("pointermove", onMove);
       cancelAnimationFrame(frame);
+      clearTimeout(stopTimer);
     };
   }, []);
 

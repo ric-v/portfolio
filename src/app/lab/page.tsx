@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SimProvider } from "@/components/lab/SimProvider";
 import { Console } from "@/components/lab/Console";
 import { Explainers } from "@/components/lab/Explainers";
+import { WireframeSurface } from "@/components/ui/WireframeSurface";
 
 export const metadata: Metadata = {
   title: `The Lab — how ${portfolioConfig.personal.shortName} thinks about reliability`,
@@ -45,7 +46,10 @@ const REAL_WORLD = [
 function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string; title: string; intro?: string }) {
   return (
     <div className="mb-8 max-w-2xl">
-      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">{kicker}</p>
+      <div className="flex items-center gap-2">
+        <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_6px_var(--accent)]" />
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">{kicker}</p>
+      </div>
       <h2 id={id} className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
         {title}
       </h2>
@@ -65,7 +69,8 @@ export default async function LabPage({ searchParams }: { searchParams: Promise<
       <SiteHeader current="lab" />
 
       <main id="main" className="mx-auto max-w-7xl px-4 sm:px-6">
-        <section className="py-10 sm:py-14">
+        <section className="relative isolate py-10 sm:py-14">
+          <WireframeSurface variant="hero" className="pointer-events-none absolute inset-y-0 -inset-x-4 sm:-inset-x-8 -z-10 opacity-70" />
           <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">The lab · how I think</p>
           <h1 className="mt-3 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
             If it ain&apos;t broke, break it.
@@ -108,20 +113,34 @@ export default async function LabPage({ searchParams }: { searchParams: Promise<
           />
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {REAL_WORLD.map((r) => (
-              <li key={r.lever} className="surface lift rounded-xl border border-line p-5" data-reveal>
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">{r.lever}</p>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink">{r.proof}</p>
-                <p className="mt-3 text-sm text-dim">{r.where}</p>
+              <li
+                key={r.lever}
+                className="surface lift group relative overflow-hidden rounded-xl border border-line p-5 transition-all duration-500"
+                data-reveal
+              >
+                {/* Top light wash */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[var(--sheen-soft)] to-transparent opacity-30 transition-opacity duration-700 group-hover:opacity-100" />
+                <WireframeSurface />
+                <div className="relative z-10">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">{r.lever}</p>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink transition-colors duration-300 group-hover:text-accent">
+                    {r.proof}
+                  </p>
+                  <p className="mt-3 text-sm text-dim">{r.where}</p>
+                </div>
               </li>
             ))}
           </ul>
 
-          <div className="surface mt-10 flex flex-col items-start gap-4 rounded-2xl border border-line p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-            <div>
+          <div className="surface lift group relative mt-10 flex flex-col items-start gap-4 overflow-hidden rounded-2xl border border-line p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            {/* Top light wash */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--sheen-soft)] to-transparent opacity-30 transition-opacity duration-700 group-hover:opacity-100" />
+            <WireframeSurface />
+            <div className="relative z-10">
               <p className="text-xl font-semibold tracking-tight text-ink">Like how this thinks?</p>
               <p className="mt-1 text-ink-soft">See the work behind it, or get in touch.</p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="relative z-10 flex flex-wrap gap-3">
               <Link href="/#work" className="btn !px-4 !py-2 !text-sm">
                 ← Back to my work
               </Link>
