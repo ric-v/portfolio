@@ -314,6 +314,8 @@ export const portfolioConfig: PortfolioConfig = {
     {
       title: "Asterix OS",
       kind: "Browser desktop",
+      image: "/projects/asterixos.png",
+      imageAlt: "Asterix OS - Browser desktop portfolio with draggable windows and live terminal",
       description:
         "A portfolio that boots like an operating system: draggable windows, a dock, a terminal, a file explorer that browses my GitHub repos live, and a command palette, all in the browser.",
       tags: ["Next.js", "TypeScript", "Zustand", "Framer Motion"],
