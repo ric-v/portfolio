@@ -326,8 +326,8 @@ export const portfolioConfig: PortfolioConfig = {
         kind: "Terminal app",
         summary: "Terminal app manager for Arch Linux, written in Rust with Ratatui.",
         tags: ["Rust", "TUI"],
-        url: "https://github.com/ric-v/pacpad",
-        urlLabel: "github.com/ric-v/pacpad",
+        url: "https://pacpad.astrx.dev",
+        urlLabel: "pacpad.astrx.dev",
         github: "https://github.com/ric-v/pacpad",
       },
       {
